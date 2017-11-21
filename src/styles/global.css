@@ -1,0 +1,522 @@
+/*@import '../../../node_modules/bootstrap';*/
+@import '../../node_modules/normalize.css/normalize.css';
+
+/*
+@import '../variables.css';
+*/
+/*
+ * Base styles
+ * ========================================================================== */
+
+html {
+    color: #222;
+    font-weight: 100;
+    font-size: 1em; /* ~16px; */
+    font-family: var(--font-family-base);
+    line-height: 1.375; /* ~22px */
+}
+
+body {
+    background-color:#eff3f8;
+    color:#34495e;
+    padding:0 !important;
+    margin:0 !important;
+    font-size:14px;
+    font-family:"Roboto", "Open Sans", sans-serif;
+}
+
+/*
+ * Remove text-shadow in selection highlight:
+ * https://twitter.com/miketaylr/status/12228805301
+ *
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+/*
+ * Remove the gap between audio, canvas, iframes,
+ * images, videos and the bottom of their containers:
+ * https://github.com/h5bp/html5-boilerplate/issues/440
+ */
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+td {
+    padding: 5px 2px !important;
+    border:none !important;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+    resize: vertical;
+}
+
+/*
+ * Browser upgrade prompt
+ * ========================================================================== */
+
+.browserupgrade {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+/*
+ * Print styles
+ * Inlined to avoid the additional HTTP request:
+ * http://www.phpied.com/delay-loading-your-print-css/
+ * ========================================================================== */
+
+@media print {
+    *,
+    *:before,
+    *:after {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster: http://www.sanbeiji.com/archives/953 */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links that are fragment identifiers,
+     * or use the `javascript:` pseudo protocol
+     */
+
+    a[href^="#"]:after,
+    a[href^="javascript:"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    /*
+     * Printing Tables:
+     * http://css-discuss.incutio.com/wiki/Printing_Tables
+     */
+
+    thead {
+        display: table-header-group;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}
+/*
+Custom Bootstrap
+*/
+.nav-tabs {
+    border:none !important;
+    background: 0 0 !important;
+    margin:0;
+}
+.nav-tabs li {
+    border:none !important;
+    background: 0 0 !important;
+    margin: 0;
+}
+
+.nav-tabs li.active {
+    border:none !important;
+    background: 0 0 !important;
+    background:0 0;
+    /*border-bottom: 4px solid #3fc9d5 !important;*/
+    border-bottom: 4px solid #585758 !important;
+    position: relative;
+}
+.nav-tabs li.active a {
+    border:none !important;
+    background: 0 0 !important;
+    color: #333;
+    background: 0 0 !important;
+    margin:0;
+    padding:10px 10px;
+}
+.nav-tabs li.active a:hover {
+    border:none !important;
+    background: 0 0 !important;
+}
+
+.nav-tabs li:hover {
+    /*border:none !important;*/
+    background: 0 0 !important;
+    /*border-bottom: 4px solid #585758 !important;*/
+
+}
+.nav-tabs li a {
+    border:none !important;
+    background: 0 0 !important;
+    margin: 0;
+    padding-left:10px;
+    padding-right:10px;
+    color: #737373;
+}
+
+.nav-tabs li a:active {
+    border:none !important;
+    background: 0 0 !important;
+}
+
+.nav-pills .sub-header-link a:hover {
+    background:none;
+}
+
+@media only screen and (min-width : 320px) {
+    .left-side {
+        margin: 5px 0px;
+        padding: 5px 0px;
+    }
+
+    .right-side {
+        margin: 5px 0px;
+        padding: 5px 0px;
+    }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+    .left-side {
+        margin: 10px 0px;
+        padding: 10px 5px 0px 10px;
+    }
+
+    .right-side {
+        margin: 10px 0px;
+        padding: 10px 0px 0px 5px;
+    }
+}
+
+
+
+.list-group {
+    margin-bottom: 0;
+}
+
+a.list-group-item {
+    cursor:pointer;
+}
+.list-group-item {
+    display:inline-block;
+    width:100%;
+
+    border-radius: 0 !important;
+
+    border-bottom-style: none;
+    border-left-style:none;
+    border-right-style:none;
+    border-top: 1px solid #ddd !important;
+    padding:0px 15px;
+
+}
+
+
+
+
+.list-group-item.active {
+    background-color:#eee;
+    border:none;
+}
+.list-group-item.hover {
+    background-color:#f1f1f1;
+}
+.inline-list-item {
+    display:inline-block;
+    vertical-align:middle;
+    line-height:normal;
+    padding: 0 5px;
+    color:#444;
+    height:1.45em;
+}
+
+/*
+End Custom Boostrap
+*/
+
+.nopadding {
+    padding:0px !important;
+}
+
+.portlet-title {
+    padding:17px 20px 10px;
+    border-bottom:1px solid #eee;
+    background-color:#fff;
+}
+
+.portlet-body {
+    padding: 10px 20px 20px 25px;
+}
+
+.page-title {
+    color:#2f353b!important;
+    text-transform: uppercase !important;
+    font-size:16px;
+    font-weight:bold;
+    padding:10px 0px;
+}
+
+.sub-title-container {
+    /*padding:10px 10px;*/
+    border-bottom: 1px solid #ebf0f5;
+}
+
+.sub-title {
+    text-transform: uppercase;
+    color: #2f353b!important;
+    font-weight: bold;
+    padding: 10px 15px;
+}
+
+.sub-container {
+    padding: 5px 0px 0px 0px;
+    background-color:#fff;
+    border: 1px solid #ebf0f5;
+    min-height:200px;
+}
+
+.lighter {
+    color:#777;
+}
+.bold {
+    font-weight:bold !important;
+}
+
+.darker {
+    color:#333;
+}
+
+.centered {
+    margin: 0 auto;
+    display: table;
+}
+
+
+/*
+SPINNERSSS
+*/
+
+@-moz-keyframes throbber-loader {
+    0% {
+        background: #dde2e7;
+    }
+    10% {
+        background: #6b9dc8;
+    }
+    40% {
+        background: #dde2e7;
+    }
+}
+@-webkit-keyframes throbber-loader {
+    0% {
+        background: #dde2e7;
+    }
+    10% {
+        background: #6b9dc8;
+    }
+    40% {
+        background: #dde2e7;
+    }
+}
+@keyframes throbber-loader {
+    0% {
+        background: #dde2e7;
+    }
+    10% {
+        background: #6b9dc8;
+    }
+    40% {
+        background: #dde2e7;
+    }
+}
+/* :not(:required) hides these rules from IE9 and below */
+.throbber-loader:not(:required) {
+    -moz-animation: throbber-loader 1000ms 300ms infinite ease-out;
+    -webkit-animation: throbber-loader 1000ms 300ms infinite ease-out;
+    animation: throbber-loader 1000ms 300ms infinite ease-out;
+    background: #dde2e7;
+    display: inline-block;
+    position: relative;
+    text-indent: -9999px;
+    width: 0.9em;
+    height: 1.5em;
+    margin: 20px 1.6em;
+}
+.throbber-loader:not(:required):before, .throbber-loader:not(:required):after {
+    background: #dde2e7;
+    content: '\x200B';
+    display: inline-block;
+    width: 0.9em;
+    height: 1.5em;
+    position: absolute;
+    top: 0;
+}
+.throbber-loader:not(:required):before {
+    -moz-animation: throbber-loader 1000ms 150ms infinite ease-out;
+    -webkit-animation: throbber-loader 1000ms 150ms infinite ease-out;
+    animation: throbber-loader 1000ms 150ms infinite ease-out;
+    left: -1.6em;
+}
+.throbber-loader:not(:required):after {
+    -moz-animation: throbber-loader 1000ms 450ms infinite ease-out;
+    -webkit-animation: throbber-loader 1000ms 450ms infinite ease-out;
+    animation: throbber-loader 1000ms 450ms infinite ease-out;
+    right: -1.6em;
+}
+/*
+END SPINNERS
+*/
+
+/* MODAL */
+
+.modal {
+    display:flex !important;
+    background: none;
+    background-color: transparent !important;
+}
+
+/* END MODAL */
+
+
+/* Flex Stuff */
+.flex-container {
+    display: flex;
+    display: -webkit-flex
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-center {
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+.flex-spacing {
+    justify-content: space-between;
+}
+
+
+/* Flex Table */
+
+.table-row {
+    display: flex;           display: -webkit-flex;
+    flex-direction: row;     -webkit-flex-direction: row;
+    flex-grow: 0;            -webkit-flex-grow: 0;
+    flex-wrap: nowrap;         -webkit-flex-wrap: nowrap;
+    width: 100%;
+    padding:0px 15px;
+    font-weight:100;
+    font-size: 0.7em;
+    line-height:2.5em;
+    border-bottom: 1px solid #eee;
+
+}
+.table-header {
+    font-weight: bold;
+    border-bottom: 1px solid #444;
+}
+
+
+.text {
+    display: flex;           display: -webkit-flex;
+    flex-grow: 1;            -webkit-flex-grow: 1;
+    /*overflow: hidden;*/
+    line-height:1em;
+    text-overflow: ellipsis;
+    font-size:9px;
+    padding: 3px 12px 3px 0px;
+    align-items:center;
+    /*justify-content:center;*/
+
+}
+
+.num {
+    width: 80px;
+}
+
+
+
+/* End Flex Table */
+
+
+/* End Flex Stuff */
