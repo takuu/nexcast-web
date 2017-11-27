@@ -27,16 +27,7 @@ class App extends React.Component {
 
     return (
       <div>
-        {/*        <Header
-          loggedIn={!!auth.token}
-          router={this.context.router}
-          params={params}
-          dispatch={dispatch}
-          user={user}
-          auth={auth}
-          ui={ui}
-          {...bindActionCreators({ logout }, dispatch)}
-        />*/}
+        <Header />
         <div style={{minHeight: '800px'}}>
 
           {renderRoutes(route.routes)}

@@ -14,7 +14,7 @@ const {
 } = require('../../lib/constants').default;
 import Immutable from 'immutable';
 import _ from 'lodash';
-import {AsyncStorage} from 'react-native';
+// import {AsyncStorage} from 'react-native';
 
 const initialState = new Immutable.Map();
 

@@ -8,9 +8,9 @@ module.exports = {
   devtool: bundle === 'server'
     ? 'source-map'
     : 'eval-cheap-module-source-map',
-  context: path.join(__dirname, '../src'),
+  context: path.join(__dirname, 'src'),
   entry: [
-    '../src/client',
+    './client',
     'webpack-hot-middleware/client'
   ],
 

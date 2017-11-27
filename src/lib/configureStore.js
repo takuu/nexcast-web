@@ -1,40 +1,11 @@
-/**
- * # configureStore.js
- *
- * A Redux boilerplate setup
- *
- */
-'use strict'
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+// import promise from 'redux-promise';
+import promiseMiddleware from 'redux-promise-middleware';
+import { loadingBarMiddleware } from 'react-redux-loading-bar';
 
-/**
- * ## Imports
- *
- * redux functions
- */
-import { createStore, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
+import reducers from '../reducers/index';
 
-/**
-* ## Reducer
-* The reducer contains the 4 reducers from
-* device, global, auth, profile
-*/
-import reducer from '../reducers'
-
-/**
- * ## creatStoreWithMiddleware
- * Like the name...
- */
-const createStoreWithMiddleware = applyMiddleware(
-  thunk
-)(createStore)
-
-/**
- * ## configureStore
- * @param {Object} the state with for keys:
- * device, global, auth, profile
- *
- */
-export default function configureStore (initialState) {
-  return createStoreWithMiddleware(reducer, initialState)
+export default function configureStore(initialState = {}) {
+  return createStore(reducers, initialState, applyMiddleware(thunk, promiseMiddleware(), loadingBarMiddleware()));
 }
