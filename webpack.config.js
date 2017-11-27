@@ -55,6 +55,23 @@ module.exports = {
       { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
         loader: "url-loader?limit=10000&mimetype=application/octet-stream"
       },
+      {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'babel-loader'
+          },
+          {
+            loader: 'react-svg-loader',
+            query: {
+              svgo: {
+                plugins: [{removeTitle: false}],
+                floatPrecision: 2
+              }
+            }
+          }
+        ]
+      }
       //{
       //  test: /\.js$/,
       //  loader: "eslint-loader", exclude: /node_modules/

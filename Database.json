@@ -1,0 +1,34 @@
+{
+  "cards": [
+    {
+      "title": "Awesome Corgi",
+      "description": "Nothing is more awesome",
+      "mediaType": "image",
+      "mediaUrl": "/src/images/corgi-0.jpg",
+      "buttonText1": "Be Awesome",
+      "buttonLink1": "",
+      "buttonText2": "",
+      "buttonLink2": ""
+    },
+    {
+      "title": "Nothing makes sense",
+      "description": "The world is an oyster?",
+      "mediaType": "image",
+      "mediaUrl": "/src/images/corgi-1.jpg",
+      "buttonText1": "",
+      "buttonLink1": "",
+      "buttonText2": "",
+      "buttonLink2": ""
+    },
+    {
+      "title": "Single file line",
+      "description": "Want to know how to train your corgis to line up",
+      "mediaType": "image",
+      "mediaUrl": "/src/images/corgi-2.jpg",
+      "buttonText1": "",
+      "buttonLink1": "",
+      "buttonText2": "",
+      "buttonLink2": ""
+    }
+  ]
+}
