@@ -15,11 +15,14 @@ const {
 
   ON_PROFILE_FORM_FIELD_CHANGE
 } = require('../../lib/constants').default
-import CONFIG from '../../lib/config'
+
+import Action from '../../lib/constants';
+import CONFIG from '../../lib/config';
+import axios from 'axios';
 
 const BackendFactory = require('../../lib/BackendFactory').default
-import {appAuthToken} from '../../lib/AppAuthToken'
 import _ from 'lodash';
+import { baseUrl } from '../../config.json';
 
 
 export function getPopularRequest () {
@@ -58,7 +61,7 @@ export function getCategoryFailure (err) {
   }
 }
 
-export function getPopular () {
+export function getPopularOld () {
   return dispatch => {
     dispatch(getPopularRequest())
 
@@ -70,7 +73,6 @@ export function getPopular () {
         let json = (typeof data === 'string') ? JSON.parse(data): data;
         let result = _.map(json.result, (item) => {
           return {
-
             artist_name: item.podcast.artist_name,
             description: item.podcast.description,
             feed_url: item.podcast.feed_url,
@@ -82,7 +84,6 @@ export function getPopular () {
             genre_id: item.genre_id,
             rank_date: item.rank_date,
             rank_number: item.rank_number,
-
           };
         });
 
@@ -97,6 +98,37 @@ export function getPopular () {
         dispatch(getPopularFailure(error))
       })
   }
+}
+
+export function getPopular() {
+  return async dispatch => {
+    dispatch({ type: Action.GET_POPULAR_REQUEST });
+    try {
+      const { status, result, error } = (await axios.get(`${baseUrl}/v1/api/toppodcasts/popular?category_id=1303`)).data;
+      const popularList = _.map(result, (item) => {
+        return {
+          artist_name: item.podcast.artist_name,
+          description: item.podcast.description,
+          feed_url: item.podcast.feed_url,
+          id: item.podcast.id,
+          image_url: item.podcast.image_url,
+          title: item.podcast.title,
+          release_date: item.podcast.release_date,
+          created_at: item.created_at,
+          genre_id: item.genre_id,
+          rank_date: item.rank_date,
+          rank_number: item.rank_number,
+        };
+      });
+      (status == 1) ?
+        dispatch({ type: GET_POPULAR_SUCCESS, payload: popularList }) :
+        dispatch({ type: GET_POPULAR_FAILURE, payload: 'err: server status 0' });
+
+    } catch (err) {
+      dispatch({ type: GET_POPULAR_FAILURE, payload: 'getPopular: ' + err });
+    }
+
+  };
 }
 
 

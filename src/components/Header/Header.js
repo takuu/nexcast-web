@@ -73,7 +73,7 @@ class Header extends Component {
     return (
       <div>
         <div>
-          <AppBar position="fixed">
+          <AppBar position="fixed" style={{background: '#fff'}}>
             <Toolbar className={classes.headerDesktop}>
               <Hidden mdUp>
                 <IconButton
@@ -84,7 +84,8 @@ class Header extends Component {
                   <MenuIcon style={{ color: '#444'}} />
                 </IconButton>
               </Hidden>
-              <div><Typography align='left' type="title" color="default" style={{color: 'white'}}>Nexcast</Typography></div>
+              <div><img style={{height: '32px', padding: '5px'}} src={require('../../images/nexcast_logo_dark.png')} alt={`Nexcast`}/></div>
+              {/*<div><Typography align='left' type="title" color="default" style={{color: 'white'}}>Nexcast</Typography></div>*/}
               <Hidden smDown>
                 <div>
                   {navLinks}

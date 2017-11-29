@@ -34,11 +34,12 @@ class EpisodePage extends Component {
   render() {
     const { classes } = this.props;
     console.log('EpisodePage');
-    const tagList = _.map(cards.cards, ({ title, description, mediaType, mediaUrl, buttonText1, buttonLink1, buttonText2, buttonLink2 }, index) => {
+    const tagList = _.map(cards.cards.result, ({ title, description, mediaType, mediaUrl, buttonText1, buttonLink1, buttonText2, buttonLink2 }, index) => {
       return (
         <Tag key={index} title={title} description={description} mediaType={mediaType} mediaUrl={mediaUrl} buttonText1={buttonText1} buttonLink1={buttonLink1} buttonLink2={buttonLink2} buttonText2={buttonText2}></Tag>
       )
-    })
+    });
+    console.log('EpisodePage: ', cards.cards);
     return (
       <div>
         <div style={{position: 'fixed', top: '44px', width: '100%', display: 'flex', left: 'auto', flexDirection: 'column'}}>

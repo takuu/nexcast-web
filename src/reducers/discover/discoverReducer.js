@@ -46,6 +46,7 @@ export default (state = initialState, action) => {
     // Received pocasts data from an external API
     case GET_POPULAR_SUCCESS:
       if (!action.payload || !action.payload.length) { return state }
+      console.log('GET_POPULAR_SUCCESS: ', action.payload);
       return mergeEntities(state, Immutable.fromJS(action.payload));
     case GET_CATEGORY_SUCCESS:
       if (!action.payload || !action.payload.length) { return state }
