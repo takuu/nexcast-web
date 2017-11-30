@@ -6,7 +6,7 @@ import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 import { getEpisodes } from '../reducers/showDetail/showDetailActions';
 import { getPodcast } from '../reducers/podcast/podcastActions';
-
+import Button from 'material-ui/Button';
 
 
 const styles = theme => ({
@@ -15,11 +15,22 @@ const styles = theme => ({
     flexGrow: 1,
     marginTop: 30,
   },
-  paper: {
+  podcastImage: {
     padding: 16,
-    textAlign: 'center',
+    float: 'left',
+    width: 1000,
+    display: 'flex',
+    flexDirection: 'row',
     color: theme.palette.text.secondary,
   },
+  episode: {
+    padding: 16,
+    float: 'left',
+    width: 1000,
+    display: 'flex',
+    flexDirection: 'row',
+    color: theme.palette.text.secondary,
+  }
 });
 
 
@@ -49,7 +60,32 @@ class PodcastPage extends Component {
       <div style={{width: '99%'}}>
         <Grid container spacing={24}>
           <Grid item xs={12}>
-            <Paper className={classes.paper}>xs=12</Paper>
+            <Paper className={classes.podcastImage}>
+              <img src={TEMP_PODCAST_INFO.image_url} height="250" alt=""/>
+              <div style={{ padding: '0px 40px', width: '50%' }}>
+                <h2>{TEMP_PODCAST_INFO.title}</h2>
+                <h4>{TEMP_PODCAST_INFO.artist_name}</h4>
+                <p>{TEMP_PODCAST_INFO.description}</p>
+              </div>
+              <div style={{ padding: '10px' }}>
+                <Button raised color="primary">Subscribe</Button>
+              </div>
+            </Paper>
+
+          </Grid>
+          <Grid item xs={12}>
+            <div>
+              {TEMP_SHOW_DETAIL.map((episode) => (
+                <Paper className={classes.episode} spacing={24}>
+                  <img src={episode.image_location} height="100" alt=""/>
+                  <div style={{ padding: '0px 40px' }}>
+                    <h2>{episode.title}</h2>
+                    <h4>{episode.subtitle}</h4>
+                    <p>{episode.description_clean}</p>
+                  </div>
+                </Paper>
+              ))}
+            </div>
           </Grid>
         </Grid>
       </div>
