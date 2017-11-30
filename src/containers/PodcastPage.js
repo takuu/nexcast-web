@@ -7,6 +7,7 @@ import { withStyles } from 'material-ui/styles';
 import { getEpisodes } from '../reducers/showDetail/showDetailActions';
 import { getPodcast } from '../reducers/podcast/podcastActions';
 import Button from 'material-ui/Button';
+import { secondsToHMS } from '../lib/helpers';
 
 
 const styles = theme => ({
@@ -81,6 +82,7 @@ class PodcastPage extends Component {
                   <div style={{ padding: '0px 40px' }}>
                     <h2>{episode.title}</h2>
                     <h4>{episode.subtitle}</h4>
+                    <h5>{episode.pub_date} - {secondsToHMS(episode.duration)}</h5>
                     <p>{episode.description_clean}</p>
                   </div>
                 </Paper>
