@@ -73,7 +73,7 @@ class Header extends Component {
     return (
       <div>
         <div>
-          <AppBar position="fixed" style={{background: '#fff'}}>
+          <AppBar position="fixed" style={{background: '#fff', zIndex: '1301'}}>
             <Toolbar className={classes.headerDesktop}>
               <Hidden mdUp>
                 <IconButton
