@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
@@ -82,21 +83,24 @@ class HomePage extends Component {
             <div className={classes.root}>
 
               {taggedShows.map(show => (
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.media}
-                    image={show.image_url}
-                    title={show.title}
-                  />
-                  <CardContent>
-                    <Typography type="headline" style={{fontSize: '1.2em'}}>
-                      {show.title}
-                    </Typography>
-                    {/*                  <Typography component="p">
-                      {show.description}
-                    </Typography>*/}
-                  </CardContent>
-                </Card>
+                <Link to={`/podcast/${encodeURIComponent(show.feed_url)}`}>
+                  <Card className={classes.card}>
+                    <CardMedia
+                      className={classes.media}
+                      image={show.image_url}
+                      title={show.title}
+                    />
+                    <CardContent>
+                      <Typography type="headline" style={{fontSize: '1.2em'}}>
+                        {show.title}
+                      </Typography>
+                      {/*                  <Typography component="p">
+                        {show.description}
+                      </Typography>*/}
+                    </CardContent>
+                  </Card>
+                </Link>
+
               ))}
 
             </div>
@@ -111,21 +115,24 @@ class HomePage extends Component {
               <br/>
 
               {podcasts.map(show => (
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.media}
-                    image={show.image_url}
-                    title={show.title}
-                  />
-                  <CardContent>
-                    <Typography type="headline" component="h4">
-                      {show.title}
-                    </Typography>
-                    {/*                  <Typography component="p">
+                <Link to={`/podcast/${encodeURIComponent(show.feed_url)}`}>
+                  <Card className={classes.card}>
+                    <CardMedia
+                      className={classes.media}
+                      image={show.image_url}
+                      title={show.title}
+                    />
+                    <CardContent>
+                      <Typography type="headline" component="h4">
+                        {show.title}
+                      </Typography>
+                      {/*                  <Typography component="p">
                     {show.description}
                   </Typography>*/}
-                  </CardContent>
-                </Card>
+                    </CardContent>
+                  </Card>
+                </Link>
+
               ))}
 
             </div>

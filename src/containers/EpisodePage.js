@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
@@ -7,6 +8,8 @@ import AudioPlayer from '../components/AudioPlayer/AudioPlayer';
 import cards from '../../Database.json';
 import _ from 'lodash';
 import Tag from '../components/Tag/Tag';
+import { getEpisodes } from '../reducers/showDetail/showDetailActions';
+import { getPodcast } from '../reducers/podcast/podcastActions';
 
 
 // var sound = "http://hwcdn.libsyn.com/p/9/5/0/950f894211e17b78/Part_1_-_Schooled_by_Silicon_Valley.mp3?c_id=12078641&expiration=1494730851&hwt=4da344cb8477fe2203f931507cde8ded";
@@ -30,15 +33,17 @@ const styles = theme => ({
   },
 });
 
+
+@connect((state, router) => {
+  const { showDetail, podcastInfo } = state;
+  return { showDetail, podcastInfo };
+}, {
+  getPodcast, getEpisodes
+})
 class EpisodePage extends Component {
   render() {
     const { classes } = this.props;
-    console.log('EpisodePage');
-    const tagList = _.map(cards.cards.result, ({ title, description, mediaType, mediaUrl, buttonText1, buttonLink1, buttonText2, buttonLink2 }, index) => {
-      return (
-        <Tag key={index} title={title} description={description} mediaType={mediaType} mediaUrl={mediaUrl} buttonText1={buttonText1} buttonLink1={buttonLink1} buttonLink2={buttonLink2} buttonText2={buttonText2}></Tag>
-      )
-    });
+    console.log('EpisodePage', );
     console.log('EpisodePage: ', cards.cards);
     return (
       <div>

@@ -5,10 +5,12 @@ import ActionTypes from '../../lib/constants';
 const BackendFactory = require('../../lib/BackendFactory').default;
 import _ from 'lodash';
 import * as helpers from '../../lib/helpers';
-import CONFIG from '../../lib/config'
+import CONFIG from '../../lib/config';
+import { baseUrl } from '../../config.json';
+import Action from '../../lib/constants';
+import axios from 'axios';
 
-
-export function getEpisodes (rss = '') {
+export function getEpisodesOld (rss = '') {
 
   return async (dispatch) => {
     try {
@@ -35,6 +37,19 @@ export function getEpisodes (rss = '') {
       console.log('general error2: ', error);
     }
   };
+}
 
+export function getEpisodes (rss = '', limit=10) {
+  return async (dispatch) => {
+    try {
+      const { status, result, error } = (await axios.get(`${baseUrl}/v1/api/episodes/episodeByRSS?rss=${rss}&limit=${limit}`)).data;
 
+      (status == 1) ?
+        dispatch({ type: Action.GET_EPISODES_SUCCESS, payload: result }) :
+        dispatch({ type: Action.GET_EPISODES_FAILURE, payload: error });
+
+    } catch (err) {
+      dispatch({ type: Action.GET_EPISODES_FAILURE, payload: err });
+    }
+  }
 }

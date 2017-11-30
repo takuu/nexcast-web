@@ -22,8 +22,8 @@ const routes = [
     routes: [
       { path: '/', component: HomePage, exact: true },
       { path: '/podcastlist', component: PodcastListPage },
-      { path: '/podcast/:podcastId', component: PodcastPage },
-      { path: '/episode/:episodeId', component: EpisodePage },
+      { path: '/podcast/:rss', component: PodcastPage },
+      { path: '/episode/:rss', component: EpisodePage },
     ]
   }
 ];
