@@ -41,7 +41,13 @@ const TEMP_PODCAST_INFO = {"id":398382980,"title":"AfterBuzz TV Network AfterSho
 
 @connect((state, router) => {
   const { showDetail, podcastInfo } = state;
-  return { showDetail: showDetail.toJS(), podcastInfo: podcastInfo.toJS() };
+  const { rss } = router.match.params;
+
+
+
+  const detail = showDetail.toJS();
+
+  return { showDetail: showDetail.toJS()[decodeURIComponent(rss)], podcastInfo: podcastInfo.toJS()[decodeURIComponent(rss)] };
 }, {
   getPodcast, getEpisodes
 })
@@ -55,18 +61,18 @@ class PodcastPage extends Component {
     this.props.getEpisodes(rss);
   }
   render() {
-    const { classes, showDetail, podcastInfo } = this.props;
+    const { classes, showDetail = [], podcastInfo = {} } = this.props;
     console.log('PodcastPage: ', showDetail, podcastInfo);
     return (
       <div style={{width: '99%'}}>
         <Grid container spacing={24}>
           <Grid item xs={12}>
             <Paper className={classes.podcastImage}>
-              <img src={TEMP_PODCAST_INFO.image_url} height="250" alt=""/>
+              <img src={podcastInfo.image_url} height="250" alt=""/>
               <div style={{ padding: '0px 40px', width: '50%' }}>
-                <h2>{TEMP_PODCAST_INFO.title}</h2>
-                <h4>{TEMP_PODCAST_INFO.artist_name}</h4>
-                <p>{TEMP_PODCAST_INFO.description}</p>
+                <h2>{podcastInfo.title}</h2>
+                <h4>{podcastInfo.artist_name}</h4>
+                <p>{podcastInfo.description}</p>
               </div>
               <div style={{ padding: '10px' }}>
                 <Button raised color="primary">Subscribe</Button>
@@ -76,8 +82,8 @@ class PodcastPage extends Component {
           </Grid>
           <Grid item xs={12}>
             <div>
-              {TEMP_SHOW_DETAIL.map((episode) => (
-                <Paper className={classes.episode} spacing={24}>
+              {showDetail.map((episode, index) => (
+                <Paper className={classes.episode} spacing={24} key={index}>
                   <img src={episode.image_location} height="100" alt=""/>
                   <div style={{ padding: '0px 40px' }}>
                     <h2>{episode.title}</h2>

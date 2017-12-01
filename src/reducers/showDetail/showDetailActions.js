@@ -45,7 +45,10 @@ export function getEpisodes (rss = '', limit=10) {
       const { status, result, error } = (await axios.get(`${baseUrl}/v1/api/episodes/episodeByRSS?rss=${rss}&limit=${limit}`)).data;
 
       (status == 1) ?
-        dispatch({ type: Action.GET_EPISODES_SUCCESS, payload: result }) :
+        dispatch({
+          type: Action.GET_EPISODES_SUCCESS,
+          payload: result.map(episode => ({ ...episode, title: episode.title.replace('↵', ''), rss: decodeURIComponent(rss) })),
+        }) :
         dispatch({ type: Action.GET_EPISODES_FAILURE, payload: error });
 
     } catch (err) {
