@@ -41,9 +41,13 @@ const styles = theme => ({
   getPodcast, getEpisodes
 })
 class EpisodePage extends Component {
+  componentWillMount() {
+    const { rss } = this.props.match.params;
+    this.props.getPodcast(rss);
+  }
   render() {
-    const { classes } = this.props;
-    console.log('EpisodePage', );
+    const { classes, showDetail } = this.props;
+    console.log('EpisodePage', this.props);
     console.log('EpisodePage: ', cards.cards);
 
     const tagList = _.map(cards.cards.result, ({ title, description, mediaType, mediaUrl, buttonText1, buttonLink1, buttonText2, buttonLink2 }, index) => {
