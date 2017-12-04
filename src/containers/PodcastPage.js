@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
+import { Link } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
-import { getEpisodes } from '../reducers/showDetail/showDetailActions';
+import { getEpisodes, getEpisodesById } from '../reducers/showDetail/showDetailActions';
 import { getPodcast } from '../reducers/podcast/podcastActions';
 import Button from 'material-ui/Button';
 import { secondsToHMS } from '../lib/helpers';
@@ -41,27 +42,29 @@ const TEMP_PODCAST_INFO = {"id":398382980,"title":"AfterBuzz TV Network AfterSho
 
 @connect((state, router) => {
   const { showDetail, podcastInfo } = state;
-  const { rss } = router.match.params;
+  const { podcastId } = router.match.params;
 
 
 
   const detail = showDetail.toJS();
+  console.log('connect detail ', detail)
 
-  return { showDetail: showDetail.toJS()[decodeURIComponent(rss)], podcastInfo: podcastInfo.toJS()[decodeURIComponent(rss)] };
+  return { showDetail: showDetail.toJS()[podcastId], podcastInfo: podcastInfo.toJS()[podcastId] };
 }, {
-  getPodcast, getEpisodes
+  getPodcast, getEpisodes, getEpisodesById
 })
 class PodcastPage extends Component {
   constructor() {
     super();
   }
   componentWillMount() {
-    const { rss } = this.props.match.params;
-    this.props.getPodcast(rss);
-    this.props.getEpisodes(rss);
+    const { podcastId } = this.props.match.params;
+    this.props.getPodcast('');
+    this.props.getEpisodesById(podcastId);
   }
   render() {
     const { classes, showDetail = [], podcastInfo = {} } = this.props;
+    const { rss } = this.props.match.params;
     console.log('PodcastPage: ', showDetail, podcastInfo);
     return (
       <div style={{width: '99%'}}>
@@ -83,15 +86,18 @@ class PodcastPage extends Component {
           <Grid item xs={12}>
             <div>
               {showDetail.map((episode, index) => (
-                <Paper className={classes.episode} spacing={24} key={index}>
-                  <img src={episode.image_location} height="100" alt=""/>
-                  <div style={{ padding: '0px 40px' }}>
-                    <h2>{episode.title}</h2>
-                    <h4>{episode.subtitle}</h4>
-                    <h5>{episode.pub_date} - {secondsToHMS(episode.duration)}</h5>
-                    <p>{episode.description_clean}</p>
-                  </div>
-                </Paper>
+                <Link to={`/podcast/${rss}/episode/${encodeURIComponent(episode.media_location)}/title/${episode.title}`}>
+                  <Paper className={classes.episode} spacing={24} key={index}>
+                    <img src={episode.image_location} height="100" alt=""/>
+                    <div style={{ padding: '0px 40px' }}>
+                      <h2>{episode.title}</h2>
+                      <h4>{episode.subtitle}</h4>
+                      <h5>{episode.pub_date} - {secondsToHMS(episode.duration)}</h5>
+                      <p>{episode.description_clean}</p>
+                    </div>
+                  </Paper>
+                </Link>
+
               ))}
             </div>
           </Grid>

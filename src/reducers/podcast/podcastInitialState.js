@@ -4,7 +4,9 @@ import {Record} from 'immutable'
 
 var ShowDetailRecord = Record({
 
+
   "id": "",
+  "podcast_id": "",
   "title": "",
   "feed_url": "",
   "image_url": "",

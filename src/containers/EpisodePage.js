@@ -34,9 +34,12 @@ const styles = theme => ({
 });
 
 
+
 @connect((state, router) => {
   const { showDetail, podcastInfo } = state;
-  return { showDetail, podcastInfo };
+  const { rss } = router.match.params;
+  console.log('fooobar: ', showDetail.toJS());
+  return { showDetail: showDetail.toJS()[decodeURIComponent(rss)], podcastInfo: podcastInfo.toJS()[decodeURIComponent(rss)] };
 }, {
   getPodcast, getEpisodes
 })
@@ -46,7 +49,8 @@ class EpisodePage extends Component {
     this.props.getPodcast(rss);
   }
   render() {
-    const { classes, showDetail } = this.props;
+    const { classes, showDetail, podcastInfo } = this.props;
+    const { title, mp3 } = this.props.match.params;
     console.log('EpisodePage', this.props);
     console.log('EpisodePage: ', cards.cards);
 
@@ -59,7 +63,7 @@ class EpisodePage extends Component {
     return (
       <div>
         <div style={{position: 'fixed', top: '44px', width: '100%', display: 'flex', left: 'auto', flexDirection: 'column'}}>
-          <AudioPlayer mediaUrl={sound}  onProgress={onProgress} tags={[5,10,15,30,100, 157]} title="Nexcast" subTitle={"First Episode"} />
+          <AudioPlayer mediaUrl={decodeURIComponent(mp3)}  onProgress={onProgress} tags={[5,10,15,30,100, 157]} title={title} subTitle={"First Episode"} />
         </div>
         <div style={{marginTop: '300px'}}>
           <Grid container spacing={24}>

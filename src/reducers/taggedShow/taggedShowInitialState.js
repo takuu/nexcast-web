@@ -3,7 +3,7 @@
 import {Record} from 'immutable'
 
 var TaggedShowRecord = Record({
-
+  "id": "",
   "podcast_sid": "",
   "users_sid": "",
   "title": "",

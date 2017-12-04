@@ -4,6 +4,8 @@ import {Record} from 'immutable'
 
 var PodcastRecord = Record({
 
+  "id": "",
+  "podcast_id": "",
   "ranking_sid": "",
   "title": "",
   "rss_feed_id": "",

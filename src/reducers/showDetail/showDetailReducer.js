@@ -11,7 +11,7 @@ const initialState = new Immutable.Map();
 
 const mapEntities = (state, newShowDetail) => {
   if(newShowDetail.length) {
-    return state.set(newShowDetail[0].rss, newShowDetail);
+    return state.set(newShowDetail[0].podcast_id, newShowDetail);
   } else {
     return state;
   }

@@ -72,6 +72,10 @@ class HomePage extends Component {
   render() {
     const { taggedShows, podcasts, classes } = this.props;
     console.log('HomePage: ', taggedShows);
+    podcasts.map((show)=> {
+      console.log('show: ', show.toJS());
+    });
+
 
     return (
       <div style={{padding: '0px 20px'}}>
@@ -83,7 +87,7 @@ class HomePage extends Component {
             <div className={classes.root}>
 
               {taggedShows.map(show => (
-                <Link to={`/podcast/${encodeURIComponent(show.feed_url)}`}>
+                <Link to={`/podcast/${show.id}`}>
                   <Card className={classes.card}>
                     <CardMedia
                       className={classes.media}
@@ -115,7 +119,7 @@ class HomePage extends Component {
               <br/>
 
               {podcasts.map(show => (
-                <Link to={`/podcast/${encodeURIComponent(show.feed_url)}`}>
+                <Link to={`/podcast/${show.podcast_id}`}>
                   <Card className={classes.card}>
                     <CardMedia
                       className={classes.media}

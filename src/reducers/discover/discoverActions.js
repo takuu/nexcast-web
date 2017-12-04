@@ -110,7 +110,7 @@ export function getPopular() {
           artist_name: item.podcast.artist_name,
           description: item.podcast.description,
           feed_url: item.podcast.feed_url,
-          id: item.podcast.id,
+          podcast_id: item.podcast_id,
           image_url: item.podcast.image_url,
           title: item.podcast.title,
           release_date: item.podcast.release_date,

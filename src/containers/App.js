@@ -52,7 +52,7 @@ class App extends React.Component {
   render () {
     const { auth, dispatch, params, user, ui, route, classes } = this.props;
 
-    const [ root, pathname, ...other ] = this.props.location.pathname.split('/');
+    const [ root, podcast, podcastId,pathname,  ...other ] = this.props.location.pathname.split('/');
     const subscriptions = [
       { name: 'Nexcast', url: '' },
       { name: 'RadioHead', url: '' },
@@ -61,7 +61,7 @@ class App extends React.Component {
 
     const HIDE_DRAWER_PATH = ['episode'];
 
-    const showDrawer = !!!(HIDE_DRAWER_PATH.find((path) => (path.toLowerCase() === pathname.toLowerCase())));
+    const showDrawer = !!!(HIDE_DRAWER_PATH.find((path) => (path.toLowerCase() === (pathname || '').toLowerCase())));
 
     console.log('hideDrawer: ', showDrawer);
 

@@ -56,3 +56,21 @@ export function getEpisodes (rss = '', limit=10) {
     }
   }
 }
+
+export function getEpisodesById (id = '', limit=10) {
+  return async (dispatch) => {
+    try {
+      const { status, result, error } = (await axios.get(`${baseUrl}/v1/api/episodes/podcast/${id}?&limit=${limit}`)).data;
+
+      (status == 1) ?
+        dispatch({
+          type: Action.GET_EPISODES_SUCCESS,
+          payload: result.map(episode => ({ ...episode, title: episode.title.replace('↵', '') })),
+        }) :
+        dispatch({ type: Action.GET_EPISODES_FAILURE, payload: error });
+
+    } catch (err) {
+      dispatch({ type: Action.GET_EPISODES_FAILURE, payload: err });
+    }
+  }
+}
