@@ -68,7 +68,7 @@ class EpisodePage extends Component {
     return (
       <div>
         <div style={{position: 'fixed', top: '44px', width: '100%', display: 'flex', left: 'auto', flexDirection: 'column'}}>
-          <AudioPlayer mediaUrl={decodeURIComponent(episode.media_location)}  onProgress={onProgress} tags={[5,10,15,30,100, 157]} title={episode.title} subTitle={"First Episode"} />
+          <AudioPlayer mediaUrl={decodeURIComponent(episode.media_location)}  onProgress={onProgress} tags={[5,10,15,30,100, 157]} title={podcastInfo.title} subTitle={episode.title} />
         </div>
         <div style={{marginTop: '300px'}}>
           <Grid container spacing={24}>
