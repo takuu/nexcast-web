@@ -57,6 +57,30 @@ export function getEpisodes (rss = '', limit=10) {
   }
 }
 
+
+
+export function getEpisodeByKey (key = '') {
+  return async (dispatch) => {
+    try {
+      const { status, result = {}, error } = (await axios.get(`${baseUrl}/v1/api/episodes/episodeKey/${key}`)).data;
+      const episode = {
+        ...result,
+        title: result.title.replace('↵', '')
+      };
+
+      (status == 1) ?
+        dispatch({
+          type: Action.GET_EPISODE_SUCCESS,
+          payload: episode,
+        }) :
+        dispatch({ type: Action.GET_EPISODE_FAILURE, payload: error });
+    } catch (err) {
+      dispatch({ type: Action.GET_EPISODE_FAILURE, payload: err });
+    }
+  }
+
+
+}
 export function getEpisodesById (id = '', limit=10) {
   return async (dispatch) => {
     try {

@@ -66,3 +66,18 @@ export function getPodcast(rss = '') {
   }
 }
 
+
+export function getPodcastById(id = '') {
+  return async (dispatch) => {
+    try {
+      const { status, result, error } = (await axios.get(`${baseUrl}/v1/api/podcasts/${id}`)).data;
+
+      (status == 1) ?
+        dispatch({ type: Action.GET_PODCAST_SUCCESS, payload: result }) :
+        dispatch({ type: Action.GET_PODCAST_FAILURE, payload: error });
+
+    } catch(err) {
+      dispatch({ type: Action.GET_PODCAST_FAILURE, payload: err });
+    }
+  }
+}

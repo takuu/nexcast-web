@@ -9,7 +9,7 @@ import podcastInitialState from './podcastInitialState';
 const initialState = new Immutable.Map();
 
 const mapEntities = (state, newShowDetail) => {
-    return state.set(newShowDetail.feed_url, newShowDetail);
+    return state.set(newShowDetail.id, newShowDetail);
 };
 
 

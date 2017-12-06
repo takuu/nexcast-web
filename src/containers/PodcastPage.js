@@ -6,7 +6,7 @@ import Grid from 'material-ui/Grid';
 import { Link } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import { getEpisodes, getEpisodesById } from '../reducers/showDetail/showDetailActions';
-import { getPodcast } from '../reducers/podcast/podcastActions';
+import { getPodcast, getPodcastById } from '../reducers/podcast/podcastActions';
 import Button from 'material-ui/Button';
 import { secondsToHMS } from '../lib/helpers';
 
@@ -51,7 +51,7 @@ const TEMP_PODCAST_INFO = {"id":398382980,"title":"AfterBuzz TV Network AfterSho
 
   return { showDetail: showDetail.toJS()[podcastId], podcastInfo: podcastInfo.toJS()[podcastId] };
 }, {
-  getPodcast, getEpisodes, getEpisodesById
+  getPodcast, getPodcastById, getEpisodes, getEpisodesById
 })
 class PodcastPage extends Component {
   constructor() {
@@ -59,12 +59,12 @@ class PodcastPage extends Component {
   }
   componentWillMount() {
     const { podcastId } = this.props.match.params;
-    this.props.getPodcast('');
+    this.props.getPodcastById(podcastId);
     this.props.getEpisodesById(podcastId);
   }
   render() {
     const { classes, showDetail = [], podcastInfo = {} } = this.props;
-    const { rss } = this.props.match.params;
+    const { podcastId } = this.props.match.params;
     console.log('PodcastPage: ', showDetail, podcastInfo);
     return (
       <div style={{width: '99%'}}>
@@ -86,7 +86,7 @@ class PodcastPage extends Component {
           <Grid item xs={12}>
             <div>
               {showDetail.map((episode, index) => (
-                <Link to={`/podcast/${rss}/episode/${encodeURIComponent(episode.media_location)}/title/${episode.title}`}>
+                <Link to={`/podcast/${podcastId}/episode/${episode.episode_key}`} key={index}>
                   <Paper className={classes.episode} spacing={24} key={index}>
                     <img src={episode.image_location} height="100" alt=""/>
                     <div style={{ padding: '0px 40px' }}>

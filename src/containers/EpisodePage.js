@@ -8,8 +8,8 @@ import AudioPlayer from '../components/AudioPlayer/AudioPlayer';
 import cards from '../../Database.json';
 import _ from 'lodash';
 import Tag from '../components/Tag/Tag';
-import { getEpisodes } from '../reducers/showDetail/showDetailActions';
-import { getPodcast } from '../reducers/podcast/podcastActions';
+import { getEpisodeByKey } from '../reducers/showDetail/showDetailActions';
+import { getPodcastById } from '../reducers/podcast/podcastActions';
 
 
 // var sound = "http://hwcdn.libsyn.com/p/9/5/0/950f894211e17b78/Part_1_-_Schooled_by_Silicon_Valley.mp3?c_id=12078641&expiration=1494730851&hwt=4da344cb8477fe2203f931507cde8ded";
@@ -37,20 +37,25 @@ const styles = theme => ({
 
 @connect((state, router) => {
   const { showDetail, podcastInfo } = state;
-  const { rss } = router.match.params;
-  console.log('fooobar: ', showDetail.toJS());
-  return { showDetail: showDetail.toJS()[decodeURIComponent(rss)], podcastInfo: podcastInfo.toJS()[decodeURIComponent(rss)] };
+  const { podcastId, episodeKey } = router.match.params;
+
+  const episodeList = showDetail.toJS()[podcastId];
+  const episode = _.find(episodeList, {episode_key: episodeKey});
+  console.log('fooobar: ', episodeList, episode);
+
+  return { showDetail: episodeList, episode: episode, podcastInfo: podcastInfo.toJS()[podcastId] };
 }, {
-  getPodcast, getEpisodes
+  getPodcastById, getEpisodeByKey
 })
 class EpisodePage extends Component {
   componentWillMount() {
-    const { rss } = this.props.match.params;
-    this.props.getPodcast(rss);
+    const { podcastId, episodeKey } = this.props.match.params;
+    this.props.getPodcastById(podcastId);
+    this.props.getEpisodeByKey(episodeKey);
   }
   render() {
-    const { classes, showDetail, podcastInfo } = this.props;
-    const { title, mp3 } = this.props.match.params;
+    const { classes, showDetail, podcastInfo, episode = {} } = this.props;
+    const { episodeKey, podcastId } = this.props.match.params;
     console.log('EpisodePage', this.props);
     console.log('EpisodePage: ', cards.cards);
 
@@ -63,7 +68,7 @@ class EpisodePage extends Component {
     return (
       <div>
         <div style={{position: 'fixed', top: '44px', width: '100%', display: 'flex', left: 'auto', flexDirection: 'column'}}>
-          <AudioPlayer mediaUrl={decodeURIComponent(mp3)}  onProgress={onProgress} tags={[5,10,15,30,100, 157]} title={title} subTitle={"First Episode"} />
+          <AudioPlayer mediaUrl={decodeURIComponent(episode.media_location)}  onProgress={onProgress} tags={[5,10,15,30,100, 157]} title={episode.title} subTitle={"First Episode"} />
         </div>
         <div style={{marginTop: '300px'}}>
           <Grid container spacing={24}>

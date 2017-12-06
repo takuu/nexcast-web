@@ -70,6 +70,10 @@ export default keyMirror({
   GET_EPISODES_SUCCESS: null,
   GET_EPISODES_FAILURE: null,
 
+  GET_EPISODE_REQUEST: null,
+  GET_EPISODE_SUCCESS: null,
+  GET_EPISODE_FAILURE: null,
+
   GET_PODCAST_SUCCESS: null,
   GET_PODCAST_FAILURE: null,
 
