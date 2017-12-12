@@ -1,6 +1,8 @@
-import webpack from 'webpack';
-import path from 'path';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+var webpack = require('webpack');
+var path = require('path');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
+console.log('NODE_ENV: ', process.env.NODE_ENV);
 const bundle = process.env.BUNDLE || 'client';
 const env = process.env.NODE_ENV || 'development';
 
@@ -15,12 +17,28 @@ module.exports = {
   ],
 
   output: {
-    path: path.join(__dirname, 'public'),
+    path: path.join(__dirname, 'build'),
     publicPath: '/',
     filename: 'js/app.js'
   },
 
-  plugins: [
+  plugins: process.env.NODE_ENV === 'production' ? [
+    new CopyWebpackPlugin([
+      { from: './template.html', to: 'index.html' },
+    ]),
+    new ExtractTextPlugin({
+      filename:  'css/[name].css',
+      allChunks: true
+    }),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        BROWSER: JSON.stringify(true)
+      }
+    })
+  ] : [
     new ExtractTextPlugin('css/app.css'),
     new webpack.DefinePlugin({
       'process.env': { NODE_ENV: JSON.stringify(env), BROWSER: JSON.stringify(true) }
@@ -29,7 +47,6 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ],
-
   module: {
     rules: [
       {
@@ -43,7 +60,10 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style-loader!css-loader'
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: "css-loader"
+        })
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
