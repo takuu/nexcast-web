@@ -32,7 +32,7 @@ console.log('prod-server NODE_ENV: ', process.env.NODE_ENV);
 var apiProxy = new httpProxy.createProxyServer();
 app.get('/api/v1*', function (req, res, next) {
   var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
-  console.log('app.get /api : ', fullUrl);
+  console.log('app.get /v1/api : ', fullUrl);
   apiProxy.web(req, res, { target: process.env.API_URL || 'http://localhost:1337' }, function(e) {
     console.log('process.env.API_URL: ', process.env.API_URL);
     console.log('what??!  error on proxy...', e);
