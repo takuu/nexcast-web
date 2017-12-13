@@ -54,7 +54,7 @@ export function getPodcastOld (rss = '') {
 export function getPodcast(rss = '') {
   return async (dispatch) => {
     try {
-      const { status, result, error } = (await axios.get(`${baseUrl}/v1/api/podcasts/getByRSS?rss=${rss}`)).data;
+      const { status, result, error } = (await axios.get(`${CONFIG.baseAPI}/podcasts/getByRSS?rss=${rss}`)).data;
 
       (status == 1) ?
         dispatch({ type: Action.GET_PODCAST_SUCCESS, payload: result }) :
@@ -70,7 +70,7 @@ export function getPodcast(rss = '') {
 export function getPodcastById(id = '') {
   return async (dispatch) => {
     try {
-      const { status, result, error } = (await axios.get(`${baseUrl}/v1/api/podcasts/${id}`)).data;
+      const { status, result, error } = (await axios.get(`${CONFIG.baseAPI}/podcasts/${id}`)).data;
 
       (status == 1) ?
         dispatch({ type: Action.GET_PODCAST_SUCCESS, payload: result }) :
