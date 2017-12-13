@@ -22,8 +22,8 @@ import List, { ListItem, ListItemAvatar, ListItemIcon, ListItemText, ListSubhead
 import Avatar from 'material-ui/Avatar';
 import InboxIcon from 'material-ui-icons/MoveToInbox';
 
-import SubscriptionIcon from 'material-ui-icons/subscriptions';
-import FavoriteIcon from 'material-ui-icons/favorite';
+import SubscriptionIcon from 'material-ui-icons/Subscriptions';
+import FavoriteIcon from 'material-ui-icons/Favorite';
 
 
 import CustomDrawer from '../components/CustomDrawer/CustomDrawer';

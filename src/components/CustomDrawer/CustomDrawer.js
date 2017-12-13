@@ -7,8 +7,8 @@ import { withStyles } from 'material-ui/styles';
 import List, { ListItem, ListItemAvatar, ListItemIcon, ListItemText, ListSubheader } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import InboxIcon from 'material-ui-icons/MoveToInbox';
-import SubscriptionIcon from 'material-ui-icons/subscriptions';
-import FavoriteIcon from 'material-ui-icons/favorite';
+import SubscriptionIcon from 'material-ui-icons/Subscriptions';
+import FavoriteIcon from 'material-ui-icons/Favorite';
 import Divider from 'material-ui/Divider';
 
 const styles = theme => ({
