@@ -5,7 +5,6 @@ var router = express.Router();
 import path from 'path';
 // we'll use this to render our app to an html string
 import { renderToString } from 'react-dom/server';
-
 // and these to match the url to routes and then render
 import { match, RouterContext } from 'react-router';
 import proxyMiddleware from 'http-proxy-middleware';
@@ -31,7 +30,7 @@ console.log('prod-server NODE_ENV: ', process.env.NODE_ENV);
 
 
 var apiProxy = new httpProxy.createProxyServer();
-app.get('/v1/api*', function (req, res, next) {
+app.get('/api/v1*', function (req, res, next) {
   var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
   console.log('app.get /v1/api : ', fullUrl);
   apiProxy.web(req, res, { target: process.env.API_URL || 'http://localhost:1337' }, function(e) {

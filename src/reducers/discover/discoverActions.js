@@ -104,7 +104,7 @@ export function getPopular() {
   return async dispatch => {
     dispatch({ type: Action.GET_POPULAR_REQUEST });
     try {
-      const { status, result, error } = (await axios.get(`${baseUrl}/v1/api/toppodcasts/popular?category_id=1303`)).data;
+      const { status, result, error } = (await axios.get(`${CONFIG.baseAPI}/toppodcasts/popular?category_id=1303`)).data;
       const popularList = _.map(result, (item) => {
         return {
           artist_name: item.podcast.artist_name,

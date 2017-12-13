@@ -6,6 +6,8 @@ module.exports = {
     parseRemote: false,
     parseLocal: false
   },
+  baseUrl: process.env.NODE_ENV === 'production' ? '' : 'http://localhost:1337',
+  baseAPI: process.env.NODE_ENV === 'production' ? '/api/v1' : 'http://localhost:1337/api/v1',
   HAPI: {
     local: {
       url: 'http://localhost:5000'

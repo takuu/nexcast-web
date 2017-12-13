@@ -42,7 +42,7 @@ export function getEpisodesOld (rss = '') {
 export function getEpisodes (rss = '', limit=10) {
   return async (dispatch) => {
     try {
-      const { status, result, error } = (await axios.get(`${baseUrl}/v1/api/episodes/episodeByRSS?rss=${rss}&limit=${limit}`)).data;
+      const { status, result, error } = (await axios.get(`${CONFIG.baseAPI}/episodes/episodeByRSS?rss=${rss}&limit=${limit}`)).data;
 
       (status == 1) ?
         dispatch({
@@ -62,7 +62,7 @@ export function getEpisodes (rss = '', limit=10) {
 export function getEpisodeByKey (key = '') {
   return async (dispatch) => {
     try {
-      const { status, result = {}, error } = (await axios.get(`${baseUrl}/v1/api/episodes/episodeKey/${key}`)).data;
+      const { status, result = {}, error } = (await axios.get(`${CONFIG.baseAPI}/episodes/episodeKey/${key}`)).data;
       const episode = {
         ...result,
         title: result.title.replace('↵', '')
@@ -84,7 +84,7 @@ export function getEpisodeByKey (key = '') {
 export function getEpisodesById (id = '', limit=10) {
   return async (dispatch) => {
     try {
-      const { status, result, error } = (await axios.get(`${baseUrl}/v1/api/episodes/podcast/${id}?&limit=${limit}`)).data;
+      const { status, result, error } = (await axios.get(`${CONFIG.baseAPI}/episodes/podcast/${id}?&limit=${limit}`)).data;
 
       (status == 1) ?
         dispatch({
