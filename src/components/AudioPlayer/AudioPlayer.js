@@ -168,18 +168,20 @@ class AudioPlayer extends Component {
 
   }
   render() {
-    const {tags} = this.props.tags;
-    const { styleConfig: {progressColor, seekColor, playerColor, controlColor} } = this.props;
+    const { styleConfig: {progressColor, seekColor, playerColor, controlColor}, tags, duration } = this.props;
 
     const tagBar = (
       (this.props.tags || []).map((sec, index) => {
-        const percent = (sec/this.state.duration) * 100;
+        const percent = (sec/duration) * 100;
+        console.log('percentage: ', percent);
         return (
           <span key={index} style={{display: 'inline-block', position: 'absolute', left: `${percent}%`, top: 0, width: '3px', height: '20px', backgroundColor: playerColor}}></span>
         )
       })
-
     );
+
+    console.log('AudioPlayer: ', tags);
+    debugger;
 
     return (
       <div>
@@ -208,33 +210,36 @@ class AudioPlayer extends Component {
           </div>
           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '5px 12px 0px 12px', padding: '5px 2%'}}>
             <span style={{color: 'white'}}>{secondsToHMS(parseInt(this.state.position))}</span>
-            <span style={{color: 'white'}}>{secondsToHMS(parseInt(this.state.duration))}</span>
+            <span style={{color: 'white'}}>{secondsToHMS(parseInt(duration))}</span>
           </div>
 
 
-          <div style={{ width: '96%', margin: '5px 2%', padding: '8px' }}>
-            <Slider
-              defaultValue={1}
-              step={1}
-              min={1}
-              value={parseInt(this.state.position)}
-              max={parseInt(this.state.duration) || 100}
-              onChange={this.moveSeek}
-              onAfterChange={this.seek}
-              maximumTrackStyle={{ backgroundColor: controlColor, height: 10 }}
-              minimumTrackStyle={{ backgroundColor: progressColor || 'blue', height: 10, borderRadius: 0,paddingRight: -50, }}
-              handleStyle={{
-                borderColor: progressColor,
-                borderWidth: 0,
-                height: 28,
-                width: 5,
-                marginLeft: -2,
-                marginTop: -9,
-                backgroundColor: progressColor,
-                borderRadius: 0,
-              }}
-            />
-            <div style={{width: '100%', height: '0px', top: '-13px', position: 'relative'}}>
+          <div style={{ width: '96%', margin: '5px 2%', padding: '8px', position: 'relative' }}>
+            <div style={{position: 'absolute', width: '100%'}}>
+              <Slider
+                defaultValue={1}
+                step={1}
+                min={1}
+                value={parseInt(this.state.position)}
+                max={parseInt(duration) || 100}
+                onChange={this.moveSeek}
+                onAfterChange={this.seek}
+                maximumTrackStyle={{ backgroundColor: controlColor, height: 10 }}
+                minimumTrackStyle={{ backgroundColor: progressColor || 'blue', height: 10, borderRadius: 0, paddingRight: -50, }}
+                handleStyle={{
+                  borderColor: progressColor,
+                  borderWidth: 0,
+                  height: 28,
+                  width: 5,
+                  marginLeft: -2,
+                  marginTop: -9,
+                  backgroundColor: progressColor,
+                  borderRadius: 0,
+                }}
+              />
+            </div>
+
+            <div style={{width: '100%', height: '0px', top: '0px', position: 'absolute'}}>
               {tagBar}
             </div>
           </div>
@@ -252,6 +257,7 @@ AudioPlayer.propTypes = {
   subTitle: PropTypes.string,
   onProgress: PropTypes.func,
   styleConfig: PropTypes.objectOf(PropTypes.string),
+  duration: PropTypes.number,
   // tags: PropTypes.arrayOf(PropTypes.number),
   // onAction: PropTypes.func,
   // onComplete: PropTypes.func,
@@ -264,6 +270,7 @@ AudioPlayer.defaultProps = {
   onProgress: {},
   styleConfig: {progressColor: 'white', controlColor: '#56a0e5', seekColor: '#56a0e5', playerColor: '#0371d8' },
   tags: [],
+  duration: 100,
   // onAction: {},
   // onComplete: {},
 };

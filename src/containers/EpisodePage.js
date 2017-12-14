@@ -73,10 +73,13 @@ class EpisodePage extends Component {
 
 
   render() {
-    const { classes, showDetail, podcastInfo, episode = {} } = this.props;
+    const { classes, showDetail, podcastInfo = {}, episode = {} } = this.props;
     const { episodeKey, podcastId } = this.props.match.params;
     console.log('EpisodePage', this.props);
     console.log('EpisodePage: ', cards.cards);
+    const foo = _.map(cards.cards.result, 'seconds');
+
+    console.log('foo: ', foo);
 
     const tagList = _.map(cards.cards.result, ({ title, description, mediaType, mediaUrl, buttonText1, buttonLink1, buttonText2, buttonLink2 }, index) => {
       return (
@@ -89,7 +92,7 @@ class EpisodePage extends Component {
     return (
       <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}}>
         <div style={{ width: '100%', height: '100px', zIndex: 100}}>
-          <AudioPlayer mediaUrl={decodeURIComponent(episode.media_location)}  onProgress={onProgress} tags={[5,10,15,30,100, 157]} title={podcastInfo ? podcastInfo.title: ''} subTitle={episode.title} />
+          <AudioPlayer mediaUrl={decodeURIComponent(episode.media_location)} duration={episode.duration} onProgress={onProgress} tags={_.map(cards.cards.result, 'seconds')} title={podcastInfo.title} subTitle={episode.title} />
         </div>
         <div style={{height: '120px', width: '100%'}}></div>
         <div style={{ marginTop: '0px'}}>
