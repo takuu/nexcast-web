@@ -73,14 +73,14 @@ class AudioPlayer extends Component {
     if(playerInfo.mediaUrl != mediaUrl) {
       playerInfo.mediaUrl = mediaUrl;
       this.state.url = mediaUrl;
-      sound = new Howl({
+/*      sound = new Howl({
         src: [mediaUrl],
         volume: 0.1,
         onend: function() {
 
         }
       });
-      this.play();
+      this.play();*/
     }
 
   }

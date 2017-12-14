@@ -7,6 +7,7 @@ import Grid from 'material-ui/Grid';
 import AudioPlayer from '../components/AudioPlayer/AudioPlayer';
 import cards from '../../Database.json';
 import _ from 'lodash';
+import Slider from 'react-slick';
 import Tag from '../components/Tag/Tag';
 import { getEpisodeByKey } from '../reducers/showDetail/showDetailActions';
 import { getPodcastById } from '../reducers/podcast/podcastActions';
@@ -20,6 +21,14 @@ console.log('cards: ', cards);
 function onProgress(e) {
   console.log('progress: ', e)
 }
+
+var settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1
+};
 
 const styles = theme => ({
   root: {
@@ -48,11 +57,21 @@ const styles = theme => ({
   getPodcastById, getEpisodeByKey
 })
 class EpisodePage extends Component {
+  constructor() {
+    super();
+    this.goto = this.goto.bind(this);
+  }
   componentWillMount() {
     const { podcastId, episodeKey } = this.props.match.params;
     this.props.getPodcastById(podcastId);
     this.props.getEpisodeByKey(episodeKey);
   }
+
+  goto(num) {
+    this.refs.slider.slickGoTo(num)
+  }
+
+
   render() {
     const { classes, showDetail, podcastInfo, episode = {} } = this.props;
     const { episodeKey, podcastId } = this.props.match.params;
@@ -61,28 +80,30 @@ class EpisodePage extends Component {
 
     const tagList = _.map(cards.cards.result, ({ title, description, mediaType, mediaUrl, buttonText1, buttonLink1, buttonText2, buttonLink2 }, index) => {
       return (
-        <Tag key={index} title={title} description={description} mediaType={mediaType} mediaUrl={mediaUrl} buttonText1={buttonText1} buttonLink1={buttonLink1} buttonLink2={buttonLink2} buttonText2={buttonText2}></Tag>
+        <div key={index}>
+          <Tag key={index} title={title} description={description} mediaType={mediaType} mediaUrl={mediaUrl} buttonText1={buttonText1} buttonLink1={buttonLink1} buttonLink2={buttonLink2} buttonText2={buttonText2}></Tag>
+        </div>
       )
     });
 
     return (
-      <div>
-        <div style={{position: 'fixed', top: '44px', width: '100%', display: 'flex', left: 'auto', flexDirection: 'column'}}>
-          <AudioPlayer mediaUrl={decodeURIComponent(episode.media_location)}  onProgress={onProgress} tags={[5,10,15,30,100, 157]} title={podcastInfo.title} subTitle={episode.title} />
+      <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}}>
+        <div style={{ width: '100%', height: '100px', zIndex: 100}}>
+          <AudioPlayer mediaUrl={decodeURIComponent(episode.media_location)}  onProgress={onProgress} tags={[5,10,15,30,100, 157]} title={podcastInfo ? podcastInfo.title: ''} subTitle={episode.title} />
         </div>
-        <div style={{marginTop: '300px'}}>
+        <div style={{height: '120px', width: '100%'}}></div>
+        <div style={{ marginTop: '0px'}}>
           <Grid container spacing={24}>
             <Grid item xs={0} sm={3}>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Paper className={classes.paper}>
+              <Slider ref='slider' {...settings}>
                 {tagList}
-              </Paper>
+              </Slider>
             </Grid>
             <Grid item xs={0} sm={3}>
             </Grid>
           </Grid>
-
         </div>
       </div>
     );
@@ -93,3 +114,30 @@ EpisodePage.propTypes = {};
 EpisodePage.defaultProps = {};
 
 export default withStyles(styles)(EpisodePage);
+
+
+/*
+      <div>
+        <div style={{position: 'fixed', top: '44px', width: '100%', display: 'flex', left: 'auto', flexDirection: 'column', zIndex: 100}}>
+          <AudioPlayer mediaUrl={decodeURIComponent(episode.media_location)}  onProgress={onProgress} tags={[5,10,15,30,100, 157]} title={podcastInfo ? podcastInfo.title: ''} subTitle={episode.title} />
+        </div>
+        <div style={{height: '200px', width: '1%'}}></div>
+        <div style={{marginTop: '0px', position: 'relative'}}>
+          <Grid container spacing={24}>
+            <Grid item xs={0} sm={3}>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Slider {...settings}>
+                {tagList}
+              </Slider>
+            </Grid>
+            <Grid item xs={0} sm={3}>
+            </Grid>
+          </Grid>
+        </div>
+      </div>
+
+
+
+
+ */

@@ -70,7 +70,7 @@ class App extends React.Component {
         <Header />
         <CustomDrawer subscriptions={subscriptions} show={showDrawer}></CustomDrawer>
 
-        <div style={{minHeight: '800px', marginLeft: showDrawer ? '300px' : '0px', marginTop: '120px'}}>
+        <div style={{minHeight: '600px', marginLeft: showDrawer ? '300px' : '0px', marginTop: '45px'}}>
 
           {renderRoutes(route.routes)}
         </div>
