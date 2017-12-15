@@ -126,26 +126,3 @@ EpisodePage.defaultProps = {};
 
 export default withStyles(styles)(EpisodePage);
 
-
-/*
-      <div>
-        <div style={{position: 'fixed', top: '44px', width: '100%', display: 'flex', left: 'auto', flexDirection: 'column', zIndex: 100}}>
-          <AudioPlayer mediaUrl={decodeURIComponent(episode.media_location)}  onProgress={onProgress} tags={[5,10,15,30,100, 157]} title={podcastInfo ? podcastInfo.title: ''} subTitle={episode.title} />
-        </div>
-        <div style={{height: '200px', width: '1%'}}></div>
-        <div style={{marginTop: '0px', position: 'relative'}}>
-          <Grid container spacing={24}>
-            <Grid item xs={0} sm={3}>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <Slider {...settings}>
-                {tagList}
-              </Slider>
-            </Grid>
-            <Grid item xs={0} sm={3}>
-            </Grid>
-          </Grid>
-        </div>
-      </div>
-
- */
