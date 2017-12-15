@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Slider from 'rc-slider';
+var ReactSlider =  require('react-slider');
 import 'rc-slider/assets/index.css';
 
 // import Play from '../../images/ios-play.svg';
@@ -180,7 +181,7 @@ class AudioPlayer extends Component {
       })
     );
 
-    console.log('AudioPlayer: ', tags);
+    console.log('ReactSlider: ', ReactSlider);
     debugger;
 
     return (
@@ -213,9 +214,10 @@ class AudioPlayer extends Component {
             <span style={{color: 'white'}}>{secondsToHMS(parseInt(duration))}</span>
           </div>
 
-
+          {/*<ReactSlider min={1} max={parseInt(duration) || 100} value={parseInt(this.state.position)} onChange={this.moveSeek}></ReactSlider>*/}
           <div style={{ width: '96%', margin: '5px 2%', padding: '8px', position: 'relative' }}>
             <div style={{position: 'absolute', width: '100%'}}>
+
               <Slider
                 defaultValue={1}
                 step={1}
@@ -225,16 +227,20 @@ class AudioPlayer extends Component {
                 onChange={this.moveSeek}
                 onAfterChange={this.seek}
                 maximumTrackStyle={{ backgroundColor: controlColor, height: 10 }}
+                railStyle={{ position: 'absolute', width: '100%' }}
+                trackStyle={{ position: 'absolute' }}
                 minimumTrackStyle={{ backgroundColor: progressColor || 'blue', height: 10, borderRadius: 0, paddingRight: -50, }}
                 handleStyle={{
-                  borderColor: progressColor,
                   borderWidth: 0,
                   height: 28,
                   width: 5,
                   marginLeft: -2,
                   marginTop: -9,
-                  backgroundColor: progressColor,
                   borderRadius: 0,
+                  borderColor: progressColor,
+                  backgroundColor: 'black',
+                  position: 'absolute',
+
                 }}
               />
             </div>
