@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Slider from 'rc-slider';
-var ReactSlider =  require('react-slider');
 import 'rc-slider/assets/index.css';
 
 // import Play from '../../images/ios-play.svg';
@@ -214,7 +213,6 @@ class AudioPlayer extends Component {
             <span style={{color: 'white'}}>{secondsToHMS(parseInt(duration))}</span>
           </div>
 
-          {/*<ReactSlider min={1} max={parseInt(duration) || 100} value={parseInt(this.state.position)} onChange={this.moveSeek}></ReactSlider>*/}
           <div style={{ width: '96%', margin: '5px 2%', padding: '8px', position: 'relative' }}>
             <div style={{position: 'absolute', width: '100%'}}>
 
