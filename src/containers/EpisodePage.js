@@ -40,8 +40,16 @@ const styles = theme => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
+  playerTitle: {
+    color: '#fff',
+    fontSize: '1.5em',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    '-webkitLineClamp': 2,
+    '-webkitBoxOrient': 'vertical',
+  }
 });
-
 
 
 @connect((state, router) => {
@@ -139,8 +147,5 @@ export default withStyles(styles)(EpisodePage);
           </Grid>
         </div>
       </div>
-
-
-
 
  */

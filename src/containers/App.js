@@ -1,5 +1,6 @@
 
-if (process.env.BROWSER) require('../styles/global.css');
+// if (process.env.BROWSER) require('../styles/global.css');
+require('../styles/global.css');
 
 import React from 'react';
 import PropTypes from 'prop-types';

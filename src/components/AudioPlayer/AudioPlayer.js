@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Slider from 'rc-slider';
+import { withStyles } from 'material-ui/styles';
 import 'rc-slider/assets/index.css';
 
 // import Play from '../../images/ios-play.svg';
@@ -20,6 +21,29 @@ playing: 3,
 paused: 4,
 stopped: 5,
  */
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    marginTop: 30,
+  },
+  paper: {
+    padding: 16,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  },
+  playerTitle: {
+    color: '#fff',
+    fontSize: '1.5em',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    '-webkitLineClamp': 2,
+    '-webkitBoxOrient': 'vertical',
+  }
+});
+
+
 
 
 export function secondsToHMS(seconds=0) {
@@ -168,7 +192,7 @@ class AudioPlayer extends Component {
 
   }
   render() {
-    const { styleConfig: {progressColor, seekColor, playerColor, controlColor}, tags, duration } = this.props;
+    const { styleConfig: {progressColor, seekColor, playerColor, controlColor}, tags, duration, classes } = this.props;
 
     const tagBar = (
       (this.props.tags || []).map((sec, index) => {
@@ -180,7 +204,6 @@ class AudioPlayer extends Component {
       })
     );
 
-    console.log('ReactSlider: ', ReactSlider);
     debugger;
 
     return (
@@ -188,7 +211,7 @@ class AudioPlayer extends Component {
         <div style={{ width: '100%', height: 200, backgroundColor: playerColor }}>
 
           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '20px 5px 0px 5px', padding: '5px'}}>
-            <span style={{'color': '#fff', fontSize: '1.5em'}}>{this.props.title} - {this.props.subTitle}</span>
+            <span className={classes.playerTitle}>{this.props.title} - {this.props.subTitle}</span>
           </div>
 
           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '5px', padding: '5px'}}>
@@ -280,5 +303,5 @@ AudioPlayer.defaultProps = {
 };
 
 
-export default AudioPlayer;
+export default withStyles(styles)(AudioPlayer);
 
