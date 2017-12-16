@@ -57,6 +57,7 @@ const styles = theme => ({
 });
 
 const categories = [
+  { name: 'Popular', id: 1303 },
   { name: 'Games and Hobbies', id: 1323 },
   { name: 'Sports & Recreation', id: 1316 },
   { name: 'Music', id: 1310 },
@@ -80,8 +81,10 @@ class HomePage extends Component {
   componentWillMount() {
     console.log('componentWillMount: ', this.props);
     this.props.getTaggedShows();
-    this.props.getPopular();
-    this.props.getPodcastByCategoryId(categories[0].id)
+    // this.props.getPopular();
+    _.map(categories, (category) => {
+      this.props.getPodcastByCategoryId(category.id);
+    });
   }
   render() {
     const { taggedShows, popular, classes } = this.props;
@@ -119,40 +122,6 @@ class HomePage extends Component {
               ))}
 
             </div>
-          </Grid>
-        </div>
-
-        <div style={{marginTop: '100px'}}>
-          <Typography type="headline" component="h4">
-            Popular
-          </Typography>
-          <Grid container spacing={24} style={{marginTop: '20px'}}>
-            <div className={classes.root}>
-              <br/>
-
-              {_.map(popular[categories[0].id], (show) => (
-                <Link to={`/podcast/${show.podcast_id}`}>
-                  <Card className={classes.card}>
-                    <CardMedia
-                      className={classes.media}
-                      image={show.image_url}
-                      title={show.title}
-                    />
-                    <CardContent>
-                      <Typography type="headline" component="h4">
-                        {show.title}
-                      </Typography>
-                      {/*                  <Typography component="p">
-                    {show.description}
-                  </Typography>*/}
-                    </CardContent>
-                  </Card>
-                </Link>
-
-              ))}
-
-            </div>
-
           </Grid>
         </div>
 
