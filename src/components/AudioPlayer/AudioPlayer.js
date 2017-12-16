@@ -9,7 +9,6 @@ import 'rc-slider/assets/index.css';
 
 import {Howler} from 'howler';
 
-let playerInfo = {};
 var sound = {};
 
 /*
@@ -62,9 +61,9 @@ class AudioPlayer extends Component {
     this.state = {
       playerStatus: 0,
       duration: 0,
-      url: "",
       position: 0,
       intervalId: 0,
+      mediaUrl: '',
     };
     this.onToggle = this.onToggle.bind(this);
     this.play = this.play.bind(this);
@@ -85,42 +84,49 @@ class AudioPlayer extends Component {
 
   componentWillMount() {
     const { mediaUrl, styleConfig: {progressColor, seekColor, playerColor, controlColor} } = this.props;
-    this.start(this.props);
+    // this.start(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.start(nextProps);
+    if(nextProps.mediaUrl && this.state.intervalId == 0) this.start(nextProps);
   }
 
   start(props) {
     const { mediaUrl } = props;
-    if(playerInfo.mediaUrl != mediaUrl) {
-      playerInfo.mediaUrl = mediaUrl;
-      this.state.url = mediaUrl;
-/*      sound = new Howl({
+    if(mediaUrl && this.state.mediaUrl != mediaUrl) {
+
+      console.log('Howler: ', mediaUrl);
+      this.setState({
+        ...this.state,
+        mediaUrl,
+      });
+      sound = new Howl({
         src: [mediaUrl],
         volume: 0.1,
         onend: function() {
 
         }
       });
-      this.play();*/
+      sound.once('load', () => {
+        this.play();
+      });
+
     }
 
   }
 
   play() {
-    const {mediaUrl} = this.props.player;
 
     sound.play();
-    playerInfo.intervalId = this.state.intervalId = setInterval(() => {
 
-      playerInfo.position = sound.seek();
-      this.state.position = sound.seek();
+    clearInterval(this.state.intervalId);
+
+    console.log('play!!!!');
+
+    const intervalId = setInterval(() => {
 
       let status = sound.state();
-      let position = 0;
-      let duration = 0;
+
       switch(status) {
         case 'loading':
           this.setState({
@@ -143,16 +149,22 @@ class AudioPlayer extends Component {
       this.props.onProgress(sound.seek());
 
     }, 1000);
+
+    this.setState({
+      ...this.state,
+      playerStatus: 3,
+      intervalId
+    });
+
   }
 
   pause() {
-    const {mediaUrl} = this.props.player;
     clearInterval(this.state.intervalId);
     sound.pause();
     this.setState({
+      ...this.state,
       playerStatus: 2,
     });
-    // this.props.actions.playerPause(mediaUrl);
   }
 
   resume() {
@@ -179,6 +191,7 @@ class AudioPlayer extends Component {
   }
   moveSeek(value) {
     this.setState({
+      ...this.state,
       position: value,
     })
   }
@@ -197,7 +210,6 @@ class AudioPlayer extends Component {
     const tagBar = (
       (this.props.tags || []).map((sec, index) => {
         const percent = (sec/duration) * 100;
-        console.log('percentage: ', percent);
         return (
           <span key={index} style={{display: 'inline-block', position: 'absolute', left: `${percent}%`, top: 0, width: '3px', height: '20px', backgroundColor: playerColor}}></span>
         )
