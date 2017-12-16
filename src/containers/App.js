@@ -33,6 +33,11 @@ import CustomDrawer from '../components/CustomDrawer/CustomDrawer';
 
 const styles = theme => ({
   drawerHeader: theme.mixins.toolbar,
+  noDrawer: {
+    [theme.breakpoints.down('md')]: {
+      marginLeft: '0px !important'
+    },
+  }
 });
 
 
@@ -69,9 +74,12 @@ class App extends React.Component {
     return (
       <div>
         <Header />
-        <CustomDrawer subscriptions={subscriptions} show={showDrawer}></CustomDrawer>
+        <Hidden smDown>
+          <CustomDrawer subscriptions={subscriptions} show={showDrawer}></CustomDrawer>
+        </Hidden>
 
-        <div style={{minHeight: '600px', marginLeft: showDrawer ? '300px' : '0px', marginTop: '45px'}}>
+
+        <div className={classes.noDrawer} style={{minHeight: '600px', marginLeft: showDrawer ? '300px' : '0px', marginTop: '45px'}}>
 
           {renderRoutes(route.routes)}
         </div>

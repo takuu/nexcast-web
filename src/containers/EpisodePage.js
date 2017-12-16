@@ -74,7 +74,13 @@ class EpisodePage extends Component {
   }
 
   goto(num) {
-    this.refs.slider.slickGoTo(num)
+    const seconds = _.map(cards.cards.result, 'seconds');
+    const position = _.findLastIndex(cards.cards.result, (item) => {
+      return num >= parseInt(item.seconds);
+    });
+
+    this.refs.slider.slickGoTo(position >= 0 ? position : 0);
+
   }
 
 
@@ -94,7 +100,7 @@ class EpisodePage extends Component {
     return (
       <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}}>
         <div style={{ width: '100%', height: '100px', zIndex: 100}}>
-          <AudioPlayer mediaUrl={episode.media_location ? decodeURIComponent(episode.media_location) : ''} duration={episode.duration} onProgress={onProgress} tags={_.map(cards.cards.result, 'seconds')} title={podcastInfo.title} subTitle={episode.title} />
+          <AudioPlayer onProgress={this.goto} mediaUrl={episode.media_location ? decodeURIComponent(episode.media_location) : ''} duration={episode.duration} tags={_.map(cards.cards.result, 'seconds')} title={podcastInfo.title} subTitle={episode.title} />
         </div>
         <div style={{height: '120px', width: '100%'}}></div>
         <div style={{ marginTop: '0px'}}>

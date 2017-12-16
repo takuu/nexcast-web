@@ -65,21 +65,16 @@ class AudioPlayer extends Component {
       intervalId: 0,
       mediaUrl: '',
     };
-    this.onToggle = this.onToggle.bind(this);
     this.play = this.play.bind(this);
     this.start = this.start.bind(this);
     this.pause = this.pause.bind(this);
     this.resume = this.resume.bind(this);
     this.goBack = this.goBack.bind(this);
     this.goForward = this.goForward.bind(this);
-    this.seekToTime = this.seekToTime.bind(this);
     this.stop = this.stop.bind(this);
     this.seek = this.seek.bind(this);
     this.moveSeek = this.moveSeek.bind(this);
     this.test = this.test.bind(this);
-  }
-
-  onToggle(e) {
   }
 
   componentWillMount() {
@@ -89,6 +84,10 @@ class AudioPlayer extends Component {
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.mediaUrl && this.state.intervalId == 0) this.start(nextProps);
+  }
+
+  componentWillUnmount() {
+    sound.unload();
   }
 
   start(props) {
@@ -102,7 +101,7 @@ class AudioPlayer extends Component {
       });
       sound = new Howl({
         src: [mediaUrl],
-        volume: 0.1,
+        volume: 1,
         onend: function() {
 
         }
@@ -178,13 +177,6 @@ class AudioPlayer extends Component {
   goForward() {
     const {position} = this.state;
     this.seek(position + 15);
-  }
-
-  seekToTime(percent) {
-    const {mediaUrl, title, episodeTitle, duration} = this.props.player;
-    //seekToTime
-    const sec = (percent/100) * duration;
-    if(duration) this.props.actions.playerSeekTo(mediaUrl, sec);
   }
 
   stop() {

@@ -48,7 +48,6 @@ const TEMP_PODCAST_INFO = {"id":398382980,"title":"AfterBuzz TV Network AfterSho
 
 
   const detail = showDetail.toJS();
-  console.log('connect detail ', detail)
 
   return { showDetail: showDetail.toJS()[podcastId], podcastInfo: podcastInfo.toJS()[podcastId] };
 }, {
@@ -66,7 +65,6 @@ class PodcastPage extends Component {
   render() {
     const { classes, showDetail = [], podcastInfo = {} } = this.props;
     const { podcastId } = this.props.match.params;
-    console.log('PodcastPage: ', showDetail, podcastInfo);
     return (
       <div style={{width: '99%'}}>
         <Grid container spacing={24}>

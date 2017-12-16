@@ -76,6 +76,7 @@ class Header extends Component {
           <AppBar position="fixed" style={{background: '#fff', zIndex: '1301'}}>
             <Toolbar className={classes.headerDesktop}>
               <Hidden mdUp>
+
                 <IconButton
                   color="contrast"
                   aria-label="open drawer"
@@ -84,7 +85,10 @@ class Header extends Component {
                   <MenuIcon style={{ color: '#444'}} />
                 </IconButton>
               </Hidden>
-              <div><img style={{height: '32px', padding: '5px'}} src={require('../../images/nexcast_logo_dark.png')} alt={`Nexcast`}/></div>
+              <Link to={'/'}>
+                <div><img style={{height: '32px', padding: '5px'}} src={require('../../images/nexcast_logo_dark.png')} alt={`Nexcast`}/></div>
+              </Link>
+
               {/*<div><Typography align='left' type="title" color="default" style={{color: 'white'}}>Nexcast</Typography></div>*/}
               <Hidden smDown>
                 <div>
