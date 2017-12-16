@@ -51,6 +51,9 @@ const styles = theme => ({
 });
 
 
+
+
+
 @connect((state, router) => {
   const { showDetail, podcastInfo } = state;
   const { podcastId, episodeKey } = router.match.params;
@@ -96,6 +99,7 @@ class EpisodePage extends Component {
         </div>
       )
     });
+
 
     return (
       <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}}>
