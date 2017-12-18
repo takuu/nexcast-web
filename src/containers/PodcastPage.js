@@ -19,9 +19,14 @@ const styles = theme => ({
     marginTop: 30,
   },
   podcastImage: {
-    padding: 16,
+    [theme.breakpoints.down('md')]: {
+      height: '100px !important'
+    },
+  },
+  podcastContainer: {
+    padding: 1,
     float: 'left',
-    width: 1000,
+    // width: 1000,
     display: 'flex',
     flexDirection: 'row',
     color: theme.palette.text.secondary,
@@ -29,7 +34,7 @@ const styles = theme => ({
   episode: {
     padding: 16,
     float: 'left',
-    width: 1000,
+    // width: 1000,
     display: 'flex',
     flexDirection: 'row',
     color: theme.palette.text.secondary,
@@ -69,8 +74,8 @@ class PodcastPage extends Component {
       <div style={{width: '99%'}}>
         <Grid container spacing={24}>
           <Grid item xs={12}>
-            <Paper className={classes.podcastImage}>
-              <img src={podcastInfo.image_url} height="250" alt=""/>
+            <Paper className={classes.podcastContainer}>
+              <img src={podcastInfo.image_url} className={classes.podcastImage} style={{height: '250px'}} alt=""/>
               <div style={{ padding: '0px 40px', width: '50%' }}>
                 <h2>{podcastInfo.title}</h2>
                 <h4>{podcastInfo.artist_name}</h4>
