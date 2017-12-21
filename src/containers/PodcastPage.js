@@ -11,7 +11,6 @@ import Button from 'material-ui/Button';
 
 import { secondsToHMS } from '../lib/helpers';
 
-
 const styles = theme => ({
   drawerHeader: theme.mixins.toolbar,
   root: {
@@ -29,12 +28,13 @@ const styles = theme => ({
     // width: 1000,
     display: 'flex',
     flexDirection: 'row',
+    width: '100%',
     color: theme.palette.text.secondary,
   },
   episode: {
-    padding: 16,
+    padding: 8,
     float: 'left',
-    // width: 1000,
+    width: '100%',
     display: 'flex',
     flexDirection: 'row',
     color: theme.palette.text.secondary,
@@ -49,8 +49,6 @@ const TEMP_PODCAST_INFO = {"id":398382980,"title":"AfterBuzz TV Network AfterSho
 @connect((state, router) => {
   const { showDetail, podcastInfo } = state;
   const { podcastId } = router.match.params;
-
-
 
   const detail = showDetail.toJS();
 
@@ -76,14 +74,16 @@ class PodcastPage extends Component {
           <Grid item xs={12}>
             <Paper className={classes.podcastContainer}>
               <img src={podcastInfo.image_url} className={classes.podcastImage} style={{height: '250px'}} alt=""/>
-              <div style={{ padding: '0px 40px', width: '50%' }}>
+              <div style={{ padding: '0px 5%', width: '100%' }}>
                 <h2>{podcastInfo.title}</h2>
                 <h4>{podcastInfo.artist_name}</h4>
-                <p>{podcastInfo.description}</p>
+                <div style={{ padding: '10px' }}>
+                  <Button raised color="primary">Subscribe</Button>
+                </div>
               </div>
-              <div style={{ padding: '10px' }}>
-                <Button raised color="primary">Subscribe</Button>
-              </div>
+            </Paper>
+            <Paper className={classes.podcastContainer}>
+              <p>{podcastInfo.description}</p>
             </Paper>
 
           </Grid>
@@ -93,7 +93,7 @@ class PodcastPage extends Component {
                 <Link to={`/podcast/${podcastId}/episode/${episode.episode_key}`} key={index}>
                   <Paper className={classes.episode} spacing={24} key={index}>
                     <img src={episode.image_location} height="100" alt=""/>
-                    <div style={{ padding: '0px 40px' }}>
+                    <div style={{ padding: '0px 5%' }}>
                       <h2>{episode.title}</h2>
                       <h4>{episode.subtitle}</h4>
                       <h5>{episode.pub_date} - {secondsToHMS(episode.duration)}</h5>
