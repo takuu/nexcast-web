@@ -100,8 +100,8 @@ class HomePage extends Component {
           <Grid container spacing={24} style={{marginTop: '20px'}}>
             <div className={classes.root}>
 
-              {taggedShows.map(show => (
-                <Link to={`/podcast/${show.id}`}>
+              {taggedShows.map((show, index) => (
+                <Link to={`/podcast/${show.id}`} key={index}>
                   <Card className={classes.card}>
                     <CardMedia
                       className={classes.media}

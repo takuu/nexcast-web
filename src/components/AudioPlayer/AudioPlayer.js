@@ -106,9 +106,8 @@ class AudioPlayer extends Component {
 
         }
       });
-      sound.once('load', () => {
-        this.play();
-      });
+      this.play();
+
 
     }
 
@@ -118,42 +117,46 @@ class AudioPlayer extends Component {
 
     sound.play();
 
-    clearInterval(this.state.intervalId);
+    sound.once('play', () => {
+      clearInterval(this.state.intervalId);
 
-    console.log('play!!!!');
+      console.log('play!!!!');
 
-    const intervalId = setInterval(() => {
+      const intervalId = setInterval(() => {
 
-      let status = sound.state();
+        let status = sound.state();
 
-      switch(status) {
-        case 'loading':
-          this.setState({
-            playerStatus: 1,
-            duration: 0,
-            position: 0,
-          });
-          break;
-        case 'loaded':
-          this.setState({
-            playerStatus: 3,
-            duration: sound.duration(),
-            position: sound.seek()
-          });
-          break;
-        default:
-          break;
-      }
+        switch(status) {
+          case 'loading':
+            this.setState({
+              playerStatus: 1,
+              duration: 0,
+              position: 0,
+            });
+            break;
+          case 'loaded':
+            this.setState({
+              playerStatus: 3,
+              duration: sound.duration(),
+              position: sound.seek()
+            });
+            break;
+          default:
+            break;
+        }
 
-      this.props.onProgress(sound.seek());
+        this.props.onProgress(sound.seek());
 
-    }, 1000);
+      }, 1000);
 
-    this.setState({
-      ...this.state,
-      playerStatus: 3,
-      intervalId
+      this.setState({
+        ...this.state,
+        playerStatus: 3,
+        intervalId
+      });
     });
+
+
 
   }
 
@@ -199,14 +202,13 @@ class AudioPlayer extends Component {
   render() {
     const { styleConfig: {progressColor, seekColor, playerColor, controlColor}, tags, duration, classes } = this.props;
 
-    const tagBar = (
+    const tagBar =
       (this.props.tags || []).map((sec, index) => {
         const percent = (sec/duration) * 100;
         return (
           <span key={index} style={{display: 'inline-block', position: 'absolute', left: `${percent}%`, top: 0, width: '3px', height: '20px', backgroundColor: playerColor}}></span>
         )
-      })
-    );
+      });
 
     debugger;
 
