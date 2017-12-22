@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { Link, Route, Redirect } from 'react-router-dom';
+import SearchInput, {createFilter} from 'react-search-input'
+import Autosuggest from 'react-autosuggest';
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
@@ -13,6 +15,7 @@ import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
 import Collapse from 'material-ui/transitions/Collapse';
 import MenuIcon from 'material-ui-icons/Menu';
+
 import InboxIcon from 'material-ui-icons/MoveToInbox';
 import ExpandLess from 'material-ui-icons/ExpandLess';
 import ExpandMore from 'material-ui-icons/ExpandMore';
@@ -42,6 +45,9 @@ const styles = theme => ({
       paddingRight: '0px !important',
     },
   },
+  searchBar: {
+    color: '#444',
+  },
   drawerHeader: theme.mixins.toolbar,
   flex: {
     flex: 1,
@@ -53,11 +59,92 @@ const styles = theme => ({
 });
 
 
+
+
+// Imagine you have a list of languages that you'd like to autosuggest.
+const languages = [
+  {
+    name: 'C',
+    year: 1972
+  },
+  {
+    name: 'Elm',
+    year: 2012
+  },
+];
+
+// Teach Autosuggest how to calculate suggestions for any given input value.
+const getSuggestions = (value = '') => {
+  const inputValue = value.trim().toLowerCase();
+  const inputLength = inputValue.length;
+
+  return inputLength === 0 ? [] : languages.filter(lang =>
+    lang.name.toLowerCase().slice(0, inputLength) === inputValue
+  );
+};
+
+// When suggestion is clicked, Autosuggest needs to populate the input
+// based on the clicked suggestion. Teach Autosuggest how to calculate the
+// input value for every given suggestion.
+const getSuggestionValue = suggestion => suggestion.name;
+
+// Use your imagination to render suggestions.
+const renderSuggestion = suggestion => (
+  <div>
+    {suggestion.name}
+  </div>
+);
+
+
+
+
+
+
+const KEYS_TO_FILTERS = [ 'title', 'author', 'description'];
+const PODCASTS = [
+  { title: "Software Engineering", author: 'foobar', description: 'foobaz' },
+  { title: "Midlife Crisis", author: 'john', description: 'getting old' },
+  { title: "Software Development", author: 'joe', description: '' },
+];
+
+
 class Header extends Component {
   constructor() {
     super();
     this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
+
+
+
+    // Autosuggest is a controlled component.
+    // This means that you need to provide an input value
+    // and an onChange handler that updates this value (see below).
+    // Suggestions also need to be provided to the Autosuggest,
+    // and they are initially empty because the Autosuggest is closed.
+    this.state = {
+      value: '',
+      suggestions: []
+    };
   }
+  onChange = (event, { newValue }) => {
+    this.setState({
+      value: newValue
+    });
+  };
+
+  // Autosuggest will call this function every time you need to update suggestions.
+  // You already implemented this logic above, so just use it.
+  onSuggestionsFetchRequested = ({ value }) => {
+    this.setState({
+      suggestions: getSuggestions(value)
+    });
+  };
+
+  // Autosuggest will call this function every time you need to clear suggestions.
+  onSuggestionsClearRequested = () => {
+    this.setState({
+      suggestions: []
+    });
+  };
 
   handleDrawerToggle() {
 
@@ -65,10 +152,19 @@ class Header extends Component {
 
   render() {
     const { classes } = this.props;
+    const { value, suggestions } = this.state;
     const navLinkConfig = [
       { name: 'Popular', url: '/popular' },
       { name: 'Queue', url: '/queue' },
     ];
+
+    // Autosuggest will pass through all these props to the input.
+    const inputProps = {
+      placeholder: 'Type a programming language',
+      value,
+      onChange: this.onChange
+    };
+
     const navLinks = _.map(navLinkConfig, ({ name, url }, index) => ( <Link key={index} style={{textDecoration: 'none'}} to={url}><Button style={{color: 'white'}}color="default">{name}</Button></Link> ));
     return (
       <div>
@@ -85,6 +181,16 @@ class Header extends Component {
                 </IconButton>
               </Hidden>
               <div><img style={{height: '32px', padding: '5px'}} src={require('../../images/nexcast_logo_dark.png')} alt={`Nexcast`}/></div>
+
+              <Autosuggest
+                suggestions={suggestions}
+                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                getSuggestionValue={getSuggestionValue}
+                renderSuggestion={renderSuggestion}
+                inputProps={inputProps}
+              />
+
               {/*<div><Typography align='left' type="title" color="default" style={{color: 'white'}}>Nexcast</Typography></div>*/}
               <Hidden smDown>
                 <div>
