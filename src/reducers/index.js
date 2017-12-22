@@ -5,7 +5,7 @@ import { combineReducers } from 'redux';
 // import auth from './auth/authReducer'
 import device from './device/deviceReducer'
 import global from './global/globalReducer'
-import podcasts from './discover/discoverReducer';
+import popular from './discover/discoverReducer';
 import podcastInfo from './podcast/podcastReducer';
 // import profile from './profile/profileReducer'
 import taggedShows from './taggedShow/taggedShowReducer'
@@ -21,7 +21,7 @@ const rootReducer = combineReducers({
   device,
   global,
   // profile,
-  podcasts,
+  popular,
   podcastInfo,
   taggedShows,
   showDetail,

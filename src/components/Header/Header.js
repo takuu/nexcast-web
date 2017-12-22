@@ -172,6 +172,7 @@ class Header extends Component {
           <AppBar position="fixed" style={{background: '#fff', zIndex: '1301'}}>
             <Toolbar className={classes.headerDesktop}>
               <Hidden mdUp>
+
                 <IconButton
                   color="contrast"
                   aria-label="open drawer"
@@ -180,6 +181,7 @@ class Header extends Component {
                   <MenuIcon style={{ color: '#444'}} />
                 </IconButton>
               </Hidden>
+<<<<<<< HEAD
               <div><img style={{height: '32px', padding: '5px'}} src={require('../../images/nexcast_logo_dark.png')} alt={`Nexcast`}/></div>
 
               <Autosuggest
@@ -190,6 +192,11 @@ class Header extends Component {
                 renderSuggestion={renderSuggestion}
                 inputProps={inputProps}
               />
+=======
+              <Link to={'/'}>
+                <div><img style={{height: '32px', padding: '5px'}} src={require('../../images/nexcast_logo_dark.png')} alt={`Nexcast`}/></div>
+              </Link>
+>>>>>>> c537c5abf370ea1eba5769560c47fd4bf9a4d314
 
               {/*<div><Typography align='left' type="title" color="default" style={{color: 'white'}}>Nexcast</Typography></div>*/}
               <Hidden smDown>

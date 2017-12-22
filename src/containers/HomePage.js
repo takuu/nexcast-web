@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
+import _ from 'lodash';
 import { GridList, GridListTile, GridListTileBar } from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import StarBorderIcon from 'material-ui-icons/StarBorder';
@@ -12,10 +13,11 @@ import StarBorderIcon from 'material-ui-icons/StarBorder';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
+import CategoryList from '../components/CategoryList/CategoryList';
 
 
 import { getTaggedShows } from '../reducers/taggedShow/taggedShowActions';
-import { getPopular } from '../reducers/discover/discoverActions';
+import { getPopular, getPodcastByCategoryId } from '../reducers/discover/discoverActions';
 
 
 const styles = theme => ({
@@ -54,11 +56,23 @@ const styles = theme => ({
   },
 });
 
+const categories = [
+  { name: 'Popular', id: 1303 },
+  { name: 'Games and Hobbies', id: 1323 },
+  { name: 'Sports & Recreation', id: 1316 },
+  { name: 'Music', id: 1310 },
+  { name: 'Education', id: 1304 },
+  { name: 'Business', id: 1321 },
+  { name: 'Government & Organization', id: 1325 },
+  { name: 'TV & Film', id: 1309 },
+  { name: 'Technology', id: 1318 },
+]
+
 @connect((state, router) => {
-  const { taggedShows, podcasts } = state;
-  return { taggedShows, podcasts };
+  const { taggedShows, popular } = state;
+  return { taggedShows, popular: popular.toJS() };
 }, {
-  getTaggedShows, getPopular
+  getTaggedShows, getPopular, getPodcastByCategoryId
 })
 class HomePage extends Component {
   constructor() {
@@ -67,14 +81,14 @@ class HomePage extends Component {
   componentWillMount() {
     console.log('componentWillMount: ', this.props);
     this.props.getTaggedShows();
-    this.props.getPopular();
+    // this.props.getPopular();
+    _.map(categories, (category) => {
+      this.props.getPodcastByCategoryId(category.id);
+    });
   }
   render() {
-    const { taggedShows, podcasts, classes } = this.props;
-    console.log('HomePage: ', taggedShows);
-    podcasts.map((show)=> {
-      console.log('show: ', show.toJS());
-    });
+    const { taggedShows, popular, classes } = this.props;
+    console.log('HomePage: ', popular);
 
 
     return (
@@ -86,8 +100,8 @@ class HomePage extends Component {
           <Grid container spacing={24} style={{marginTop: '20px'}}>
             <div className={classes.root}>
 
-              {taggedShows.map(show => (
-                <Link to={`/podcast/${show.id}`}>
+              {taggedShows.map((show, index) => (
+                <Link to={`/podcast/${show.id}`} key={index}>
                   <Card className={classes.card}>
                     <CardMedia
                       className={classes.media}
@@ -110,39 +124,14 @@ class HomePage extends Component {
             </div>
           </Grid>
         </div>
-        <div style={{marginTop: '100px'}}>
-          <Typography type="headline" component="h4">
-            Popular
-          </Typography>
-          <Grid container spacing={24} style={{marginTop: '20px'}}>
-            <div className={classes.root}>
-              <br/>
 
-              {podcasts.map(show => (
-                <Link to={`/podcast/${show.podcast_id}`}>
-                  <Card className={classes.card}>
-                    <CardMedia
-                      className={classes.media}
-                      image={show.image_url}
-                      title={show.title}
-                    />
-                    <CardContent>
-                      <Typography type="headline" component="h4">
-                        {show.title}
-                      </Typography>
-                      {/*                  <Typography component="p">
-                    {show.description}
-                  </Typography>*/}
-                    </CardContent>
-                  </Card>
-                </Link>
-
-              ))}
-
+        {_.map(categories, (category, index) => {
+          return (
+            <div style={{marginTop: '100px'}} key={index}>
+              <CategoryList name={category.name} podcastList={popular[category.id]}></CategoryList>
             </div>
-
-          </Grid>
-        </div>
+          )
+        })}
       </div>
 
     );

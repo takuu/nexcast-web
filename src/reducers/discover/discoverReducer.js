@@ -30,7 +30,16 @@ const PodcastMap = Immutable.OrderedMap;
 const PodcastList = Immutable.List;
 
 // const initialState = new PodcastMap();
-const initialState = new PodcastList();
+// const initialState = new PodcastList();
+const initialState = new Immutable.Map();
+
+const mapEntities = (state, podcasts) => {
+  if(podcasts.length) {
+    return state.set(podcasts[0].genre_id, podcasts);
+  } else {
+    return state;
+  }
+};
 
 
 const mergeEntities = (state, newPodcasts) =>
@@ -47,11 +56,10 @@ export default (state = initialState, action) => {
     case GET_POPULAR_SUCCESS:
       if (!action.payload || !action.payload.length) { return state }
       console.log('GET_POPULAR_SUCCESS: ', action.payload);
-      return mergeEntities(state, Immutable.fromJS(action.payload));
+      return mapEntities(state, action.payload);
     case GET_CATEGORY_SUCCESS:
       if (!action.payload || !action.payload.length) { return state }
-
-      return mergeEntities(state, Immutable.fromJS(action.payload));
+      return mapEntities(state, action.payload);
       break;
   }
   return state;
