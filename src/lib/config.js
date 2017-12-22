@@ -7,11 +7,7 @@ module.exports = {
     parseLocal: false
   },
   baseUrl: process.env.NODE_ENV === 'production' ? '' : 'http://localhost:1337',
-<<<<<<< HEAD
-  baseAPI: process.env.NODE_ENV === 'production' ? '/api/v1' : 'http://kodasama.com/api/v1',
-=======
   baseAPI: '/api/v1',
->>>>>>> c537c5abf370ea1eba5769560c47fd4bf9a4d314
   HAPI: {
     local: {
       url: 'http://localhost:5000'
