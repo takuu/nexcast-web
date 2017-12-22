@@ -10,7 +10,7 @@ import { getPodcast, getPodcastById } from '../reducers/podcast/podcastActions';
 import Button from 'material-ui/Button';
 
 import { secondsToHMS } from '../lib/helpers';
-import { episodes } from '../../Database.json';
+import { episodes, podcast } from '../../Database.json';
 
 const styles = theme => ({
   drawerHeader: theme.mixins.toolbar,
@@ -67,8 +67,10 @@ class PodcastPage extends Component {
     this.props.getEpisodesById(podcastId);
   }
   render() {
-    const { classes, showDetail = [], podcastInfo = {} } = this.props;
+    let { classes, showDetail = [], podcastInfo = {} } = this.props;
     const { podcastId } = this.props.match.params;
+    podcastInfo = podcast.result;
+    showDetail = episodes.result;
     return (
       <div style={{width: '99%'}}>
         <Grid container spacing={24}>
@@ -90,7 +92,7 @@ class PodcastPage extends Component {
           </Grid>
           <Grid item xs={12}>
             <div>
-              {episodes.result.map((episode, index) => (
+              {showDetail.map((episode, index) => (
                 <Link to={`/podcast/${podcastId}/episode/${episode.episode_key}`} key={index}>
                   <Paper className={classes.episode} spacing={24} key={index}>
                     <img src={episode.image_location} height="100" alt=""/>
