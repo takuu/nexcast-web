@@ -46,7 +46,12 @@ const styles = theme => ({
     },
   },
   searchBar: {
-    color: '#444',
+    container: {
+
+    },
+    input: {
+      border: '1px solid #f00',
+    }
   },
   drawerHeader: theme.mixins.toolbar,
   flex: {
@@ -56,6 +61,9 @@ const styles = theme => ({
     marginLeft: -12,
     marginRight: 20,
   },
+
+  // Search Bar
+
 });
 
 

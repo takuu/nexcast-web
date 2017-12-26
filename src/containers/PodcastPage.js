@@ -90,8 +90,8 @@ class PodcastPage extends Component {
             {episodes.result.map((episode, index) => (
                 <Paper className={classes.episode} spacing={24} key={index}>
                   <div style={{ width: '100%',display: 'flex', flexDirection: 'row' }}>
-                    <img src={episode.image_location} height="100" alt=""/>
-                    <div style={{ padding: '0px 5%' }}>
+                    <img src={episode.image_location} height="175" alt=""/>
+                    <div style={{ padding: '0px 2%' }}>
                       <Link to={`/podcast/${podcastId}/episode/${episode.episode_key}`} key={index}>
                         <h2 className="paper-list-title">{episode.title}</h2>
                       </Link>
