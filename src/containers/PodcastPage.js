@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Paper from 'material-ui/Paper';
@@ -10,7 +10,7 @@ import { getPodcast, getPodcastById } from '../reducers/podcast/podcastActions';
 import Button from 'material-ui/Button';
 
 import { secondsToHMS } from '../lib/helpers';
-import { episodes } from '../../Database.json';
+import { episodes, podcast } from '../../Database.json';
 
 const styles = theme => ({
   drawerHeader: theme.mixins.toolbar,
@@ -63,8 +63,10 @@ class PodcastPage extends Component {
     this.props.getEpisodesById(podcastId);
   }
   render() {
-    const { classes, showDetail = [], podcastInfo = {} } = this.props;
+    let { classes, showDetail = [], podcastInfo = {} } = this.props;
     const { podcastId } = this.props.match.params;
+    podcastInfo = podcast.result;
+    showDetail = episodes.result;
     return (
       <Grid container spacing={24}>
         <Grid item xs={12}>
@@ -95,9 +97,7 @@ class PodcastPage extends Component {
                       <Link to={`/podcast/${podcastId}/episode/${episode.episode_key}`} key={index}>
                         <h2 className="paper-list-title">{episode.title}</h2>
                       </Link>
-
                       <span className="paper-list-text">{episode.subtitle}</span>
-
                     </div>
                   </div>
                   <div style={{ width: '100%' }}>
