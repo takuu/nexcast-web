@@ -72,14 +72,14 @@ class App extends React.Component {
     console.log('hideDrawer: ', showDrawer);
 
     return (
-      <div>
+      <div style={{ width: '100%' }}>
         <Header />
         <Hidden smDown>
           <CustomDrawer subscriptions={subscriptions} show={showDrawer}></CustomDrawer>
         </Hidden>
 
 
-        <div className={classes.noDrawer} style={{minHeight: '600px', marginLeft: showDrawer ? '300px' : '0px', marginTop: '45px'}}>
+        <div className={classes.noDrawer} style={{minHeight: '600px', marginLeft: showDrawer ? '300px' : '0px', marginTop: '75px'}}>
 
           {renderRoutes(route.routes)}
         </div>

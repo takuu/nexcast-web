@@ -181,7 +181,11 @@ class Header extends Component {
                   <MenuIcon style={{ color: '#444'}} />
                 </IconButton>
               </Hidden>
-              <div><img style={{height: '32px', padding: '5px'}} src={require('../../images/nexcast_logo_dark.png')} alt={`Nexcast`}/></div>
+              <div>
+                <Link to={"/"} >
+                  <img style={{height: '32px', padding: '5px'}} src={require('../../images/nexcast_logo_dark.png')} alt={`Nexcast`}/>
+                </Link>
+              </div>
 
               <Autosuggest
                 suggestions={suggestions}

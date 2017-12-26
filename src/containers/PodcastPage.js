@@ -24,20 +24,16 @@ const styles = theme => ({
     },
   },
   podcastContainer: {
-    padding: 1,
-    float: 'left',
-    // width: 1000,
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     width: '100%',
     color: theme.palette.text.secondary,
   },
   episode: {
     padding: 8,
-    float: 'left',
     width: '100%',
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     color: theme.palette.text.secondary,
   }
 });
@@ -70,44 +66,49 @@ class PodcastPage extends Component {
     const { classes, showDetail = [], podcastInfo = {} } = this.props;
     const { podcastId } = this.props.match.params;
     return (
-      <div style={{width: '99%'}}>
-        <Grid container spacing={24}>
-          <Grid item xs={12}>
-            <Paper className={classes.podcastContainer}>
+      <Grid container spacing={24}>
+        <Grid item xs={12}>
+          <Paper className={classes.podcastContainer}>
+
+            <div style={{ width: '100%', display: 'flex', flexDirection: 'row'}}>
               <img src={podcastInfo.image_url} className={classes.podcastImage} style={{height: '250px'}} alt=""/>
-              <div style={{ padding: '0px 5%', width: '100%' }}>
-                <h2>{podcastInfo.title}</h2>
-                <h4>{podcastInfo.artist_name}</h4>
+              <div>
+                <h2 className="paper-list-title">{podcastInfo.title}</h2>
+                <span className="paper-list-text">{podcastInfo.artist_name}</span>
                 <div style={{ padding: '10px' }}>
                   <Button raised color="primary">Subscribe</Button>
                 </div>
               </div>
-            </Paper>
-            <Paper className={classes.podcastContainer}>
-              <p>{podcastInfo.description}</p>
-            </Paper>
-
-          </Grid>
-          <Grid item xs={12}>
-            <div>
-              {episodes.result.map((episode, index) => (
-                <Link to={`/podcast/${podcastId}/episode/${episode.episode_key}`} key={index}>
-                  <Paper className={classes.episode} spacing={24} key={index}>
+            </div>
+          </Paper>
+          <Paper className={classes.podcastContainer}>
+            <p>{podcastInfo.description}</p>
+          </Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <div>
+            {episodes.result.map((episode, index) => (
+                <Paper className={classes.episode} spacing={24} key={index}>
+                  <div style={{ width: '100%',display: 'flex', flexDirection: 'row' }}>
                     <img src={episode.image_location} height="100" alt=""/>
                     <div style={{ padding: '0px 5%' }}>
-                      <h2>{episode.title}</h2>
-                      <h4>{episode.subtitle}</h4>
-                      <h5>{episode.pub_date} - {secondsToHMS(episode.duration)}</h5>
-                      <p>{episode.description_clean}</p>
-                    </div>
-                  </Paper>
-                </Link>
+                      <Link to={`/podcast/${podcastId}/episode/${episode.episode_key}`} key={index}>
+                        <h2 className="paper-list-title">{episode.title}</h2>
+                      </Link>
 
-              ))}
-            </div>
-          </Grid>
+                      <span className="paper-list-text">{episode.subtitle}</span>
+
+                    </div>
+                  </div>
+                  <div style={{ width: '100%' }}>
+                    <h5>{episode.pub_date} - {secondsToHMS(episode.duration)}</h5>
+                    <p className="paper-list-text-long">{episode.description_clean}</p>
+                  </div>
+                </Paper>
+            ))}
+          </div>
         </Grid>
-      </div>
+      </Grid>
     );
   }
 }
