@@ -15,6 +15,7 @@ import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
 import Collapse from 'material-ui/transitions/Collapse';
 import MenuIcon from 'material-ui-icons/Menu';
+import theme from '../../styles/theme.css';
 
 import InboxIcon from 'material-ui-icons/MoveToInbox';
 import ExpandLess from 'material-ui-icons/ExpandLess';
@@ -44,14 +45,6 @@ const styles = theme => ({
       paddingLeft: '0px !important',
       paddingRight: '0px !important',
     },
-  },
-  searchBar: {
-    container: {
-
-    },
-    input: {
-      border: '1px solid #f00',
-    }
   },
   drawerHeader: theme.mixins.toolbar,
   flex: {
@@ -168,7 +161,7 @@ class Header extends Component {
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
-      placeholder: 'Type a programming language',
+      placeholder: 'Search',
       value,
       onChange: this.onChange
     };
@@ -195,14 +188,20 @@ class Header extends Component {
                 </Link>
               </div>
 
-              <Autosuggest
-                suggestions={suggestions}
-                onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                getSuggestionValue={getSuggestionValue}
-                renderSuggestion={renderSuggestion}
-                inputProps={inputProps}
-              />
+              <div className="search-box">
+                <Autosuggest
+                  suggestions={suggestions}
+                  style={{float: 'left'}}
+                  theme={theme}
+                  onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                  onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                  getSuggestionValue={getSuggestionValue}
+                  renderSuggestion={renderSuggestion}
+                  inputProps={inputProps}
+                />
+                <button type="submit"><i className="fa fa-search"></i></button>
+              </div>
+
 
 
               {/*<div><Typography align='left' type="title" color="default" style={{color: 'white'}}>Nexcast</Typography></div>*/}
