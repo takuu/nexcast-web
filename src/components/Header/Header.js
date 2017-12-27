@@ -21,10 +21,6 @@ import _ from 'lodash';
 
 import { searchPodcastShows } from '../../reducers/search/searchActions';
 
-import InboxIcon from 'material-ui-icons/MoveToInbox';
-import ExpandLess from 'material-ui-icons/ExpandLess';
-import ExpandMore from 'material-ui-icons/ExpandMore';
-import StarBorder from 'material-ui-icons/StarBorder';
 
 const styles = theme => ({
   root: {
