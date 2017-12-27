@@ -35,7 +35,7 @@
 #react-autowhatever-1 {
     position: fixed;
     top: 60px;
-    width: 200px;
+    width: 350px;
     background: white;
 }
 
@@ -49,5 +49,15 @@
     font-size: 17px;
     border: none;
     border: 2px solid #eee;
+    width: 300px;
+    outline-color: rgb(28,98,185);
+    /*outline: none;*/
     float: left;
+}
+
+.search-box input[type=text]:focus {
+    border: none;
+    border: 2px solid #eee;
+    /*box-shadow: 0 0 5px rgba(0, 0, 0, 1);*/
+
 }

@@ -56,7 +56,8 @@ class App extends React.Component {
   }
 
   render () {
-    const { auth, dispatch, params, user, ui, route, classes } = this.props;
+    const { auth, dispatch, params, user, ui, route, classes, match } = this.props;
+    debugger;
 
     const [ root, podcast, podcastId,pathname,  ...other ] = this.props.location.pathname.split('/');
     const subscriptions = [
@@ -73,7 +74,7 @@ class App extends React.Component {
 
     return (
       <div style={{ width: '100%' }}>
-        <Header />
+        <Header match={match} />
         <Hidden smDown>
           <CustomDrawer subscriptions={subscriptions} show={showDrawer}></CustomDrawer>
         </Hidden>

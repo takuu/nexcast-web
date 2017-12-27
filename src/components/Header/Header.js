@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link, Route, Redirect } from 'react-router-dom';
 import SearchInput, {createFilter} from 'react-search-input'
 import Autosuggest from 'react-autosuggest';
@@ -16,6 +17,9 @@ import IconButton from 'material-ui/IconButton';
 import Collapse from 'material-ui/transitions/Collapse';
 import MenuIcon from 'material-ui-icons/Menu';
 import theme from '../../styles/theme.css';
+import _ from 'lodash';
+
+import { searchPodcastShows } from '../../reducers/search/searchActions';
 
 import InboxIcon from 'material-ui-icons/MoveToInbox';
 import ExpandLess from 'material-ui-icons/ExpandLess';
@@ -59,48 +63,6 @@ const styles = theme => ({
 
 });
 
-
-
-
-// Imagine you have a list of languages that you'd like to autosuggest.
-const languages = [
-  {
-    name: 'C',
-    year: 1972
-  },
-  {
-    name: 'Elm',
-    year: 2012
-  },
-];
-
-// Teach Autosuggest how to calculate suggestions for any given input value.
-const getSuggestions = (value = '') => {
-  const inputValue = value.trim().toLowerCase();
-  const inputLength = inputValue.length;
-
-  return inputLength === 0 ? [] : languages.filter(lang =>
-    lang.name.toLowerCase().slice(0, inputLength) === inputValue
-  );
-};
-
-// When suggestion is clicked, Autosuggest needs to populate the input
-// based on the clicked suggestion. Teach Autosuggest how to calculate the
-// input value for every given suggestion.
-const getSuggestionValue = suggestion => suggestion.name;
-
-// Use your imagination to render suggestions.
-const renderSuggestion = suggestion => (
-  <div>
-    {suggestion.name}
-  </div>
-);
-
-
-
-
-
-
 const KEYS_TO_FILTERS = [ 'title', 'author', 'description'];
 const PODCASTS = [
   { title: "Software Engineering", author: 'foobar', description: 'foobaz' },
@@ -108,7 +70,14 @@ const PODCASTS = [
   { title: "Software Development", author: 'joe', description: '' },
 ];
 
+@connect((state, router) => {
+  const { searchShows } = state;
+  const { podcastId } = router.match.params;
 
+  return { searchShows: searchShows.toJS() };
+}, {
+  searchPodcastShows
+})
 class Header extends Component {
   constructor() {
     super();
@@ -126,6 +95,20 @@ class Header extends Component {
       suggestions: []
     };
   }
+
+  componentWillReceiveProps(nextProps) {
+    const { searchShows } = nextProps;
+
+    if( !_.isEqual(searchShows, this.props.searchShows)) {
+      const foo = _.map(searchShows.results, (show) => { return { name: show.collectionName } });
+      debugger;
+      this.setState({
+        suggestions: foo,
+      });
+
+    }
+  }
+
   onChange = (event, { newValue }) => {
     this.setState({
       value: newValue
@@ -135,9 +118,7 @@ class Header extends Component {
   // Autosuggest will call this function every time you need to update suggestions.
   // You already implemented this logic above, so just use it.
   onSuggestionsFetchRequested = ({ value }) => {
-    this.setState({
-      suggestions: getSuggestions(value)
-    });
+    this.props.searchPodcastShows(value);
   };
 
   // Autosuggest will call this function every time you need to clear suggestions.
@@ -152,12 +133,13 @@ class Header extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, searchShows } = this.props;
     const { value, suggestions } = this.state;
     const navLinkConfig = [
       { name: 'Popular', url: '/popular' },
       { name: 'Queue', url: '/queue' },
     ];
+    debugger;
 
     // Autosuggest will pass through all these props to the input.
     const inputProps = {
@@ -195,8 +177,8 @@ class Header extends Component {
                   theme={theme}
                   onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
                   onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                  getSuggestionValue={getSuggestionValue}
-                  renderSuggestion={renderSuggestion}
+                  getSuggestionValue={(suggestion) => suggestion.name}
+                  renderSuggestion={(suggestion) => (<div>{suggestion.name}</div>)}
                   inputProps={inputProps}
                 />
                 <button type="submit"><i className="fa fa-search"></i></button>
