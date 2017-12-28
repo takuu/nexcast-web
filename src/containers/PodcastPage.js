@@ -82,7 +82,7 @@ class PodcastPage extends Component {
         </Grid>
         <Grid item xs={12}>
           <div>
-            {showDetail.result.map((episode, index) => (
+            {showDetail.map((episode, index) => (
                 <Paper className={classes.episode} spacing={24} key={index}>
                   <div style={{ width: '100%',display: 'flex', flexDirection: 'row' }}>
                     <img src={episode.image_location} height="175" alt=""/>
