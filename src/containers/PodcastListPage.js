@@ -63,7 +63,7 @@ class PodcastPage extends Component {
       <Grid container spacing={24}>
         <Grid item xs={12}>
           <div>
-            {searchShows.result.map((podcast, index) => (
+            {searchShows.results && searchShows.results.map((podcast, index) => (
               <Paper className={classes.episode} spacing={24} key={index}>
                 <div style={{ width: '100%',display: 'flex', flexDirection: 'row' }}>
                   <img src={podcast.artworkUrl600} height="175" alt=""/>
