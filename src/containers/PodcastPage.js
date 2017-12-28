@@ -65,8 +65,8 @@ class PodcastPage extends Component {
   render() {
     let { classes, showDetail = [], podcastInfo = {} } = this.props;
     const { podcastId } = this.props.match.params;
-    podcastInfo = podcast.result;
-    showDetail = episodes.result;
+    // podcastInfo = podcast.result;
+    // showDetail = episodes.result;
     return (
       <Grid container spacing={24}>
         <Grid item xs={12}>

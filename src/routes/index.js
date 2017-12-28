@@ -23,6 +23,7 @@ const routes = [
       { path: '/', component: HomePage, exact: true },
       { path: '/podcastlist', component: PodcastListPage },
       { path: '/podcast/:podcastId', component: PodcastPage, exact: true },
+      { path: '/search/:term', component: PodcastListPage, exact: true },
       { path: '/podcast/:podcastId/episode/:episodeKey', component: EpisodePage },
     ]
   }

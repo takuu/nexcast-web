@@ -78,6 +78,7 @@ class Header extends Component {
   constructor() {
     super();
     this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
+    this.onSearch = this.onSearch.bind(this);
 
 
 
@@ -123,6 +124,12 @@ class Header extends Component {
       suggestions: []
     });
   };
+
+  onSearch() {
+    console.log(this.props, this.state);
+    this.props.history.push(`/search/${this.state.value}`);
+    debugger;
+  }
 
   handleDrawerToggle() {
 
@@ -177,7 +184,7 @@ class Header extends Component {
                   renderSuggestion={(suggestion) => (<div>{suggestion.name}</div>)}
                   inputProps={inputProps}
                 />
-                <button type="submit"><i className="fa fa-search"></i></button>
+                <button type="submit" onClick={this.onSearch}><i className="fa fa-search"></i></button>
               </div>
 
 
