@@ -19,6 +19,8 @@ import MenuIcon from 'material-ui-icons/Menu';
 import theme from '../../styles/theme.css';
 import _ from 'lodash';
 
+import SearchBar from '../../components/SearchBar/SearchBar';
+
 import { searchPodcastShows } from '../../reducers/search/searchActions';
 
 
@@ -66,90 +68,27 @@ const PODCASTS = [
   { title: "Software Development", author: 'joe', description: '' },
 ];
 
-@connect((state, router) => {
-  const { searchShows } = state;
-  const { podcastId } = router.match.params;
-
-  return { searchShows: searchShows.toJS() };
-}, {
-  searchPodcastShows
-})
 class Header extends Component {
   constructor() {
     super();
-    this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
-    this.onSearch = this.onSearch.bind(this);
-
-
-
-    // Autosuggest is a controlled component.
-    // This means that you need to provide an input value
-    // and an onChange handler that updates this value (see below).
-    // Suggestions also need to be provided to the Autosuggest,
-    // and they are initially empty because the Autosuggest is closed.
-    this.state = {
-      value: '',
-      suggestions: []
-    };
+    this.onChange = this.onChange.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    const { searchShows } = nextProps;
-
-    if( !_.isEqual(searchShows, this.props.searchShows)) {
-      const foo = _.map(searchShows.results, (show) => { return { name: show.collectionName } });
-      debugger;
-      this.setState({
-        suggestions: foo,
-      });
-
-    }
-  }
-
-  onChange = (event, { newValue }) => {
-    this.setState({
-      value: newValue
-    });
-  };
-
-  // Autosuggest will call this function every time you need to update suggestions.
-  // You already implemented this logic above, so just use it.
-  onSuggestionsFetchRequested = ({ value }) => {
-    this.props.searchPodcastShows(value);
-  };
-
-  // Autosuggest will call this function every time you need to clear suggestions.
-  onSuggestionsClearRequested = () => {
-    this.setState({
-      suggestions: []
-    });
-  };
-
-  onSearch() {
-    console.log(this.props, this.state);
-    this.props.history.push(`/search/${this.state.value}`);
-    debugger;
-  }
-
-  handleDrawerToggle() {
+  onChange(val) {
+    console.log('val: ', val);
 
   }
+
+
 
   render() {
-    const { classes, searchShows } = this.props;
-    const { value, suggestions } = this.state;
+    const { classes } = this.props;
     const navLinkConfig = [
       { name: 'Popular', url: '/popular' },
       { name: 'Queue', url: '/queue' },
     ];
     debugger;
 
-    // Autosuggest will pass through all these props to the input.
-    const inputProps = {
-      placeholder: 'Search',
-      value,
-      onChange: this.onChange
-    };
 
     const navLinks = _.map(navLinkConfig, ({ name, url }, index) => ( <Link key={index} style={{textDecoration: 'none'}} to={url}><Button style={{color: 'white'}}color="default">{name}</Button></Link> ));
     return (
@@ -173,19 +112,7 @@ class Header extends Component {
                 </Link>
               </div>
 
-              <div className="search-box">
-                <Autosuggest
-                  suggestions={suggestions}
-                  style={{float: 'left'}}
-                  theme={theme}
-                  onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                  onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                  getSuggestionValue={(suggestion) => suggestion.name}
-                  renderSuggestion={(suggestion) => (<div>{suggestion.name}</div>)}
-                  inputProps={inputProps}
-                />
-                <button type="submit" onClick={this.onSearch}><i className="fa fa-search"></i></button>
-              </div>
+              <SearchBar onChange={this.onChange} history={this.props.history} />
 
 
 
