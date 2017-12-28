@@ -587,6 +587,10 @@ END SPINNERS
 }
 
 
+.slick-next:before, .slick-prev:before {
+    color: rgb(3, 113, 216);
+}
+
 
 /* End Flex Table */
 
