@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
       if (!action.payload || !action.payload.length) { return state }
       // return mergeEntities(state, Immutable.fromJS(action.payload));
       result.isSearching = false;
-      result.results = action.payload;
+      result.result = action.payload;
       return Immutable.Map(result);
   }
   return state;

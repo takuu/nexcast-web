@@ -29,7 +29,8 @@ class SearchBar extends Component {
     const { searchShows } = nextProps;
 
     if( !_.isEqual(searchShows, this.props.searchShows) ) {
-      const foo = _.map(searchShows.results, (show) => { return { name: show.collectionName } });
+      const { result = [] } = searchShows;
+      const foo = _.map(result.slice(0,10), (show) => { return { name: show.collectionName } });
       debugger;
       this.setState({
         suggestions: foo,
@@ -81,7 +82,7 @@ class SearchBar extends Component {
             onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
             onSuggestionsClearRequested={this.onSuggestionsClearRequested}
             getSuggestionValue={(suggestion) => suggestion.name}
-            renderSuggestion={(suggestion) => (<div style={{cursor: 'pointer', fontSize: '1.2em'}}>{suggestion.name}</div>)}
+            renderSuggestion={(suggestion) => (<div style={{cursor: 'pointer', fontSize: '1.4em', lineHeight: '1.6em'}} className="single-line-ellipsis">{suggestion.name}</div>)}
             inputProps={inputProps}
           />
           <button type="submit" onClick={this.onSearch}><i className="fa fa-search"></i></button>

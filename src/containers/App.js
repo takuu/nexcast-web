@@ -51,7 +51,7 @@ const categories = [
   { name: 'Government & Organization', id: 1325 },
   { name: 'TV & Film', id: 1309 },
   { name: 'Technology', id: 1318 },
-]
+];
 
 
 @connect(state => {
@@ -89,7 +89,7 @@ class App extends React.Component {
       <div style={{ width: '100%' }}>
         <Header match={match} history={history} />
         <Hidden smDown>
-          <CustomDrawer subscriptions={categories} show={showDrawer}></CustomDrawer>
+          <CustomDrawer subscriptions={[]} show={showDrawer}></CustomDrawer>
         </Hidden>
 
 

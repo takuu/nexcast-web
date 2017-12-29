@@ -9,7 +9,32 @@ import Avatar from 'material-ui/Avatar';
 import InboxIcon from 'material-ui-icons/MoveToInbox';
 import SubscriptionIcon from 'material-ui-icons/Subscriptions';
 import FavoriteIcon from 'material-ui-icons/Favorite';
+import GameIcon from 'material-ui-icons/VideogameAsset';
+import SportIcon from 'material-ui-icons/Motorcycle';
+import MusicIcon from 'material-ui-icons/MusicNote';
+import EducationIcon from 'material-ui-icons/LaptopChromebook';
+import BusinessIcon from 'material-ui-icons/Business';
+import GovernmentIcon from 'material-ui-icons/Gavel';
+import TvIcon from 'material-ui-icons/Tv';
+import TechIcon from 'material-ui-icons/LightbulbOutline';
+
 import Divider from 'material-ui/Divider';
+
+
+
+const categories = [
+  { name: 'Popular', id: 1303, icon: FavoriteIcon },
+  { name: 'Games and Hobbies', id: 1323, icon: GameIcon },
+  { name: 'Music', id: 1310, icon: MusicIcon },
+  { name: 'Education', id: 1304, icon: EducationIcon },
+  { name: 'Business', id: 1321, icon: BusinessIcon },
+  { name: 'Sports & Recreation', id: 1316, icon: SportIcon },
+  { name: 'Government & Organization', id: 1325, icon: GovernmentIcon },
+  { name: 'TV & Film', id: 1309, icon: TvIcon },
+  { name: 'Technology', id: 1318, icon: TechIcon },
+];
+
+
 
 const styles = theme => ({
   drawerHeader: theme.mixins.toolbar,
@@ -37,7 +62,7 @@ class CustomDrawer extends Component {
     const { showDrawer, drawerType } = this.state;
 
 
-    const subscriptionList = _.map(subscriptions, ({ name, url}, index) => {
+    const sideList = subscriptions.length ? _.map(subscriptions, ({ name, url}, index) => {
       return (
         <ListItem button key={index}>
           <ListItemAvatar>
@@ -48,7 +73,18 @@ class CustomDrawer extends Component {
           />
         </ListItem>
       );
-    });
+    }) :
+      _.map(categories, (item, index) => {
+        return (
+          <ListItem button key={index}>
+            <ListItemIcon>
+              <item.icon></item.icon>
+            </ListItemIcon>
+            <ListItemText primary={item.name} />
+          </ListItem>
+        );
+      });
+
     return (
       <Drawer
         type={drawerType}
@@ -91,7 +127,7 @@ class CustomDrawer extends Component {
           </List>
           <Divider />
           <List subheader={<ListSubheader>CATEGORIES</ListSubheader>}>
-            {subscriptionList}
+            {sideList}
           </List>
         </div>
       </Drawer>

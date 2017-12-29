@@ -63,10 +63,12 @@ class PodcastPage extends Component {
       <Grid container spacing={24}>
         <Grid item xs={12}>
           <div>
-            {searchShows.results && searchShows.results.map((podcast, index) => (
+            {searchShows.result && searchShows.result.map((podcast, index) => (
               <Paper className={classes.episode} spacing={24} key={index}>
                 <div style={{ width: '100%',display: 'flex', flexDirection: 'row' }}>
-                  <img src={podcast.artworkUrl600} height="175" alt=""/>
+                  <Link to={`/podcast/${podcast.collectionId}`} key={index}>
+                    <img src={podcast.artworkUrl600} height="175" alt=""/>
+                  </Link>
                   <div style={{ padding: '0px 2%' }}>
                     <Link to={`/podcast/${podcast.collectionId}`} key={index}>
                       <h2 className="paper-list-title">{podcast.trackName}</h2>

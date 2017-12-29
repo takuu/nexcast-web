@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
 import { Link } from 'react-router-dom';
@@ -86,17 +87,18 @@ class PodcastPage extends Component {
                 <Paper className={classes.episode} spacing={24} key={index}>
                   <div style={{ width: '100%',display: 'flex', flexDirection: 'row' }}>
                     <img src={episode.image_location} height="175" alt=""/>
+
                     <div style={{ padding: '0px 2%' }}>
                       <Link to={`/podcast/${podcastId}/episode/${episode.episode_key}`} key={index}>
                         <h2 className="paper-list-title">{episode.title}</h2>
                       </Link>
-                      <span className="paper-list-text">{episode.subtitle}</span>
+                      <div style={{ width: '100%' }}>
+                        <p className="paper-list-duration">{moment(episode.pub_date).startOf('day').fromNow()} - {secondsToHMS(episode.duration)}</p>
+                        <p className="paper-list-text-long">{episode.description_clean}</p>
+                      </div>
                     </div>
                   </div>
-                  <div style={{ width: '100%' }}>
-                    <h5>{episode.pub_date} - {secondsToHMS(episode.duration)}</h5>
-                    <p className="paper-list-text-long">{episode.description_clean}</p>
-                  </div>
+
                 </Paper>
             ))}
           </div>

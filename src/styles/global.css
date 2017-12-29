@@ -289,7 +289,7 @@ a:-webkit-any-link {
 
 .paper-list-text {
     -webkit-margin-before: 2%;
-    -webkit-margin-start: .5em;
+    -webkit-margin-start: .8em;
     -webkit-margin-end: .5em;
     -webkit-margin-after: 2%;
     overflow: hidden;
@@ -299,15 +299,39 @@ a:-webkit-any-link {
     -webkit-box-orient: vertical;
 }
 
+.paper-list-duration {
+    -webkit-margin-before: 2%;
+    -webkit-margin-start: .8em;
+    -webkit-margin-end: .5em;
+    -webkit-margin-after: 2%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    font-weight: bold;
+    -webkit-box-orient: vertical;
+}
+
 .paper-list-text-long {
     -webkit-margin-before: 2%;
-    -webkit-margin-start: .5em;
+    -webkit-margin-start: .8em;
     -webkit-margin-end: .5em;
     -webkit-margin-after: 2%;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
+
+.single-line-ellipsis {
+    -webkit-margin-before: 2%;
+    -webkit-margin-start: 0em;
+    -webkit-margin-end: 0em;
+    -webkit-margin-after: 2%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
 }
 
