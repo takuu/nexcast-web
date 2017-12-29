@@ -1,4 +1,5 @@
 import React from 'react';
+import { renderToNodeStream } from 'react-dom/server';
 import cookieParser from 'cookie-parser';
 import express from 'express';
 var router = express.Router();
@@ -16,14 +17,19 @@ import _ from 'lodash';
 import httpProxy from 'http-proxy';
 import { Router } from 'react-router';
 
+import Html from './src/Html';
+import Root from './src/Root';
+
 
 var app = express();
 app.use(compression());
 app.use(cookieParser());
-app.use(express.static(__dirname + '/build'));
 
+
+// app.use(express.static(__dirname + '/build'));
 app.use('/js',express.static(path.join(__dirname, 'build/js')));
 app.use('/css',express.static(path.join(__dirname, 'build/css')));
+// app.use('/css',express.static(path.join(__dirname, 'src/styles')));
 
 
 console.log('prod-server NODE_ENV: ', process.env.NODE_ENV);
@@ -50,6 +56,8 @@ function createRoute (history, store) {
 // send all requests to index.html so browserHistory works
 
 app.get('/', (req, res, next) => {
+
+  /*
   fs.readFile(path.join(__dirname, 'build', 'index.html'), {
     encoding: 'utf-8'
   }, (err, source) => {
@@ -60,30 +68,90 @@ app.get('/', (req, res, next) => {
     res.write(template({ html: '', initialState: 'undefined' }));
     res.end();
   });
+  */
+
+
+  /*
+  renderToNodeStream(
+    <Html initialData={JSON.stringify({test: 'hello world'})}>
+      <Root />
+    </Html>
+  ).pipe(res);
+
+*/
+
+
+  res.write(`
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Nexcast</title>
+    
+            <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet' type='text/css'>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+            <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
+            <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
+    
+    
+            <link rel="stylesheet" href="/css/main.css">
+            <script src="/js/app.js"></script>
+        </head>
+    
+        <body>
+  `);
+  res.write("<div id='app'>");
+  const stream = renderToNodeStream(<Root />);
+  stream.pipe(res, { end: false });
+  stream.on('end', () => {
+    res.write("</div></body></html>");
+    res.end();
+  });
+
+
 });
 
 app.get('*', (req, res) => {
   var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
   console.log('app.get * : ', fullUrl);
-  res.sendFile(path.join(__dirname , 'build', 'index.html'));
+
+  res.write(`
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Nexcast</title>
+    
+            <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet' type='text/css'>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+            <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css" />
+            <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css" />
+    
+    
+            <link rel="stylesheet" href="/css/global.css">
+            <link rel="stylesheet" href="/css/theme.css">
+            <script src="/js/app.js"></script>
+        </head>
+    
+        <body>
+  `);
+  res.write("<div id='app'>");
+  const stream = renderToNodeStream(<Root />);
+  stream.pipe(res, { end: false });
+  stream.on('end', () => {
+    res.write("</div></body></html>");
+    res.end();
+  });
+
+
 });
 
-
-function renderPage(appHtml, initialState) {
-  return `
-    <!doctype html public="storage">
-    <html>
-      <head>
-      <meta charset=utf-8/>
-    <title>Nexcast</title>
-  </head>
-    <title>Nexcast</title>
-   
-    <div id="app">${appHtml}</div>
-    <script>var __INITIAL_STATE__ =  "${initialState}";</script>
-    <script src="/app.js"></script>
-   `
-}
 
 var PORT = process.env.PORT || 3000;
 app.listen(PORT, function() {

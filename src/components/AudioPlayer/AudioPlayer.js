@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Slider from 'rc-slider';
 import { withStyles } from 'material-ui/styles';
-import 'rc-slider/assets/index.css';
+// import 'rc-slider/assets/index.css';
 
 // import Play from '../../images/ios-play.svg';
 // import Pause from '../../images/ios-pause.svg';

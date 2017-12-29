@@ -1,6 +1,6 @@
 
 // if (process.env.BROWSER) require('../styles/global.css');
-require('../styles/global.css');
+// require('../styles/global.css');
 
 import React from 'react';
 import PropTypes from 'prop-types';
@@ -41,6 +41,19 @@ const styles = theme => ({
 });
 
 
+const categories = [
+  { name: 'Popular', id: 1303 },
+  { name: 'Games and Hobbies', id: 1323 },
+  { name: 'Sports & Recreation', id: 1316 },
+  { name: 'Music', id: 1310 },
+  { name: 'Education', id: 1304 },
+  { name: 'Business', id: 1321 },
+  { name: 'Government & Organization', id: 1325 },
+  { name: 'TV & Film', id: 1309 },
+  { name: 'Technology', id: 1318 },
+]
+
+
 @connect(state => {
     const {auth, router, user, ui} = state;
 
@@ -76,7 +89,7 @@ class App extends React.Component {
       <div style={{ width: '100%' }}>
         <Header match={match} history={history} />
         <Hidden smDown>
-          <CustomDrawer subscriptions={subscriptions} show={showDrawer}></CustomDrawer>
+          <CustomDrawer subscriptions={categories} show={showDrawer}></CustomDrawer>
         </Hidden>
 
 

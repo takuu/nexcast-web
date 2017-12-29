@@ -17,8 +17,8 @@
     "prod": "set NODE_ENV=production && set API_URL=http://statyapi:1337 && set SITE_URL=staty.io && babel-node ./prod-server.js --presets react es2015 stage-0 stage-1 stage-2 stage-3 & wait"
   },
   "peerDependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   },
   "dependencies": {
     "axios": "^0.5.4",
@@ -46,9 +46,9 @@
     "moment": "^2.12.0",
     "prop-types": "^15.6.0",
     "rc-slider": "^8.5.0",
-    "react": "^16.0.0",
+    "react": "^16.2.0",
     "react-autosuggest": "^9.3.2",
-    "react-dom": "^16.0.0",
+    "react-dom": "^16.2.0",
     "react-mixin": "^1.4.0",
     "react-redux": "^4.4.5",
     "react-redux-loading-bar": "^3.0.0",

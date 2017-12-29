@@ -2,7 +2,7 @@ import 'babel-core/register';
 import 'babel-polyfill';
 import React from 'react';
 import { Router } from 'react-router';
-import { Route, HashRouter, BrowserRouter, Switch } from 'react-router-dom';
+import { Route, HashRouter, StaticRouter , Switch } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 
@@ -20,11 +20,11 @@ export default class Root extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <BrowserRouter>
+        <StaticRouter context={{test: 'hello'}} >
           <MuiThemeProvider theme={theme}>
             {renderRoutes(routes)}
           </MuiThemeProvider>
-        </BrowserRouter>
+        </StaticRouter >
       </Provider>
     );
   }

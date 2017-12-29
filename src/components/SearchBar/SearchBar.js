@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import Autosuggest from 'react-autosuggest';
-import theme from '../../styles/theme.css';
 import { withStyles } from 'material-ui/styles';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import theme from '../../styles/theme.css';
 
 import { searchPodcastShows } from '../../reducers/search/searchActions';
 

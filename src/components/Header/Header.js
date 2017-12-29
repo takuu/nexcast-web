@@ -16,7 +16,6 @@ import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
 import Collapse from 'material-ui/transitions/Collapse';
 import MenuIcon from 'material-ui-icons/Menu';
-import theme from '../../styles/theme.css';
 import _ from 'lodash';
 
 import SearchBar from '../../components/SearchBar/SearchBar';

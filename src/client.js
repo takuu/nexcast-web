@@ -12,7 +12,7 @@ if (process.env.BROWSER) require('./styles/global.css');
 const history = {};
 // var injectTapEventPlugin = require('react-tap-event-plugin');
 // injectTapEventPlugin();
-ReactDOM.render(
+ReactDOM.hydrate(
   <Root />,
   document.getElementById('app')
 );

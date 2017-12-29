@@ -90,7 +90,7 @@ class CustomDrawer extends Component {
             </ListItem>
           </List>
           <Divider />
-          <List subheader={<ListSubheader>SUBSCRIPTIONS</ListSubheader>}>
+          <List subheader={<ListSubheader>CATEGORIES</ListSubheader>}>
             {subscriptionList}
           </List>
         </div>
