@@ -79,14 +79,14 @@ class CustomDrawer extends Component {
     }) :
       _.map(categories, (item, index) => {
         return (
-          <Link to={item.url} key={index}>
+          <a href={item.url} key={index}>
             <ListItem button >
               <ListItemIcon>
                 <item.icon></item.icon>
               </ListItemIcon>
               <ListItemText primary={item.name} />
             </ListItem>
-          </Link>
+          </a>
 
         );
       });
