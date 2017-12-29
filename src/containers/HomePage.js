@@ -14,6 +14,7 @@ import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 import CategoryList from '../components/CategoryList/CategoryList';
+import { camelize } from "../lib/helpers";
 
 
 import { getTaggedShows } from '../reducers/taggedShow/taggedShowActions';
@@ -127,7 +128,7 @@ class HomePage extends Component {
 
         {_.map(categories, (category, index) => {
           return (
-            <div style={{marginTop: '100px'}} key={index}>
+            <div style={{marginTop: '100px'}} key={index} id={`${camelize(category.name)}`}>
               <CategoryList name={category.name} podcastList={popular[category.id]}></CategoryList>
             </div>
           )

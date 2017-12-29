@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Drawer from 'material-ui/Drawer';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
@@ -18,20 +19,22 @@ import GovernmentIcon from 'material-ui-icons/Gavel';
 import TvIcon from 'material-ui-icons/Tv';
 import TechIcon from 'material-ui-icons/LightbulbOutline';
 
+import { camelize } from "../../lib/helpers";
+
 import Divider from 'material-ui/Divider';
 
 
 
 const categories = [
-  { name: 'Popular', id: 1303, icon: FavoriteIcon },
-  { name: 'Games and Hobbies', id: 1323, icon: GameIcon },
-  { name: 'Music', id: 1310, icon: MusicIcon },
-  { name: 'Education', id: 1304, icon: EducationIcon },
-  { name: 'Business', id: 1321, icon: BusinessIcon },
-  { name: 'Sports & Recreation', id: 1316, icon: SportIcon },
-  { name: 'Government & Organization', id: 1325, icon: GovernmentIcon },
-  { name: 'TV & Film', id: 1309, icon: TvIcon },
-  { name: 'Technology', id: 1318, icon: TechIcon },
+  { name: 'Popular', id: 1303, icon: FavoriteIcon, url: '/#popular' },
+  { name: 'Games and Hobbies', id: 1323, icon: GameIcon, url: '/#gamesAndHobbies' },
+  { name: 'Music', id: 1310, icon: MusicIcon, url: '/#music' },
+  { name: 'Education', id: 1304, icon: EducationIcon, url: '/#education' },
+  { name: 'Business', id: 1321, icon: BusinessIcon, url: '/#business' },
+  { name: 'Sports & Recreation', id: 1316, icon: SportIcon, url: '/#sports&Recreation' },
+  { name: 'Government & Organization', id: 1325, icon: GovernmentIcon, url: '/#government&Organization' },
+  { name: 'TV & Film', id: 1309, icon: TvIcon, url: '/#tv&Film' },
+  { name: 'Technology', id: 1318, icon: TechIcon, url: `/#technology` },
 ];
 
 
@@ -76,12 +79,15 @@ class CustomDrawer extends Component {
     }) :
       _.map(categories, (item, index) => {
         return (
-          <ListItem button key={index}>
-            <ListItemIcon>
-              <item.icon></item.icon>
-            </ListItemIcon>
-            <ListItemText primary={item.name} />
-          </ListItem>
+          <Link to={item.url} key={index}>
+            <ListItem button >
+              <ListItemIcon>
+                <item.icon></item.icon>
+              </ListItemIcon>
+              <ListItemText primary={item.name} />
+            </ListItem>
+          </Link>
+
         );
       });
 
