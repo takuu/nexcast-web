@@ -22,6 +22,8 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 
 import { searchPodcastShows } from '../../reducers/search/searchActions';
 
+import CustomDrawer from '../../components/CustomDrawer/CustomDrawer';
+
 
 const styles = theme => ({
   root: {
@@ -71,6 +73,8 @@ class Header extends Component {
   constructor() {
     super();
     this.onChange = this.onChange.bind(this);
+    this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
+    this.state = {openDrawer: false };
   }
 
   onChange(val) {
@@ -78,15 +82,34 @@ class Header extends Component {
 
   }
 
-
+  handleDrawerToggle() {
+    this.setState({
+      openDrawer: !this.state.openDrawer
+    });
+  }
 
   render() {
     const { classes } = this.props;
+    const [ root, podcast, podcastId, pathname,  ...other ] = this.props.location.pathname.split('/');
     const navLinkConfig = [
       { name: 'Popular', url: '/popular' },
       { name: 'Queue', url: '/queue' },
     ];
     debugger;
+
+
+    const HIDE_DRAWER_PATH = ['episode'];
+
+    const showDrawer = !!!(HIDE_DRAWER_PATH.find((path) => (path.toLowerCase() === (pathname || '').toLowerCase())));
+
+    let foo = true;
+    if(showDrawer) {
+      foo = this.state.openDrawer;
+    } else {
+      foo = false;
+    }
+
+    console.log('hideDrawer: ', showDrawer, foo);
 
 
     const navLinks = _.map(navLinkConfig, ({ name, url }, index) => ( <Link key={index} style={{textDecoration: 'none'}} to={url}><Button style={{color: 'white'}}color="default">{name}</Button></Link> ));
@@ -124,6 +147,14 @@ class Header extends Component {
 
             </Toolbar>
           </AppBar>
+          {/* mobile */}
+          <Hidden mdUp>
+            <CustomDrawer subscriptions={[]} show={this.state.openDrawer}></CustomDrawer>
+          </Hidden>
+          {/* desktop */}
+          <Hidden smDown>
+            <CustomDrawer subscriptions={[]} show={showDrawer}></CustomDrawer>
+          </Hidden>
         </div>
       </div>
     );

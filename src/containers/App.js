@@ -27,9 +27,6 @@ import SubscriptionIcon from 'material-ui-icons/Subscriptions';
 import FavoriteIcon from 'material-ui-icons/Favorite';
 
 
-import CustomDrawer from '../components/CustomDrawer/CustomDrawer';
-
-
 
 const styles = theme => ({
   drawerHeader: theme.mixins.toolbar,
@@ -79,21 +76,10 @@ class App extends React.Component {
       { name: 'Software Daily Radio', url: '' },
     ];
 
-    const HIDE_DRAWER_PATH = ['episode'];
-
-    const showDrawer = !!!(HIDE_DRAWER_PATH.find((path) => (path.toLowerCase() === (pathname || '').toLowerCase())));
-
-    console.log('hideDrawer: ', showDrawer);
-
     return (
       <div style={{ width: '100%' }}>
-        <Header match={match} history={history} />
-        <Hidden smDown>
-          <CustomDrawer subscriptions={[]} show={showDrawer}></CustomDrawer>
-        </Hidden>
-
-
-        <div className={classes.noDrawer} style={{minHeight: '600px', marginLeft: showDrawer ? '300px' : '0px', marginTop: '75px'}}>
+        <Header match={match} history={history} location={this.props.location} />
+        <div className={classes.noDrawer} style={{minHeight: '600px', marginLeft: '300px', marginTop: '75px'}}>
 
           {renderRoutes(route.routes)}
         </div>
