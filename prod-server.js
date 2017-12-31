@@ -8,6 +8,7 @@ import path from 'path';
 import { renderToString } from 'react-dom/server';
 // and these to match the url to routes and then render
 import { match, RouterContext } from 'react-router';
+import { Route, HashRouter, StaticRouter ,BrowserRouter, Switch } from 'react-router-dom';
 import proxyMiddleware from 'http-proxy-middleware';
 import fs from 'fs';
 import { Provider } from 'react-redux';
@@ -16,6 +17,16 @@ import compression from 'compression';
 import _ from 'lodash';
 import httpProxy from 'http-proxy';
 import { Router } from 'react-router';
+import ReactDOM from 'react-dom';
+
+
+import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import createGenerateClassName from 'material-ui/styles/createGenerateClassName'
+import { green, red } from 'material-ui/colors';
+import { SheetsRegistry } from 'react-jss/lib/jss';
+import JssProvider from 'react-jss/lib/JssProvider';
+import { create } from 'jss';
+import preset from 'jss-preset-default';
 
 import Html from './src/Html';
 import Root from './src/Root';
@@ -46,44 +57,50 @@ app.get('/api/v1*', function (req, res, next) {
 });
 
 
-function createRoute (history, store) {
-  return (
-    <Router history={history}>
-      {routes}
-    </Router>
-  );
-}
-// send all requests to index.html so browserHistory works
+function handleRender(req, res) {
+  // Create a sheetsRegistry instance.
+  const sheetsRegistry = new SheetsRegistry();
 
-app.get('/', (req, res, next) => {
-
-  /*
-  fs.readFile(path.join(__dirname, 'build', 'index.html'), {
-    encoding: 'utf-8'
-  }, (err, source) => {
-    if (err) return next(err);
-
-    const template = _.template(source);
-
-    res.write(template({ html: '', initialState: 'undefined' }));
-    res.end();
+  // Create a theme instance.
+  const theme = createMuiTheme({
+    palette: {
+      primary: green,
+      accent: red,
+      type: 'light',
+    },
   });
-  */
 
+  const context = {
+    splitPoints: [], // Create an empty array
+  };
 
-  /*
-  renderToNodeStream(
-    <Html initialData={JSON.stringify({test: 'hello world'})}>
-      <Root />
-    </Html>
-  ).pipe(res);
+  // Configure JSS
+  const jss = create(preset());
+  // const jss = create({ plugins: [...preset().plugins, rtl()] }); // in-case you're supporting rtl
+  const generateClassName = createGenerateClassName();
 
-*/
+  // Render the component to a string.
+  const html = renderToString(
+    <StaticRouter location={req.url} context={context}>
+      <JssProvider registry={sheetsRegistry} jss={jss} generateClassName={generateClassName}>
+        <MuiThemeProvider theme={theme} sheetsManager={new Map()}>
+          <Root />
+        </MuiThemeProvider>
+      </JssProvider>
+    </StaticRouter>
+  )
 
+  // Grab the CSS from our sheetsRegistry.
+  const css = sheetsRegistry.toString()
 
-  res.write(`
-    <!DOCTYPE html>
-    <html lang="en">
+  // Send the rendered page back to the client.
+  res.send(renderFullPage(html, css))
+}
+
+function renderFullPage(html, css) {
+  return `
+    <!doctype html>
+    <html>
         <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -100,23 +117,45 @@ app.get('/', (req, res, next) => {
             <link rel="stylesheet" href="/css/main.css">
             <script src="/js/app.js"></script>
         </head>
-    
-        <body>
-  `);
-  res.write("<div id='app'>");
-  const stream = renderToNodeStream(<Root />);
-  stream.pipe(res, { end: false });
-  stream.on('end', () => {
-    res.write("</div></body></html>");
-    res.end();
-  });
+      <body>
+        <div id="app">${html}</div>
+        <style id="jss-server-side">${css}</style>
+      </body>
+    </html>
+  `;
+}
+
+
+app.use(handleRender);
+
+/*
+app.get('/', (req, res, next) => {
+
+
+  // fs.readFile(path.join(__dirname, 'build', 'index.html'), {
+  //   encoding: 'utf-8'
+  // }, (err, source) => {
+  //   if (err) return next(err);
+  //
+  //   const template = _.template(source);
+  //
+  //   res.write(template({ html: '', initialState: 'undefined' }));
+  //   res.end();
+  // });
+
 
 
 });
+*/
+/*
 
 app.get('*', (req, res) => {
   var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
   console.log('app.get * : ', fullUrl);
+
+  const context = {
+    splitPoints: [], // Create an empty array
+  };
 
   res.write(`
     <!DOCTYPE html>
@@ -142,7 +181,7 @@ app.get('*', (req, res) => {
         <body>
   `);
   res.write("<div id='app'>");
-  const stream = renderToNodeStream(<Root />);
+  const stream = renderToNodeStream(<StaticRouter location={req.url} context={context}><Root /></StaticRouter>);
   stream.pipe(res, { end: false });
   stream.on('end', () => {
     res.write("</div></body></html>");
@@ -151,7 +190,7 @@ app.get('*', (req, res) => {
 
 
 });
-
+*/
 
 var PORT = process.env.PORT || 3000;
 app.listen(PORT, function() {

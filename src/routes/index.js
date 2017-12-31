@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { Route, HashRouter, Switch } from 'react-router-dom';
+import { Route, HashRouter } from 'react-router-dom';
 import PodcastListPage from "../containers/PodcastListPage";
 import App from '../containers/App'
 import PodcastPage from "../containers/PodcastPage";

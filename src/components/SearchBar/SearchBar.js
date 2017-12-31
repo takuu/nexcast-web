@@ -3,7 +3,7 @@ import Autosuggest from 'react-autosuggest';
 import { withStyles } from 'material-ui/styles';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import theme from '../../styles/theme.css';
+// import theme from '../../styles/theme.css';
 
 import { searchPodcastShows } from '../../reducers/search/searchActions';
 
@@ -78,7 +78,7 @@ class SearchBar extends Component {
           <Autosuggest
             suggestions={suggestions}
             style={{float: 'left'}}
-            theme={theme}
+            // theme={theme}
             onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
             onSuggestionsClearRequested={this.onSuggestionsClearRequested}
             getSuggestionValue={(suggestion) => suggestion.name}
