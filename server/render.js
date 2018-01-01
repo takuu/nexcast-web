@@ -4,10 +4,17 @@ import { flushChunkNames } from 'react-universal-component/server'
 import flushChunks from 'webpack-flush-chunks'
 import Root from '../src/Root'
 
+
+import createGenerateClassName from 'material-ui/styles/createGenerateClassName'
+
+import { SheetsRegistry } from 'react-jss/lib/jss';
+import JssProvider from 'react-jss/lib/JssProvider';
+import { create } from 'jss';
+import preset from 'jss-preset-default';
+
 import { Route, HashRouter, StaticRouter ,BrowserRouter, Switch } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import { green, red } from 'material-ui/colors';
-
 
 const theme = createMuiTheme({
   palette: {
@@ -21,14 +28,27 @@ const context = {
 };
 
 export default ({ clientStats }) => (req, res) => {
+  const sheetsRegistry = new SheetsRegistry();
+  const context = {
+    splitPoints: [], // Create an empty array
+  };
+  // Configure JSS
+  const jss = create(preset());
+  const generateClassName = createGenerateClassName();
+
   const app = ReactDOM.renderToString(
     <StaticRouter location={req.url} context={context}>
-      <MuiThemeProvider theme={theme} sheetsManager={new Map()}>
-        <Root />
-      </MuiThemeProvider>
+      <JssProvider registry={sheetsRegistry} jss={jss} generateClassName={generateClassName}>
+        <MuiThemeProvider theme={theme} sheetsManager={new Map()}>
+
+          <Root />
+        </MuiThemeProvider>
+      </JssProvider>
     </StaticRouter>
   )
   const chunkNames = flushChunkNames()
+  // Grab the CSS from our sheetsRegistry.
+  const css = sheetsRegistry.toString()
 
   const {
     js,
@@ -63,6 +83,7 @@ export default ({ clientStats }) => (req, res) => {
         </head>
       <body>
         <div id="app">${app}</div>
+        <style id="jss-server-side">${css}</style>
           ${cssHash}
           ${js}
       </body>
