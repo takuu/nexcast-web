@@ -1,4 +1,9 @@
 {
-  "plugins": ["transform-react-jsx", "transform-decorators-legacy"],
-  "presets": ["react", "es2015", "stage-0", "stage-1", "stage-2", "stage-3" ]
+  "plugins": ["transform-react-jsx", "transform-decorators-legacy","universal-import"],
+  "presets": ["env", "react", "es2015", "stage-0", "stage-1", "stage-2", "stage-3" ],
+  "env": {
+    "development": {
+      "plugins": ["react-hot-loader/babel"]
+    }
+  }
 }
