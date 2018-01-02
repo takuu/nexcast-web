@@ -115,6 +115,7 @@ class AudioPlayer extends Component {
 
   play() {
 
+    console.log('play is clicked');
     sound.play();
 
     sound.once('play', () => {
@@ -216,7 +217,7 @@ class AudioPlayer extends Component {
       <div>
         <div style={{ width: '100%', height: 200, backgroundColor: playerColor }}>
 
-          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '20px 5px 0px 5px', padding: '5px'}}>
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0px 5px 0px 5px', padding: '5px'}}>
             <span className={classes.playerTitle}>{this.props.title} - {this.props.subTitle}</span>
           </div>
 

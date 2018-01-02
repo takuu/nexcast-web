@@ -41,6 +41,9 @@ const categories = [
 
 const styles = theme => ({
   drawerHeader: theme.mixins.toolbar,
+  drawerPaper: {
+    maxWidth: '300px'
+  }
 });
 
 class CustomDrawer extends Component {
@@ -106,9 +109,9 @@ class CustomDrawer extends Component {
       >
         <div>
           <div className={classes.drawerHeader} >
-{/*            <ListItem>
-              <ListItemText primary={<Typography align='center' type="title" color="default" style={{textTransform: 'uppercase', margin: '5px 20px 0px 0px'}}>Nexcast</Typography>}></ListItemText>
-            </ListItem>*/}
+            <ListItem>
+              <ListItemText primary={<div align='center' type="title" color="default" style={{textTransform: 'uppercase', margin: '5px 20px 0px 0px'}}></div>}></ListItemText>
+            </ListItem>
           </div>
           <Divider />
           <List>

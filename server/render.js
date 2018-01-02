@@ -14,12 +14,12 @@ import preset from 'jss-preset-default';
 
 import { Route, HashRouter, StaticRouter ,BrowserRouter, Switch } from 'react-router-dom';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import { green, red } from 'material-ui/colors';
+import { green, red, indigo, pink } from 'material-ui/colors';
 
 const theme = createMuiTheme({
   palette: {
-    primary: green,
-    accent: red,
+    primary: indigo,
+    accent: pink,
     type: 'light',
   },
 });

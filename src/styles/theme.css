@@ -35,7 +35,7 @@
 #react-autowhatever-1 {
     position: fixed;
     top: 60px;
-    width: 350px;
+    width: 450px;
     background: white;
 }
 
@@ -49,7 +49,7 @@
     font-size: 17px;
     border: none;
     border: 2px solid #eee;
-    width: 300px;
+    width: 400px;
     outline-color: rgb(28,98,185);
     /*outline: none;*/
     float: left;
@@ -77,12 +77,11 @@
 /* Small Devices, Tablets */
 @media only screen and (min-width : 768px) {
     .search-box input[type=text] {
-        width: 200px;
+        width: 400px;
     }
 
     #react-autowhatever-1 {
-        width: 100%;
-        left: 0px;
+        width: 450px;
     }
 
 }

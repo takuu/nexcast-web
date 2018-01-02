@@ -1,31 +1,11 @@
-
-// if (process.env.BROWSER) require('../styles/global.css');
-// require('../styles/global.css');
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import Header from '../components/Header/Header';
-import { Link, Route, Redirect } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 import Footer from '../components/Footer/Footer';
 
 import { withStyles } from 'material-ui/styles';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import Hidden from 'material-ui/Hidden';
-import Drawer from 'material-ui/Drawer';
-import Divider from 'material-ui/Divider';
-import List, { ListItem, ListItemAvatar, ListItemIcon, ListItemText, ListSubheader } from 'material-ui/List';
-import Avatar from 'material-ui/Avatar';
-import InboxIcon from 'material-ui-icons/MoveToInbox';
-
-import SubscriptionIcon from 'material-ui-icons/Subscriptions';
-import FavoriteIcon from 'material-ui-icons/Favorite';
-
 
 
 const styles = theme => ({
@@ -76,10 +56,15 @@ class App extends React.Component {
       { name: 'Software Daily Radio', url: '' },
     ];
 
+
+    const HIDE_DRAWER_PATH = ['episode'];
+
+    const drawerShowing = !!!(HIDE_DRAWER_PATH.find((path) => (path.toLowerCase() === (pathname || '').toLowerCase())));
+
     return (
       <div style={{ width: '100%' }}>
         <Header match={match} history={history} location={this.props.location} />
-        <div className={classes.noDrawer} style={{minHeight: '600px', marginLeft: '300px', marginTop: '75px'}}>
+        <div className={classes.noDrawer} style={{minHeight: '600px', marginLeft: drawerShowing ? '300px': '0px', marginTop: '75px', width: '100%'}}>
 
           {renderRoutes(route.routes)}
         </div>
