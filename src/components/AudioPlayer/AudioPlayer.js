@@ -94,10 +94,11 @@ class AudioPlayer extends Component {
     const { mediaUrl } = props;
     if(mediaUrl && this.state.mediaUrl != mediaUrl) {
 
-      console.log('Howler: ', mediaUrl);
+      console.log('initiate Howler: ', mediaUrl);
       this.setState({
         ...this.state,
         mediaUrl,
+        playerStatus: 1,
       });
       sound = new Howl({
         src: [mediaUrl],
@@ -106,7 +107,52 @@ class AudioPlayer extends Component {
 
         }
       });
-      this.play();
+      sound.once('load', () => {
+        this.play();
+      });
+
+      sound.on('play', () => {
+        clearInterval(this.state.intervalId);
+
+
+
+        const intervalId = setInterval(() => {
+
+          let status = sound.state();
+
+          console.log('Howler status: ', status);
+
+          switch(status) {
+            case 'loading':
+              this.setState({
+                playerStatus: 1,
+                duration: 0,
+                position: 0,
+              });
+              break;
+            case 'loaded':
+              this.setState({
+                playerStatus: 3,
+                duration: sound.duration(),
+                position: sound.seek()
+              });
+              break;
+            default:
+              break;
+          }
+
+          this.props.onProgress(sound.seek());
+
+        }, 1000);
+
+        this.setState({
+          ...this.state,
+          playerStatus: 3,
+          intervalId
+        });
+      });
+
+      // this.play();
 
 
     }
@@ -115,47 +161,15 @@ class AudioPlayer extends Component {
 
   play() {
 
-    console.log('play is clicked');
+    console.log('play is pending');
     sound.play();
+    this.setState({
+      ...this.state,
+      playerStatus: 3,
+    })
 
-    sound.once('play', () => {
-      clearInterval(this.state.intervalId);
 
-      console.log('play!!!!');
 
-      const intervalId = setInterval(() => {
-
-        let status = sound.state();
-
-        switch(status) {
-          case 'loading':
-            this.setState({
-              playerStatus: 1,
-              duration: 0,
-              position: 0,
-            });
-            break;
-          case 'loaded':
-            this.setState({
-              playerStatus: 3,
-              duration: sound.duration(),
-              position: sound.seek()
-            });
-            break;
-          default:
-            break;
-        }
-
-        this.props.onProgress(sound.seek());
-
-      }, 1000);
-
-      this.setState({
-        ...this.state,
-        playerStatus: 3,
-        intervalId
-      });
-    });
 
 
 
@@ -229,6 +243,16 @@ class AudioPlayer extends Component {
                 return (
                   <img src={require("../../images/icon_pause.png")} onClick={pause} style={{width: '50px', padding: '2px 10px'}} />
                 );
+              } else if (playerStatus == 1) {
+                return (
+                  <div className="spinner" style={{ width: '50px', height: '50px'}} onClick={play}>
+                    <div className="rect1"></div>
+                    {/*<div className="rect2"></div>*/}
+                    <div className="rect3"></div>
+                    {/*<div className="rect4"></div>*/}
+                    <div className="rect5"></div>
+                  </div>
+                )
               } else {
                 return (
                   <img src={require("../../images/icon_play.png")} onClick={play} style={{width: '50px', padding: '2px 10px'}} />
