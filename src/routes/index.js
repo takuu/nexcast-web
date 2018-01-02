@@ -2,11 +2,17 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { Route, HashRouter } from 'react-router-dom';
-import PodcastListPage from "../containers/PodcastListPage";
-import App from '../containers/App'
-import PodcastPage from "../containers/PodcastPage";
-import HomePage from "../containers/HomePage";
-import EpisodePage from "../containers/EpisodePage";
+import universal from 'react-universal-component';
+
+const PodcastListPage = universal(import('../containers/PodcastListPage'));
+const App = universal(import('../containers/App'));
+const PodcastPage = universal(import('../containers/PodcastPage'));
+const HomePage = universal(import('../containers/HomePage'));
+const EpisodePage = universal(import('../containers/EpisodePage'));
+
+
+
+
 
 // import { Switch } from 'react-router';
 
