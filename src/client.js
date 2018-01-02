@@ -1,13 +1,13 @@
 /* eslint-env browser */
 /* global process */
-import 'babel-polyfill';
+// import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import AppContainer from 'react-hot-loader/lib/AppContainer'
 const theme = createMuiTheme();
 
-import Root from './Root';
+import App from './Root';
 if (process.env.BROWSER) require('./styles/global.css');
 
 import { Route, HashRouter, StaticRouter ,BrowserRouter, Switch } from 'react-router-dom';
@@ -19,7 +19,7 @@ const history = {};
 const render = App => ReactDOM.hydrate(
   <AppContainer>
     <MuiThemeProvider theme={theme}>
-      <BrowserRouter context={{test: 'hello'}} ><Root /></BrowserRouter>
+      <BrowserRouter context={{test: 'hello'}} ><App /></BrowserRouter>
     </MuiThemeProvider>
   </AppContainer>,
   document.getElementById('app')

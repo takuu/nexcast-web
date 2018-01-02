@@ -1,4 +1,3 @@
-import 'babel-polyfill';
 import React from 'react';
 import { Router } from 'react-router';
 import { renderRoutes } from 'react-router-config';
