@@ -61,3 +61,28 @@
     /*box-shadow: 0 0 5px rgba(0, 0, 0, 1);*/
 
 }
+
+
+
+@media only screen and (min-width : 320px) {
+    .search-box input[type=text] {
+        width: 200px;
+    }
+    #react-autowhatever-1 {
+        width: 100%;
+        left: 0px;
+    }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+    .search-box input[type=text] {
+        width: 200px;
+    }
+
+    #react-autowhatever-1 {
+        width: 100%;
+        left: 0px;
+    }
+
+}

@@ -106,9 +106,9 @@ class CustomDrawer extends Component {
       >
         <div>
           <div className={classes.drawerHeader} >
-            <ListItem>
+{/*            <ListItem>
               <ListItemText primary={<Typography align='center' type="title" color="default" style={{textTransform: 'uppercase', margin: '5px 20px 0px 0px'}}>Nexcast</Typography>}></ListItemText>
-            </ListItem>
+            </ListItem>*/}
           </div>
           <Divider />
           <List>

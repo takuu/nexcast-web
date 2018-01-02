@@ -82,26 +82,24 @@ class PodcastPage extends Component {
           </Paper>
         </Grid>
         <Grid item xs={12}>
-          <div>
             {showDetail.map((episode, index) => (
                 <Paper className={classes.episode} spacing={24} key={index}>
-                  <div style={{ width: '100%',display: 'flex', flexDirection: 'row' }}>
-                    <img src={episode.image_location} height="175" alt=""/>
 
-                    <div style={{ padding: '0px 2%' }}>
+                  <div style={{ width: '100%',display: 'flex', flexDirection: 'row' }}>
+                    <Link to={`/podcast/${podcastId}/episode/${episode.episode_key}`} key={index}>
+                      <img src={episode.image_location} className={classes.podcastImage} height="175" alt=""/>
+                    </Link>
+                    <div>
                       <Link to={`/podcast/${podcastId}/episode/${episode.episode_key}`} key={index}>
                         <h2 className="paper-list-title">{episode.title}</h2>
                       </Link>
-                      <div style={{ width: '100%' }}>
-                        <p className="paper-list-duration">{moment(episode.pub_date).startOf('day').fromNow()} - {secondsToHMS(episode.duration)}</p>
-                        <p className="paper-list-text-long">{episode.description_clean}</p>
-                      </div>
+                      <p className="paper-list-duration">{moment(episode.pub_date).startOf('day').fromNow()} - {secondsToHMS(episode.duration)}</p>
+                      <p className="paper-list-text-long">{episode.description_clean}</p>
                     </div>
                   </div>
 
                 </Paper>
             ))}
-          </div>
         </Grid>
       </Grid>
     );

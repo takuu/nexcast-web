@@ -7,7 +7,8 @@ module.exports = {
   devtool: 'source-map',
   entry: path.resolve(__dirname, '../server/render.js'),
   output: {
-    libraryTarget: 'commonjs2'
+    libraryTarget: 'commonjs2',
+    publicPath: '/'
   },
   module: {
     rules: [

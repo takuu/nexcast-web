@@ -129,9 +129,17 @@ class Header extends Component {
                 </IconButton>
               </Hidden>
               <div>
-                <Link to={"/"} >
-                  <img style={{height: '32px', padding: '5px'}} src={require('../../images/nexcast_logo_dark.png')} alt={`Nexcast`}/>
-                </Link>
+                <Hidden mdUp>
+                  <Link to={"/"} >
+                    <img style={{height: '32px', padding: '5px'}} src={require('../../images/nexcast_logo_minimal.png')} alt={`Nexcast`}/>
+                  </Link>
+                </Hidden>
+                <Hidden smDown>
+                  <Link to={"/"} >
+                    <img style={{height: '32px', padding: '5px'}} src={require('../../images/nexcast_logo_dark.png')} alt={`Nexcast`}/>
+                  </Link>
+                </Hidden>
+
               </div>
 
               <SearchBar onChange={this.onChange} history={this.props.history} />
