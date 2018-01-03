@@ -29,7 +29,7 @@ export default (state = initialState, action) => {
     case ActionTypes.GET_EPISODE_SUCCESS:
       let episodeList = state.get(action.payload.podcast_id);
       if(episodeList) {
-        const found = _.find(episodeList, {episode_key: action.payload.episode_key});
+        const found = _.find(episodeList, {id: action.payload.id});
         if(!found) episodeList.push(action.payload);
         return state.set(action.payload.podcast_id, episodeList);
       } else {

@@ -86,11 +86,11 @@ class PodcastPage extends Component {
                 <Paper className={classes.episode} spacing={24} key={index}>
 
                   <div style={{ width: '100%',display: 'flex', flexDirection: 'row' }}>
-                    <Link to={`/podcast/${podcastId}/episode/${episode.episode_key}`} key={index}>
+                    <Link to={`/podcast/${podcastId}/episode/${episode.id}`} key={index}>
                       <img src={episode.image_location} className={classes.podcastImage} height="175" alt=""/>
                     </Link>
                     <div>
-                      <Link to={`/podcast/${podcastId}/episode/${episode.episode_key}`} key={index}>
+                      <Link to={`/podcast/${podcastId}/episode/${episode.id}`} key={index}>
                         <h2 className="paper-list-title">{episode.title}</h2>
                       </Link>
                       <p className="paper-list-duration">{moment(episode.pub_date).startOf('day').fromNow()} - {secondsToHMS(episode.duration)}</p>

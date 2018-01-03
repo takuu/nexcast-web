@@ -9,7 +9,7 @@ import cards from '../../Database.json';
 import _ from 'lodash';
 import Slider from 'react-slick';
 import Tag from '../components/Tag/Tag';
-import { getEpisodeByKey } from '../reducers/showDetail/showDetailActions';
+import { getEpisodeByKey, getEpisodeById } from '../reducers/showDetail/showDetailActions';
 import { getPodcastById } from '../reducers/podcast/podcastActions';
 
 
@@ -58,14 +58,15 @@ const styles = theme => ({
 
 @connect((state, router) => {
   const { showDetail, podcastInfo } = state;
-  const { podcastId, episodeKey } = router.match.params;
+  const { podcastId, episodeId } = router.match.params;
 
   const episodeList = showDetail.toJS()[podcastId];
-  const episode = _.find(episodeList, {episode_key: episodeKey});
+  const episode = _.find(episodeList, {id: parseInt(episodeId)});
+  console.log('episodeList: ', episodeList);
 
   return { showDetail: episodeList, episode: episode, podcastInfo: podcastInfo.toJS()[podcastId] };
 }, {
-  getPodcastById, getEpisodeByKey
+  getPodcastById, getEpisodeByKey, getEpisodeById
 })
 class EpisodePage extends Component {
   constructor() {
@@ -73,9 +74,9 @@ class EpisodePage extends Component {
     this.goto = this.goto.bind(this);
   }
   componentWillMount() {
-    const { podcastId, episodeKey } = this.props.match.params;
+    const { podcastId, episodeId } = this.props.match.params;
     this.props.getPodcastById(podcastId);
-    this.props.getEpisodeByKey(episodeKey);
+    this.props.getEpisodeById(episodeId);
   }
 
   goto(num) {
@@ -91,8 +92,10 @@ class EpisodePage extends Component {
 
   render() {
     const { classes, showDetail, podcastInfo = {}, episode = {} } = this.props;
-    const { episodeKey, podcastId } = this.props.match.params;
+    const { podcastId } = this.props.match.params;
     const foo = _.map(cards.cards.result, 'seconds');
+
+    console.log('episode: ', episode);
 
     const tagList = _.map(cards.cards.result, ({ title, description, mediaType, mediaUrl, buttonText1, buttonLink1, buttonText2, buttonLink2 }, index) => {
       return (
