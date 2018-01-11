@@ -24,7 +24,6 @@ import { searchPodcastShows } from '../../reducers/search/searchActions';
 
 import CustomDrawer from '../../components/CustomDrawer/CustomDrawer';
 
-
 const styles = theme => ({
   root: {
     marginTop: theme.spacing.unit * 3,

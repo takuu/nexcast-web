@@ -12,6 +12,8 @@ const {
 
 } = require('../../lib/constants').default;
 
+import Action from '../../lib/constants';
+
 const BackendFactory = require('../../lib/BackendFactory').default;
 import {appAuthToken} from '../../lib/AppAuthToken'
 import _ from 'lodash';
@@ -123,7 +125,7 @@ export function hasTag (rss) {
   }
 }
 
-export function getTags (id) {
+export function getTagsOld2 (id) {
   return dispatch => {
     dispatch(getTagsRequest());
 
@@ -154,6 +156,33 @@ export function getTags (id) {
       console.log('getTags catch: ', error);
         dispatch(getTagsFailure(error))
       })
+  }
+}
+
+export function getTags (id) {
+  return async dispatch => {
+    dispatch({ type: Action.GET_TAGS_REQUEST });
+    try {
+      const { status, result, error } = (await axios.get(`${CONFIG.baseAPI}/cards/all?episode_id=${id}`)).data;
+      const tagList = _.map(result, (tag) => {
+        tag.formattedContent = helpers.linkify((tag.content || '').replace(/(\r\n|\n|\r)/gm, "<br>"));
+        var embeddedLink = (tag.youtube_location || '').replace('youtu.be', 'www.youtube.com/embed');
+        embeddedLink = (embeddedLink || '').replace('www.youtube.com/watch?v=', 'www.youtube.com/embed/');
+        embeddedLink = embeddedLink.replace('https', 'http');
+        // tag.video_location = $sce.trustAsResourceUrl(embeddedLink);
+        tag.video_location = embeddedLink;
+
+        return tag;
+      });
+
+      (status == 1) ?
+        dispatch({ type: Action.GET_TAGS_SUCCESS, payload: tagList }) :
+        dispatch({ type: GET_TAGS_FAILURE, payload: 'err: server status 0' });
+
+    } catch (err) {
+      dispatch({ type: Action.HAS_TAG_FAILURE, payload: err });
+    }
+
   }
 }
 
