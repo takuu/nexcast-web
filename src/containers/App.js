@@ -47,7 +47,6 @@ class App extends React.Component {
 
   render () {
     const { auth, dispatch, params, user, ui, route, classes, match, history } = this.props;
-    debugger;
 
     const [ root, podcast, podcastId,pathname,  ...other ] = this.props.location.pathname.split('/');
     const subscriptions = [

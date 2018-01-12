@@ -94,7 +94,6 @@ class Header extends Component {
       { name: 'Popular', url: '/popular' },
       { name: 'Queue', url: '/queue' },
     ];
-    debugger;
 
 
     const HIDE_DRAWER_PATH = ['episode'];

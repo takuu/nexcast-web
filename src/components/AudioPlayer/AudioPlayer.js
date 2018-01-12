@@ -225,7 +225,6 @@ class AudioPlayer extends Component {
         )
       });
 
-    debugger;
 
     return (
       <div>

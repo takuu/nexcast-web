@@ -35,7 +35,7 @@ class Tag extends Component {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button dense color="primary" onClick={()=> {console.log('should open buttonLink1')}}>
+            <Button dense color="primary" onClick={()=> { window.open(buttonLink1, '_blank'); }}>
               {buttonText1}
             </Button>
             <Button dense color="primary" onClick={()=> {console.log('should open buttonLink2')}}>

@@ -11,7 +11,7 @@ import _ from 'lodash';
 const initialState = new Immutable.Map();
 
 const mapEntities = (state, newTags) => {
-  const key = (newTags.length) ? newTags[0].episode_key : 'none';
+  const key = (newTags.length) ? newTags[0].episode_id : 'none';
   return state.set(key, newTags);
 };
 
@@ -28,7 +28,7 @@ export default (state = initialState, action) => {
       // let hash = _.keyBy(action.payload, 'episode_key');
       let hash = {};
       _.map(action.payload, (tag) => {
-        const key = tag.episode_key;
+        const key = tag.episode_id;
         hash[key] = hash[key] || [];
         hash[key].push(tag);
       });

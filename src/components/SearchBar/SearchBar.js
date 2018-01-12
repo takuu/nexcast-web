@@ -11,7 +11,6 @@ import { searchPodcastShows } from '../../reducers/search/searchActions';
 @connect((state, router) => {
   const { searchShows } = state;
   console.log('router', router, this);
-  debugger;
   return { history: router.history, searchShows: searchShows.toJS() };
 }, {
   searchPodcastShows

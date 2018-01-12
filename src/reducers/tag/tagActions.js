@@ -15,10 +15,14 @@ const {
 import Action from '../../lib/constants';
 
 const BackendFactory = require('../../lib/BackendFactory').default;
-import {appAuthToken} from '../../lib/AppAuthToken'
+// import {appAuthToken} from '../../lib/AppAuthToken'
 import _ from 'lodash';
 import * as helpers from '../../lib/helpers'
 import CONFIG from '../../lib/config'
+
+
+import axios from 'axios';
+
 
 export function updateEpisodesHasTagsSuccess(json) {
   return {
@@ -164,6 +168,7 @@ export function getTags (id) {
     dispatch({ type: Action.GET_TAGS_REQUEST });
     try {
       const { status, result, error } = (await axios.get(`${CONFIG.baseAPI}/cards/all?episode_id=${id}`)).data;
+      debugger;
       const tagList = _.map(result, (tag) => {
         tag.formattedContent = helpers.linkify((tag.content || '').replace(/(\r\n|\n|\r)/gm, "<br>"));
         var embeddedLink = (tag.youtube_location || '').replace('youtu.be', 'www.youtube.com/embed');

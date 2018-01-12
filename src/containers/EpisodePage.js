@@ -10,8 +10,10 @@ import _ from 'lodash';
 import Slider from 'react-slick';
 import Tag from '../components/Tag/Tag';
 import { getEpisodeByKey, getEpisodeById } from '../reducers/showDetail/showDetailActions';
+import { getTags } from '../reducers/tag/tagActions';
 import { getPodcastById } from '../reducers/podcast/podcastActions';
 
+import { hmsToSecondsOnly } from '../lib/helpers';
 
 // var sound = "http://hwcdn.libsyn.com/p/9/5/0/950f894211e17b78/Part_1_-_Schooled_by_Silicon_Valley.mp3?c_id=12078641&expiration=1494730851&hwt=4da344cb8477fe2203f931507cde8ded";
 var sound = "http://www.noiseaddicts.com/samples_1w72b820/2534.mp3";
@@ -57,16 +59,19 @@ const styles = theme => ({
 
 
 @connect((state, router) => {
-  const { showDetail, podcastInfo } = state;
+  const { showDetail, podcastInfo, tags } = state;
   const { podcastId, episodeId } = router.match.params;
 
   const episodeList = showDetail.toJS()[podcastId];
   const episode = _.find(episodeList, {id: parseInt(episodeId)});
   console.log('episodeList: ', episodeList);
 
-  return { showDetail: episodeList, episode: episode, podcastInfo: podcastInfo.toJS()[podcastId] };
+  console.log('tags: ', tags);
+  const tagList = tags.toJS()[episodeId];
+
+  return { showDetail: episodeList, episode: episode, podcastInfo: podcastInfo.toJS()[podcastId], tags: tagList };
 }, {
-  getPodcastById, getEpisodeByKey, getEpisodeById
+  getPodcastById, getEpisodeByKey, getEpisodeById, getTags,
 })
 class EpisodePage extends Component {
   constructor() {
@@ -77,6 +82,11 @@ class EpisodePage extends Component {
     const { podcastId, episodeId } = this.props.match.params;
     this.props.getPodcastById(podcastId);
     this.props.getEpisodeById(episodeId);
+    this.props.getTags(episodeId);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    debugger;
   }
 
   goto(num) {
@@ -91,25 +101,33 @@ class EpisodePage extends Component {
 
 
   render() {
-    const { classes, showDetail, podcastInfo = {}, episode = {} } = this.props;
+    const { classes, showDetail, podcastInfo = {}, episode = {}, tags } = this.props;
     const { podcastId } = this.props.match.params;
-    const foo = _.map(cards.cards.result, 'seconds');
 
-    console.log('episode: ', episode);
+    const temp = cards.cards.result;
 
-    const tagList = _.map(cards.cards.result, ({ title, description, mediaType, mediaUrl, buttonText1, buttonLink1, buttonText2, buttonLink2 }, index) => {
+    const foo = _.sortedUniq(_.map(cards.cards.result, 'seconds'));
+    const seconds = _.map(tags, (tag) => { return hmsToSecondsOnly(tag.time)}).sort();
+
+    console.log('EpisodePage: ', this.props, seconds.sort());
+
+
+
+    const tagList = _.map(tags, ({ title, description, mediaType, mediaUrl, buttonText1, buttonLink1, buttonText2, buttonLink2, button_link, button_text }, index) => {
       return (
         <div key={index}>
-          <Tag key={index} title={title} description={description} mediaType={mediaType} mediaUrl={mediaUrl} buttonText1={buttonText1} buttonLink1={buttonLink1} buttonLink2={buttonLink2} buttonText2={buttonText2}></Tag>
+          <Tag key={index} title={title} description={description} mediaType={mediaType} mediaUrl={mediaUrl} buttonText1={button_text} buttonLink1={button_link} buttonLink2={buttonLink2} buttonText2={buttonText2}></Tag>
         </div>
       )
     });
 
 
+
+
     return (
       <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}}>
         <div style={{ width: '100%', height: '100px', zIndex: 100}}>
-          <AudioPlayer onProgress={this.goto} mediaUrl={episode.media_location ? decodeURIComponent(episode.media_location) : ''} duration={episode.duration} tags={_.map(cards.cards.result, 'seconds')} title={podcastInfo.title} subTitle={episode.title} />
+          <AudioPlayer onProgress={this.goto} mediaUrl={episode.media_location ? decodeURIComponent(episode.media_location) : ''} duration={episode.duration} tags={seconds} title={podcastInfo.title} subTitle={episode.title} />
         </div>
         <div style={{height: '120px', width: '100%'}}></div>
         <div style={{ marginTop: '0px'}}>
