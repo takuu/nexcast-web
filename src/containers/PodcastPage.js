@@ -64,8 +64,8 @@ class PodcastPage extends Component {
     const { podcastId } = this.props.match.params;
 
     console.log('PodcastPage: ', podcast, episodes);
-    showDetail = episodes.result;
-    podcastInfo = podcast.result;
+    // showDetail = episodes.result;
+    // podcastInfo = podcast.result;
     return (
       <div className="container-fluid">
         <div className="row">
