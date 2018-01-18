@@ -99,6 +99,7 @@ class EpisodePage extends Component {
     if(position >= 0) {
       const tesNode = ReactDOM.findDOMNode(this.refs[`card${position}`]);
       tesNode.scrollIntoView({block: 'start', behavior: 'smooth'});
+      window.scrollBy(0, -65);
     }
     debugger;
 
@@ -132,8 +133,8 @@ class EpisodePage extends Component {
 
     const tagList = _.map(temp, ({ title, description, mediaType, mediaUrl, buttonText1, buttonLink1, buttonText2, buttonLink2, button_link, button_text }, index) => {
       return (
-        <div key={index}>
-          <Tag key={index} ref={`card${index}`} title={title} description={description} mediaType={mediaType} mediaUrl={mediaUrl} buttonText1={button_text} buttonLink1={button_link} buttonLink2={buttonLink2} buttonText2={buttonText2}></Tag>
+        <div key={index} ref={`card${index}`} style={{padding: '80px 0px 0px 0px'}}>
+          <Tag key={index} title={title} description={description} mediaType={mediaType} mediaUrl={mediaUrl} buttonText1={button_text} buttonLink1={button_link} buttonLink2={buttonLink2} buttonText2={buttonText2}></Tag>
         </div>
       )
     });
@@ -146,7 +147,7 @@ class EpisodePage extends Component {
         <div style={{ width: '100%', height: '100px', zIndex: 100, position: 'fixed'}}>
           <AudioPlayer onProgress={this.goto} mediaUrl={episode.media_location ? decodeURIComponent(episode.media_location) : sound} duration={episode.duration} tags={foo} title={podcastInfo.title} subTitle={episode.title} />
         </div>
-        <div style={{height: '120px', width: '100%'}}></div>
+        <div style={{height: '160px', width: '100%'}}></div>
         <div style={{ marginTop: '0px'}}>
           <Grid container spacing={24}>
             <Grid item xs={0} sm={3}>
