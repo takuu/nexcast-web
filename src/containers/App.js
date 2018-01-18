@@ -63,7 +63,7 @@ class App extends React.Component {
     return (
       <div style={{ width: '100%' }}>
         <Header match={match} history={history} location={this.props.location} />
-        <div className={classes.noDrawer} style={{minHeight: '600px', marginLeft: drawerShowing ? '300px': '0px', marginTop: '75px', width: '100%'}}>
+        <div className={classes.noDrawer} style={{minHeight: '600px', marginLeft: drawerShowing ? '300px': '0px', marginTop: '56px', width: '100%'}}>
 
           {renderRoutes(route.routes)}
         </div>

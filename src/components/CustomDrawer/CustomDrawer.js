@@ -98,6 +98,7 @@ class CustomDrawer extends Component {
       <Drawer
         type={drawerType}
         anchor={'left'}
+        // type='permanent'
         open={showDrawer}
         classes={{
           paper: classes.drawerPaper,
@@ -110,7 +111,7 @@ class CustomDrawer extends Component {
         <div>
           <div className={classes.drawerHeader} >
             <ListItem>
-              <ListItemText primary={<div align='center' type="title" color="default" style={{textTransform: 'uppercase', margin: '5px 20px 0px 0px'}}></div>}></ListItemText>
+              <ListItemText primary={<div align='center' type="title" color="default" style={{textTransform: 'uppercase', margin: '5px 20px 0px 0px'}}>Nexcast</div>}></ListItemText>
             </ListItem>
           </div>
           <Divider />

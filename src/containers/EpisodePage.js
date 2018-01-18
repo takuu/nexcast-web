@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
@@ -7,7 +8,6 @@ import Grid from 'material-ui/Grid';
 import AudioPlayer from '../components/AudioPlayer/AudioPlayer';
 import cards from '../../Database.json';
 import _ from 'lodash';
-import Slider from 'react-slick';
 import Tag from '../components/Tag/Tag';
 import { getEpisodeByKey, getEpisodeById } from '../reducers/showDetail/showDetailActions';
 import { getTags } from '../reducers/tag/tagActions';
@@ -24,13 +24,13 @@ function onProgress(e) {
 }
 
 var settings = {
-  dots: true,
-  infinite: true,
+  // infinite: true,
   speed: 300,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-  centerMode: true,
-  dots: false,
+  slidesToShow: 3,
+  // slidesToScroll: 1,
+  // centerMode: true,
+  vertical: true,
+  verticalSwiping: true
 };
 
 const styles = theme => ({
@@ -90,6 +90,14 @@ class EpisodePage extends Component {
   }
 
   goto(num) {
+    const tesNode = ReactDOM.findDOMNode(this.refs[`card${num}`]);
+    tesNode.scrollIntoView({block: 'start', behavior: 'smooth'});
+    // window.scrollTo(0, tesNode.offsetTop);
+    debugger;
+
+  }
+
+  gotoOld(num) {
     const seconds = _.map(cards.cards.result, 'seconds');
     const position = _.findLastIndex(cards.cards.result, (item) => {
       return num >= parseInt(item.seconds);
@@ -113,10 +121,10 @@ class EpisodePage extends Component {
 
 
 
-    const tagList = _.map(tags, ({ title, description, mediaType, mediaUrl, buttonText1, buttonLink1, buttonText2, buttonLink2, button_link, button_text }, index) => {
+    const tagList = _.map(temp, ({ title, description, mediaType, mediaUrl, buttonText1, buttonLink1, buttonText2, buttonLink2, button_link, button_text }, index) => {
       return (
         <div key={index}>
-          <Tag key={index} title={title} description={description} mediaType={mediaType} mediaUrl={mediaUrl} buttonText1={button_text} buttonLink1={button_link} buttonLink2={buttonLink2} buttonText2={buttonText2}></Tag>
+          <Tag key={index} ref={`card${index}`} title={title} description={description} mediaType={mediaType} mediaUrl={mediaUrl} buttonText1={button_text} buttonLink1={button_link} buttonLink2={buttonLink2} buttonText2={buttonText2}></Tag>
         </div>
       )
     });
@@ -126,8 +134,8 @@ class EpisodePage extends Component {
 
     return (
       <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}}>
-        <div style={{ width: '100%', height: '100px', zIndex: 100}}>
-          <AudioPlayer onProgress={this.goto} mediaUrl={episode.media_location ? decodeURIComponent(episode.media_location) : ''} duration={episode.duration} tags={seconds} title={podcastInfo.title} subTitle={episode.title} />
+        <div style={{ width: '100%', height: '100px', zIndex: 100, position: 'fixed'}}>
+          <AudioPlayer onProgress={this.goto} mediaUrl={episode.media_location ? decodeURIComponent(episode.media_location) : sound} duration={episode.duration} tags={seconds} title={podcastInfo.title} subTitle={episode.title} />
         </div>
         <div style={{height: '120px', width: '100%'}}></div>
         <div style={{ marginTop: '0px'}}>
@@ -135,9 +143,11 @@ class EpisodePage extends Component {
             <Grid item xs={0} sm={3}>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Slider ref='slider' {...settings}>
+              <button onClick={this.goto}>TEST</button>
+{/*              <Slider ref='slider' {...settings}>
                 {tagList}
-              </Slider>
+              </Slider>*/}
+              {tagList}
             </Grid>
             <Grid item xs={0} sm={3}>
             </Grid>

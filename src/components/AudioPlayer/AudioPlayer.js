@@ -228,13 +228,13 @@ class AudioPlayer extends Component {
 
     return (
       <div>
-        <div style={{ width: '100%', height: 200, backgroundColor: playerColor }}>
+        <div style={{ width: '100%', backgroundColor: playerColor, padding: '5px 0px' }}>
 
           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0px 5px 0px 5px', padding: '5px'}}>
             <span className={classes.playerTitle}>{this.props.title} - {this.props.subTitle}</span>
           </div>
 
-          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '5px', padding: '5px'}}>
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
 
             <img src={require("../../images/icon_skip_back.png")} onClick={this.goBack} style={{width: '50px', padding: '2px 10px'}}  />
             {((playerStatus, play, pause) => {
@@ -261,12 +261,12 @@ class AudioPlayer extends Component {
             <img src={require("../../images/icon_skip_forward.png")} onClick={this.goForward} style={{width: '50px', padding: '2px 10px'}} />
 
           </div>
-          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '5px 12px 0px 12px', padding: '5px 2%'}}>
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '0px 12px', padding: '0px 2%'}}>
             <span style={{color: 'white'}}>{secondsToHMS(parseInt(this.state.position))}</span>
             <span style={{color: 'white'}}>{secondsToHMS(parseInt(duration))}</span>
           </div>
 
-          <div style={{ width: '96%', margin: '5px 2%', padding: '8px', position: 'relative' }}>
+          <div style={{ width: '96%', margin: '5px 2%', padding: '25px', position: 'relative' }}>
             <div style={{position: 'absolute', width: '100%'}}>
 
 

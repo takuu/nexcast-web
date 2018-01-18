@@ -9,6 +9,7 @@ import { withStyles } from 'material-ui/styles';
 import { getEpisodes, getEpisodesById } from '../reducers/showDetail/showDetailActions';
 import { getPodcast, getPodcastById } from '../reducers/podcast/podcastActions';
 import Button from 'material-ui/Button';
+import Hidden from 'material-ui/Hidden';
 
 import { secondsToHMS } from '../lib/helpers';
 import { episodes, podcast } from '../../Database.json';
@@ -61,15 +62,19 @@ class PodcastPage extends Component {
   render() {
     let { classes, showDetail = [], podcastInfo = {} } = this.props;
     const { podcastId } = this.props.match.params;
+
+    console.log('PodcastPage: ', podcast, episodes);
+    showDetail = episodes.result;
+    podcastInfo = podcast.result;
     return (
-      <Grid container spacing={24}>
-        <Grid item xs={12}>
+      <div className="container-fluid">
+        <div className="row">
           <Paper className={classes.podcastContainer}>
 
             <div style={{ width: '100%', display: 'flex', flexDirection: 'row'}}>
               <img src={podcastInfo.image_url} className={classes.podcastImage} style={{height: '250px'}} alt=""/>
               <div>
-                <h2 className="paper-list-title">{podcastInfo.title}</h2>
+                <h4 className="paper-list-title">{podcastInfo.title}</h4>
                 <span className="paper-list-text">{podcastInfo.artist_name}</span>
                 <div style={{ padding: '10px' }}>
                   <Button raised color="primary">Subscribe</Button>
@@ -80,28 +85,31 @@ class PodcastPage extends Component {
           <Paper className={classes.podcastContainer}>
             <p>{podcastInfo.description}</p>
           </Paper>
-        </Grid>
-        <Grid item xs={12}>
-            {showDetail.map((episode, index) => (
-                <Paper className={classes.episode} spacing={24} key={index}>
+        </div>
+        <div className="row">
+          {showDetail.map((episode, index) => (
+            <Paper className={classes.episode} key={index}>
 
-                  <div style={{ width: '100%',display: 'flex', flexDirection: 'row' }}>
-                    <Link to={`/podcast/${podcastId}/episode/${episode.id}`} key={index}>
-                      <img src={episode.image_location} className={classes.podcastImage} height="175" alt=""/>
-                    </Link>
-                    <div>
-                      <Link to={`/podcast/${podcastId}/episode/${episode.id}`} key={index}>
-                        <h2 className="paper-list-title">{episode.title}</h2>
-                      </Link>
-                      <p className="paper-list-duration">{moment(episode.pub_date).startOf('day').fromNow()} - {secondsToHMS(episode.duration)}</p>
-                      <p className="paper-list-text-long">{episode.description_clean}</p>
-                    </div>
-                  </div>
+              <div style={{ width: '100%',display: 'flex', flexDirection: 'row' }}>
+                <Hidden smDown>
+                  <Link to={`/podcast/${podcastId}/episode/${episode.id}`} key={index}>
+                    <img src={episode.image_location} className={classes.podcastImage} height="175" alt=""/>
+                  </Link>
+                </Hidden>
+                <div>
+                  <Link to={`/podcast/${podcastId}/episode/${episode.id}`} key={index}>
+                    <h5 className="paper-list-title">{episode.title}</h5>
+                  </Link>
+                  <p className="paper-list-duration">{moment(episode.pub_date).startOf('day').fromNow()} - {secondsToHMS(episode.duration)}</p>
+                  <p className="paper-list-text-long">{episode.description_clean}</p>
+                </div>
+              </div>
 
-                </Paper>
-            ))}
-        </Grid>
-      </Grid>
+            </Paper>
+          ))}
+        </div>
+
+      </div>
     );
   }
 }

@@ -101,10 +101,12 @@ class Header extends Component {
     const showDrawer = !!!(HIDE_DRAWER_PATH.find((path) => (path.toLowerCase() === (pathname || '').toLowerCase())));
 
     let foo = true;
+    let position = 'static';
     if(showDrawer) {
       foo = this.state.openDrawer;
     } else {
       foo = false;
+      position = 'fixed';
     }
 
     console.log('hideDrawer: ', showDrawer, foo);
@@ -112,9 +114,9 @@ class Header extends Component {
 
     const navLinks = _.map(navLinkConfig, ({ name, url }, index) => ( <Link key={index} style={{textDecoration: 'none'}} to={url}><Button style={{color: 'white'}}color="default">{name}</Button></Link> ));
     return (
-      <div>
-        <div>
-          <AppBar position="fixed" style={{background: '#fff', zIndex: '1301'}}>
+
+        <div style={{width: '100%'}}>
+          <AppBar position='fixed' style={{background: '#fff', zIndex: '1301'}}>
             <Toolbar className={classes.headerDesktop}>
               <Hidden mdUp>
 
@@ -162,7 +164,7 @@ class Header extends Component {
             <CustomDrawer subscriptions={[]} show={showDrawer}></CustomDrawer>
           </Hidden>
         </div>
-      </div>
+
     );
   }
 }
