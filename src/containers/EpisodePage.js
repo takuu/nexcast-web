@@ -121,7 +121,7 @@ class EpisodePage extends Component {
 
 
 
-    const tagList = _.map(temp, ({ title, description, mediaType, mediaUrl, buttonText1, buttonLink1, buttonText2, buttonLink2, button_link, button_text }, index) => {
+    const tagList = _.map(tags, ({ title, description, mediaType, mediaUrl, buttonText1, buttonLink1, buttonText2, buttonLink2, button_link, button_text }, index) => {
       return (
         <div key={index}>
           <Tag key={index} ref={`card${index}`} title={title} description={description} mediaType={mediaType} mediaUrl={mediaUrl} buttonText1={button_text} buttonLink1={button_link} buttonLink2={buttonLink2} buttonText2={buttonText2}></Tag>
