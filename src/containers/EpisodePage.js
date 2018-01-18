@@ -90,9 +90,16 @@ class EpisodePage extends Component {
   }
 
   goto(num) {
-    const tesNode = ReactDOM.findDOMNode(this.refs[`card${num}`]);
-    tesNode.scrollIntoView({block: 'start', behavior: 'smooth'});
-    // window.scrollTo(0, tesNode.offsetTop);
+
+
+    const position = _.findLastIndex(cards.cards.result, (item) => {
+      return num >= parseInt(item.seconds);
+    });
+
+    if(position >= 0) {
+      const tesNode = ReactDOM.findDOMNode(this.refs[`card${position}`]);
+      tesNode.scrollIntoView({block: 'start', behavior: 'smooth'});
+    }
     debugger;
 
   }
@@ -117,11 +124,13 @@ class EpisodePage extends Component {
     const foo = _.sortedUniq(_.map(cards.cards.result, 'seconds'));
     const seconds = _.map(tags, (tag) => { return hmsToSecondsOnly(tag.time)}).sort();
 
+
+
     console.log('EpisodePage: ', this.props, seconds.sort());
 
 
 
-    const tagList = _.map(tags, ({ title, description, mediaType, mediaUrl, buttonText1, buttonLink1, buttonText2, buttonLink2, button_link, button_text }, index) => {
+    const tagList = _.map(temp, ({ title, description, mediaType, mediaUrl, buttonText1, buttonLink1, buttonText2, buttonLink2, button_link, button_text }, index) => {
       return (
         <div key={index}>
           <Tag key={index} ref={`card${index}`} title={title} description={description} mediaType={mediaType} mediaUrl={mediaUrl} buttonText1={button_text} buttonLink1={button_link} buttonLink2={buttonLink2} buttonText2={buttonText2}></Tag>
@@ -135,7 +144,7 @@ class EpisodePage extends Component {
     return (
       <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}}>
         <div style={{ width: '100%', height: '100px', zIndex: 100, position: 'fixed'}}>
-          <AudioPlayer onProgress={this.goto} mediaUrl={episode.media_location ? decodeURIComponent(episode.media_location) : sound} duration={episode.duration} tags={seconds} title={podcastInfo.title} subTitle={episode.title} />
+          <AudioPlayer onProgress={this.goto} mediaUrl={episode.media_location ? decodeURIComponent(episode.media_location) : sound} duration={episode.duration} tags={foo} title={podcastInfo.title} subTitle={episode.title} />
         </div>
         <div style={{height: '120px', width: '100%'}}></div>
         <div style={{ marginTop: '0px'}}>

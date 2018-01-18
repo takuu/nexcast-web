@@ -221,7 +221,7 @@ class AudioPlayer extends Component {
       (this.props.tags || []).map((sec, index) => {
         const percent = (sec/duration) * 100;
         return (
-          <span key={index} style={{display: 'inline-block', position: 'absolute', left: `${percent}%`, top: '7px', width: '3px', height: '20px', backgroundColor: playerColor}}></span>
+          <span key={index} style={{display: 'inline-block', position: 'absolute', left: `${percent}%`, top: '20px', width: '3px', height: '20px', backgroundColor: playerColor}}></span>
         )
       });
 
