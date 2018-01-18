@@ -74,7 +74,7 @@ class PodcastPage extends Component {
             <div style={{ width: '100%', display: 'flex', flexDirection: 'row'}}>
               <img src={podcastInfo.image_url} className={classes.podcastImage} style={{height: '250px'}} alt=""/>
               <div>
-                <h4 className="paper-list-title">{podcastInfo.title}</h4>
+                <h2 className="paper-list-title">{podcastInfo.title}</h2>
                 <span className="paper-list-text">{podcastInfo.artist_name}</span>
                 <div style={{ padding: '10px' }}>
                   <Button raised color="primary">Subscribe</Button>
@@ -98,7 +98,7 @@ class PodcastPage extends Component {
                 </Hidden>
                 <div>
                   <Link to={`/podcast/${podcastId}/episode/${episode.id}`} key={index}>
-                    <h5 className="paper-list-title">{episode.title}</h5>
+                    <h3 className="paper-list-title">{episode.title}</h3>
                   </Link>
                   <p className="paper-list-duration">{moment(episode.pub_date).startOf('day').fromNow()} - {secondsToHMS(episode.duration)}</p>
                   <p className="paper-list-text-long">{episode.description_clean}</p>

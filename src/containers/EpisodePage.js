@@ -87,7 +87,6 @@ class EpisodePage extends Component {
     this.props.getEpisodeById(episodeId);
     this.props.getTags(episodeId);
     const tesNode = ReactDOM.findDOMNode(this.refs[`card0`]);
-    console.log('jquery', $(window)[0].animate);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -154,7 +153,6 @@ class EpisodePage extends Component {
             <Grid item xs={0} sm={3}>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <button onClick={this.goto}>TEST</button>
 {/*              <Slider ref='slider' {...settings}>
                 {tagList}
               </Slider>*/}

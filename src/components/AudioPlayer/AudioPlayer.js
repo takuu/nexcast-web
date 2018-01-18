@@ -74,7 +74,6 @@ class AudioPlayer extends Component {
     this.stop = this.stop.bind(this);
     this.seek = this.seek.bind(this);
     this.moveSeek = this.moveSeek.bind(this);
-    this.test = this.test.bind(this);
   }
 
   componentWillMount() {
@@ -212,9 +211,6 @@ class AudioPlayer extends Component {
     this.moveSeek(value);
   }
 
-  test() {
-
-  }
   render() {
     const { styleConfig: {progressColor, seekColor, playerColor, controlColor}, tags, duration, classes } = this.props;
 
