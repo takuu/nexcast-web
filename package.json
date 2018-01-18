@@ -39,6 +39,7 @@
     "jsonwebtoken": "^5.0.1",
     "jss": "^9.4.0",
     "jss-preset-default": "^4.0.1",
+    "jump.js": "^1.0.2",
     "kerberos": "~0.0.17",
     "key-mirror": "^1.0.0",
     "lodash": "^4.0.0",

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import Grid from 'material-ui/Grid';
+import jump from 'jump.js'
 import AudioPlayer from '../components/AudioPlayer/AudioPlayer';
 import cards from '../../Database.json';
 import _ from 'lodash';
@@ -77,43 +78,46 @@ class EpisodePage extends Component {
   constructor() {
     super();
     this.goto = this.goto.bind(this);
+    this.onStart = this.onStart.bind(this);
+    this.onTagHit = this.onTagHit.bind(this);
   }
   componentWillMount() {
     const { podcastId, episodeId } = this.props.match.params;
     this.props.getPodcastById(podcastId);
     this.props.getEpisodeById(episodeId);
     this.props.getTags(episodeId);
+    const tesNode = ReactDOM.findDOMNode(this.refs[`card0`]);
+    console.log('jquery', $(window)[0].animate);
   }
 
   componentWillReceiveProps(nextProps) {
-    debugger;
+    // debugger;
   }
 
+  onTagHit(num) {
+    // debugger;
+    if(num >= 0) {
+      jump(`#card${num}`, {offset: -220})
+    }
+  }
+
+
   goto(num) {
-
-
     const position = _.findLastIndex(cards.cards.result, (item) => {
       return num >= parseInt(item.seconds);
     });
 
     if(position >= 0) {
-      const tesNode = ReactDOM.findDOMNode(this.refs[`card${position}`]);
-      tesNode.scrollIntoView({block: 'start', behavior: 'smooth'});
-      window.scrollBy(0, -65);
+      jump(`#card${position}`, {offset: -220})
     }
-    debugger;
+    // debugger;
 
   }
 
-  gotoOld(num) {
-    const seconds = _.map(cards.cards.result, 'seconds');
-    const position = _.findLastIndex(cards.cards.result, (item) => {
-      return num >= parseInt(item.seconds);
-    });
-
-    this.refs.slider.slickGoTo(position >= 0 ? position : 0);
-
+  onStart() {
+    jump(`#card0`, {offset: -220})
   }
+
 
 
   render() {
@@ -133,19 +137,16 @@ class EpisodePage extends Component {
 
     const tagList = _.map(temp, ({ title, description, mediaType, mediaUrl, buttonText1, buttonLink1, buttonText2, buttonLink2, button_link, button_text }, index) => {
       return (
-        <div key={index} ref={`card${index}`} style={{padding: '80px 0px 0px 0px'}}>
+        <div key={index} ref={`card${index}`} id={`card${index}`} style={{padding: '0px 0px 0px 0px'}}>
           <Tag key={index} title={title} description={description} mediaType={mediaType} mediaUrl={mediaUrl} buttonText1={button_text} buttonLink1={button_link} buttonLink2={buttonLink2} buttonText2={buttonText2}></Tag>
         </div>
       )
     });
 
-
-
-
     return (
       <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'flex-start'}}>
         <div style={{ width: '100%', height: '100px', zIndex: 100, position: 'fixed'}}>
-          <AudioPlayer onProgress={this.goto} mediaUrl={episode.media_location ? decodeURIComponent(episode.media_location) : sound} duration={episode.duration} tags={foo} title={podcastInfo.title} subTitle={episode.title} />
+          <AudioPlayer onTagHit={this.onTagHit} onStart={this.onStart} mediaUrl={episode.media_location ? decodeURIComponent(episode.media_location) : sound} duration={episode.duration} tags={foo} title={podcastInfo.title} subTitle={episode.title} />
         </div>
         <div style={{height: '160px', width: '100%'}}></div>
         <div style={{ marginTop: '0px'}}>

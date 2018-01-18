@@ -91,10 +91,11 @@ class AudioPlayer extends Component {
   }
 
   start(props) {
-    const { mediaUrl } = props;
+    const { mediaUrl, tags } = props;
     if(mediaUrl && this.state.mediaUrl != mediaUrl) {
 
       console.log('initiate Howler: ', mediaUrl);
+      this.props.onStart();
       this.setState({
         ...this.state,
         mediaUrl,
@@ -141,7 +142,12 @@ class AudioPlayer extends Component {
               break;
           }
 
-          this.props.onProgress(sound.seek());
+          // this.props.onProgress(sound.seek());
+
+          const position = _.findLastIndex(this.props.tags, (sec) => {
+            return parseInt(sound.seek()) == parseInt(sec);
+          });
+          if(position >= 0) this.props.onTagHit(position);
 
         }, 1000);
 
@@ -167,11 +173,6 @@ class AudioPlayer extends Component {
       ...this.state,
       playerStatus: 3,
     })
-
-
-
-
-
 
   }
 
@@ -314,6 +315,7 @@ AudioPlayer.propTypes = {
   title: PropTypes.string,
   subTitle: PropTypes.string,
   onProgress: PropTypes.func,
+  onTagHit: PropTypes.func,
   styleConfig: PropTypes.objectOf(PropTypes.string),
   duration: PropTypes.number,
   // tags: PropTypes.arrayOf(PropTypes.number),
@@ -326,6 +328,7 @@ AudioPlayer.defaultProps = {
   title: "",
   subTitle: "",
   onProgress: {},
+  onTagHit: {},
   styleConfig: {progressColor: 'white', controlColor: '#56a0e5', seekColor: '#56a0e5', playerColor: '#0371d8' },
   tags: [],
   duration: 100,
