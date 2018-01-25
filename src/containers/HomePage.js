@@ -29,7 +29,7 @@ const styles = theme => ({
     overflow: 'hidden',
     flexDirection: 'row',
     background: theme.palette.background.paper,
-    flexWrap: 'nowrap',
+    // flexWrap: 'nowrap',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
     overflowX: 'scroll',
@@ -47,13 +47,13 @@ const styles = theme => ({
       'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
   },
   card: {
-    maxWidth: 350,
-    height: 350,
+    maxWidth:275,
+    height: 380,
     margin: '0px 2px'
   },
   media: {
-    height: 250,
-    width: 250,
+    height: 275,
+    width: 275,
   },
 });
 
@@ -89,7 +89,7 @@ class HomePage extends Component {
   }
   render() {
     const { taggedShows, popular, classes } = this.props;
-    console.log('HomePage: ', popular);
+    console.log('HomePage: ', popular, taggedShows);
 
 
     return (
@@ -98,32 +98,39 @@ class HomePage extends Component {
           <Typography type="headline" component="h4">
             Recommended
           </Typography>
-          <Grid container spacing={24} style={{marginTop: '20px'}}>
-            <div className={classes.root}>
+          <div className="container">
+            <div className="row">
+              <div className={classes.root}>
 
-              {taggedShows.map((show, index) => (
-                <Link to={`/podcast/${show.id}`} key={index}>
-                  <Card className={classes.card}>
-                    <CardMedia
-                      className={classes.media}
-                      image={show.image_url}
-                      title={show.title}
-                    />
-                    <CardContent>
-                      <Typography type="headline" style={{fontSize: '1.2em'}}>
-                        {show.title}
-                      </Typography>
-                      {/*                  <Typography component="p">
+                {taggedShows.map((show, index) => (
+                  <Link to={`/podcast/${show.id}`} key={index}>
+                    <Card className={classes.card}>
+                      <CardMedia
+                        className={classes.media}
+                        image={show.image_url}
+                        title={show.title}
+                      />
+                      <CardContent>
+                        <Typography type="headline" style={{fontSize: '1.3em'}}>
+                          {show.title}
+                        </Typography>
+                        <br/>
+                        <Typography type="headline" style={{fontSize: '1.1em'}} color={'secondary'}>
+                          {show.artist_name}
+                        </Typography>
+                        {/*                  <Typography component="p">
                         {show.description}
                       </Typography>*/}
-                    </CardContent>
-                  </Card>
-                </Link>
+                      </CardContent>
+                    </Card>
+                  </Link>
 
-              ))}
+                ))}
 
+              </div>
             </div>
-          </Grid>
+          </div>
+
         </div>
 
         {_.map(categories, (category, index) => {

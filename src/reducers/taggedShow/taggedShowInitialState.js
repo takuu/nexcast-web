@@ -11,6 +11,7 @@ var TaggedShowRecord = Record({
   "published_date": "",
   "language": "",
   "author": "",
+  "artist_name": "",
   "keywords": "",
   "email": "",
   "owner_name": "",
