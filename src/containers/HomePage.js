@@ -29,10 +29,18 @@ const styles = theme => ({
     overflow: 'hidden',
     flexDirection: 'row',
     background: theme.palette.background.paper,
+    // justifyContent: 'space-between',
     // flexWrap: 'nowrap',
     // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: 'translateZ(0)',
+
     overflowX: 'scroll',
+    [theme.breakpoints.up('md')]: {
+      width: '85%',
+    },
+    [theme.breakpoints.down('md')]: {
+      width: '100%',
+    }
   },
   gridList: {
     flexWrap: 'nowrap',
@@ -47,13 +55,13 @@ const styles = theme => ({
       'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
   },
   card: {
-    maxWidth:275,
+    maxWidth:250,
     height: 380,
     margin: '0px 2px'
   },
   media: {
-    height: 275,
-    width: 275,
+    height: 250,
+    width: 250,
   },
 });
 
